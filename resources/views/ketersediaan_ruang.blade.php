@@ -217,8 +217,8 @@
                   <td>{{ $ruangan->nama_ruang }}</td> <!-- Perbaiki nama variabel -->
                   <td>{{ $ruangan->kapasitas_ruang }}</td> <!-- Perbaiki nama variabel -->
                   <td>
-                      <a href="#" class="btn-action btn-edit"> Edit✏️</a> <!-- Edit Button -->
-                      <a href="#" class="btn-action btn-delete">Hapus🗑️</a> <!-- Delete Button -->
+                      <a href="#" class="btn-action btn-edit">✏️</a> <!-- Edit Button -->
+                      <a href="#" class="btn-action btn-delete">🗑️</a> <!-- Delete Button -->
                   </td>
               </tr>
           @endforeach

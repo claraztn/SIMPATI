@@ -40,15 +40,3 @@ Route::get('/ketersediaan-ruang', [KetersediaanRuanganController::class, 'index'
 
 // Route untuk menyimpan data ketersediaan ruang
 Route::post('/ketersediaan-ruang', [KetersediaanRuanganController::class, 'store'])->name('ketersediaan_ruang.store');
-
-// Menambahkan route untuk mengambil ruang berdasarkan gedung
-Route::get('/ruangan/gedung', [RuanganController::class, 'getRuangByGedung']);
-
-// Route untuk menangani form pengisian
-Route::post('/manajemen_ruang', [RuanganController::class, 'update'])->name('update_ruang');
-
-// Route untuk mengambil data ruang berdasarkan gedung
-Route::get('/ruangan/gedung', [RuanganController::class, 'getRuangByGedung']);
-
-// Route untuk menangani form pengisian
-Route::post('/manajemen_ruang', [RuanganController::class, 'update'])->name('update_ruang');
