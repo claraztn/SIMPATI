@@ -155,27 +155,27 @@
   <!-- Form Pengisian -->
   <h3 class="w3-text-gray form-title"><b>MANAJEMEN RUANG KELAS</b></h3>
   <div class="form-container">
-    <form>
+    <form action="{{ route('update_ruang') }}" method="POST">
+      @csrf
       <label for="gedung">Pilih Gedung:</label>
       <select id="gedung" name="gedung" required>
         <option value="">--Pilih Gedung--</option>
-        @foreach($ruangan->unique('gedung') as $item) <!-- Mengambil gedung yang unik -->
+        @foreach($ruangan->unique('gedung') as $item)
           <option value="{{ $item->gedung }}">{{ $item->gedung }}</option>
         @endforeach
       </select>
-
-      <!-- Nama Ruang -->
+    
       <label for="namaRuang">Nama Ruang:</label>
       <select id="namaRuang" name="namaRuang" required>
         <option value="">--Pilih Nama Ruang--</option>
       </select>
-
-      <!-- Kapasitas Ruang -->
+    
       <label for="kapasitas">Kapasitas:</label>
       <input type="number" id="kapasitas" name="kapasitas" required min="1" />
-
+    
       <button type="submit" class="btn-save">Simpan</button>
     </form>
+    
   </div>
 </div>
 
@@ -183,33 +183,38 @@
 <script>
 $(document).ready(function() {
   $('#gedung').change(function() {
-      var gedung = $(this).val();
+    var gedung = $(this).val();
+    
+    // Cek apakah gedung dipilih
+    if (gedung) {
+      $.ajax({
+        url: '/ruangan/gedung',
+        type: 'GET',
+        data: { gedung: gedung },
+        success: function(data) {
+          $('#namaRuang').empty(); // Kosongkan dropdown nama ruang
+          $('#kapasitas').val(''); // Reset input kapasitas
+
+          if (data.length > 0) {
+            $('#namaRuang').append('<option value="">--Pilih Nama Ruang--</option>');
+            $.each(data, function(key, value) {
+              $('#namaRuang').append('<option value="' + value.id_ruang + '" data-kapasitas="' + value.kapasitas_ruang + '">' + value.nama_ruang + '</option>');
+            });
+          } else {
+            $('#namaRuang').append('<option value="">Tidak ada ruang</option>');
+          }
+        },
+        error: function() {
+          alert('Terjadi kesalahan saat mengambil data ruang.');
+        }
+      });
+    } else {
       $('#namaRuang').empty(); // Kosongkan dropdown nama ruang
-      $('#kapasitas').val(''); // Reset input kapasitas
-      $('#maxKapasitasLabel').hide(); // Sembunyikan label kapasitas maksimum
-
-      if (gedung) {
-          $.ajax({
-              url: '/ruangan/gedung',
-              type: 'GET',
-              data: { gedung: gedung },
-              success: function(data) {
-                  $('#namaRuang').append('<option value="">--Pilih Nama Ruang--</option>');
-                  $.each(data, function(key, value) {
-                      $('#namaRuang').append('<option value="' + value.id_ruang + '" data-kapasitas="' + value.kapasitas_ruang + '">' + value.nama_ruang + '</option>');
-                  });
-              }
-          });
-      }
-  });
-
-  $('#namaRuang').change(function() {
-      var selectedOption = $(this).find(':selected');
-      var kapasitas = selectedOption.data('kapasitas');
-      $('#kapasitas').attr('max', kapasitas); // Set batas maksimum kapasitas
-      $('#kapasitas').val(''); // Reset input kapasitas
+    }
   });
 });
+
+
 
 let isSidebarOpen = false;
 
