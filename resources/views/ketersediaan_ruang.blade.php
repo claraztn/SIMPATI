@@ -172,7 +172,7 @@
 <!-- Navbar -->
 <header class="w3-container w3-marina w3-large w3-header">
   <a href="javascript:void(0)" class="w3-button w3-margin-right" onclick="toggleSidebar()">☰</a>
-  <a href="{{ route('dashboard_bagAkademik') }}" class="w3-button w3-margin-right" style="text-decoration: none;">Back to Menu</a>
+  <a href="{{ route('dashboard2') }}" class="w3-button w3-margin-right" style="text-decoration: none;">Back to Menu</a>
 </header>
 
 <!-- Sidebar/menu -->
@@ -187,7 +187,7 @@
   
   <br>
   <div class="w3-bar-block">
-    <a href="{{ route('dashboard_bagAkademik') }}" class="w3-bar-item w3-button w3-hover-white">Dashboard</a> 
+    <a href="{{ route('dashboard2') }}" class="w3-bar-item w3-button w3-hover-white">Dashboard</a> 
     <a href="{{ route('manajemen_ruang') }}" class="w3-bar-item w3-button w3-hover-white">Manajemen Ruang</a> 
   </div>
 </nav>
@@ -229,7 +229,7 @@
                   <td>{{ $ruang->nama_ruang }}</td> <!-- Perbaiki nama variabel -->
                   <td>{{ $ruang->kapasitas }}</td> <!-- Perbaiki nama variabel -->
                   <td>
-                      <a href="#" class="btn-action btn-edit">✏️</a> <!-- Edit Button -->
+                      <a href="manajemen_ruang" class="btn-action btn-edit">✏️</a> <!-- Edit Button -->
                       <a href="#" class="btn-action btn-delete">🗑️</a> <!-- Delete Button -->
                   </td>
               </tr>

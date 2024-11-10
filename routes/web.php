@@ -21,13 +21,21 @@ Route::get('/', function () {
 // Route untuk memproses login dan redirect ke dashboard bagian akademik
 Route::post('/login', function () {
     // Proses login (bisa ditambahkan logika autentikasi) dan redirect ke dashboard
-    return redirect()->route('dashboard_bagAkademik');
-})->name('process_login');
+    return redirect()->route('dashboard2');
+})->name('proses_login');
+
+// // Route untuk logout
+// Route::post('/logout', function () {
+//     // Logika logout, misalnya menghapus sesi atau token
+//     // auth()->logout(); // Jika menggunakan session auth
+//     session()->flush(); // Membersihkan sesi jika menggunakan session
+//     return redirect()->route('login'); // Redirect ke halaman login
+// })->name('logout');
 
 // Route untuk menampilkan halaman dashboard dekan
-Route::get('/dashboard_bagAkademik', function () {
-    return view('dashboard_bagAkademik'); // Tampilkan halaman dashboard
-})->name('dashboard_bagAkademik');
+Route::get('/dashboard2', function () {
+    return view('dashboard2'); // Tampilkan halaman dashboard
+})->name('dashboard2');
 
 // Route untuk menampilkan halaman manajemen ruang menggunakan RuanganController
 Route::get('/manajemen_ruang', [RuanganController::class, 'showManajemenRuang'])->name('manajemen_ruang');

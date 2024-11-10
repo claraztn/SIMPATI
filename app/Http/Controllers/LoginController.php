@@ -15,21 +15,26 @@ class LoginController extends Controller
 
     // Proses autentikasi login
     public function authenticate(Request $request) {
+        // Validate the request
         $validator = Validator::make($request->all(),[
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed'
+            'email' => 'required|email',
+            'password' => 'required'
         ]);
 
         if ($validator->passes()) {
-            
+            // Attempt to authenticate
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+                // If authentication is successful, redirect to the dashboard
+                return redirect()->route('dashboard2');
             } else {
-                return redirect()->route('account.login')->with('Either email or password is incorrect!');
+                // If authentication fails, redirect back with an error message
+                return redirect()->route('account.login')->with('error', 'Either email or password is incorrect!');
             } 
         } else {
+            // If validation fails, redirect back with errors
             return redirect()->route('account.login')
-            ->withInput()
-            ->withErrors($validator);
+                ->withInput()
+                ->withErrors($validator);
         }
     }
 }

@@ -5,12 +5,17 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>Laravel 11 Multi Auth</title>
       <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+      <style>
+          .custom-navbar {
+              background-color: #003f5c; 
+          }
+      </style>
    </head>
    <body class="bg-light">
-        <nav class="navbar navbar-expand-md bg-white shadow-lg bsb-navbar bsb-navbar-hover bsb-navbar-caret">
+        <nav class="navbar navbar-expand-md custom-navbar shadow-lg bsb-navbar bsb-navbar-hover bsb-navbar-caret">
             <div class="container">
-                <a class="navbar-brand" href="#">
-                   <strong>Laravel 11 Multi Auth</strong>
+                <a class="navbar-brand text-white" href="#">
+                   <strong>SIMPATI</strong>
                 </a>
                 <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
@@ -26,7 +31,7 @@
                     <ul class="navbar-nav justify-content-end flex-grow-1">
                         
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#!" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hello, Mohit</a>
+                            <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Hello, Mohit</a>
                             <ul class="dropdown-menu border-0 shadow bsb-zoomIn" aria-labelledby="accountDropdown">                          
                                 <li>
                                     <a class="dropdown-item" href="#!">Logout</a>
