@@ -15,18 +15,18 @@ Route::get('/', function () {
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard_BA', [DashboardController::class, 'index'])->name('dashboard');
 
 // Route untuk memproses login dan redirect ke dashboard bagian akademik
 Route::post('/login', function () {
     // Proses login (bisa ditambahkan logika autentikasi) dan redirect ke dashboard
-    return redirect()->route('dashboard');
+    return redirect()->route('dashboard_BA');
 })->name('proses_login');
 
 // Route untuk menampilkan halaman dashboard dekan
-Route::get('/dashboard', function () {
-    return view('dashboard'); // Tampilkan halaman dashboard
-})->name('dashboard');
+Route::get('/dashboard_BA', function () {
+    return view('dashboard_BA'); // Tampilkan halaman dashboard
+})->name('dashboard_BA');
 
 // Route untuk menampilkan halaman manajemen ruang menggunakan RuanganController
 Route::get('/manajemen_ruang', [RuanganController::class, 'showManajemenRuang'])->name('manajemen_ruang');
