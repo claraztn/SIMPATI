@@ -41,7 +41,7 @@ class RuanganController extends Controller
         DB::table('ruangan')
             ->where('nama_ruang', $request->namaRuang)
             ->update(['kapasitas' => $request->kapasitas]);
-        return redirect('ketersediaan-ruang')->with('success', 'Kapasitas ruang berhasil ditambahkan!');
+        return redirect('ketersediaan_ruang')->with('success', 'Kapasitas ruang berhasil ditambahkan!');
     }
     
 }

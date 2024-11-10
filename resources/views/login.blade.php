@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Laravel 11 Multi Auth</title>
+        <title>SIMPATI</title>
         <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     </head>
     <body class="bg-light">
@@ -15,12 +15,20 @@
                             <div class="card-body p-3 p-md-4 p-xl-5">
                                 <div class="row">
                                     <div class="col-12">
+                                        @if (Session::has('success'))
+                                            <div class="alert alert-success">{{ Session::get('success') }}</div>
+                                        @endif
+
+                                        @if (Session::has('error'))
+                                        <div class="alert alert-danger">{{ Session::get('error') }}</div>
+                                        @endif
+
                                         <div class="mb-5">
                                             <h4 class="text-center">Login Here</h4>
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <form action="{{ route('account.authenticate') }}" method="POST"> --}}
+                                <form action="{{ route('authenticate') }}" method="POST">
                                     @csrf
                                     <div class="row gy-3 overflow-hidden">
                                         <div class="col-12">

@@ -2,39 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator; // Pastikan Validator yang benar digunakan
 
 class LoginController extends Controller
 {
-    // Menampilkan halaman login
     public function index() {
         return view('login');
     }
-
-    // Proses autentikasi login
+                                                                                                                 
     public function authenticate(Request $request) {
-        // Validate the request
         $validator = Validator::make($request->all(),[
             'email' => 'required|email',
             'password' => 'required'
         ]);
 
         if ($validator->passes()) {
-            // Attempt to authenticate
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-                // If authentication is successful, redirect to the dashboard
-                return redirect()->route('dashboard2');
+                return redirect()->route('dashboard');
             } else {
-                // If authentication fails, redirect back with an error message
-                return redirect()->route('account.login')->with('error', 'Either email or password is incorrect!');
+                return redirect()->route('login')->with('error', 'Either email or password is incorrect!');
             } 
+
         } else {
-            // If validation fails, redirect back with errors
-            return redirect()->route('account.login')
+            return redirect()->route('login')
                 ->withInput()
                 ->withErrors($validator);
         }
+    }
+
+    public function logout() {
+        Auth::logout();
+        return redirect()->route('login');
     }
 }

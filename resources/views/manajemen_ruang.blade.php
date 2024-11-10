@@ -124,7 +124,7 @@
 <!-- Navbar -->
 <header class="w3-container w3-marina w3-large w3-header">
   <a href="#" class="w3-button w3-margin-right" onclick="toggleSidebar()">☰</a>
-  <a href="{{ route('dashboard2') }}" class="w3-button w3-margin-right" style="text-decoration: none;">Back to Menu</a>
+  <a href="{{ route('dashboard') }}" class="w3-button w3-margin-right" style="text-decoration: none;">Back to Menu</a>
 </header>
 
 <!-- Sidebar/menu -->
@@ -138,7 +138,7 @@
   </div>
   <br>
   <div class="w3-bar-block">
-    <a href="{{ route('dashboard2') }}" class="w3-bar-item w3-button w3-hover-white">Dashboard</a> 
+    <a href="{{ route('dashboard') }}" class="w3-bar-item w3-button w3-hover-white">Dashboard</a> 
     <a href="{{ route('manajemen_ruang') }}" class="w3-bar-item w3-button w3-hover-white">Manajemen Ruang</a> 
   </div>
 </nav>
