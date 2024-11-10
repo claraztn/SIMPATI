@@ -40,3 +40,5 @@ Route::get('/ketersediaan-ruang', [KetersediaanRuanganController::class, 'index'
 
 // Route untuk menyimpan data ketersediaan ruang
 Route::post('/ketersediaan-ruang', [KetersediaanRuanganController::class, 'store'])->name('ketersediaan_ruang.store');
+
+Route::post('/ruangan/atur-kapasitas', [RuanganController::class, 'aturKapasitas'])->name('ruangan.aturKapasitas');

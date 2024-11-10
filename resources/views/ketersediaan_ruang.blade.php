@@ -192,9 +192,21 @@
   </div>
 </nav>
 
+@if(session('success'))
+    <script>
+        alert('{{ session('success') }}');
+    </script>
+@endif
+
+@if(session('error'))
+    <script>
+        alert('{{ session('error') }}');
+    </script>
+@endif
 <!-- Main Content -->
 {{-- <h3 class="w3-text-gray form-title"><b>KETERSEDIAAN RUANG KELAS</b></h3> --}}
 <div class="w3-main" id="mainContent">
+
   <div class="button-container" style="margin-bottom: 20px;">
     <button class="btn-fill" onclick="window.location.href='{{ route('manajemen_ruang') }}'">Pengisian</button>
     <button class="btn-history" onclick="window.location.href='{{ route('ketersediaan_ruang') }}'">Riwayat Pengisian</button>
@@ -211,11 +223,11 @@
           </tr>
       </thead>
       <tbody>
-          @foreach ($ketersediaanRuangs as $ruangan) <!-- Pastikan untuk menggunakan nama yang sesuai -->
+          @foreach ($ruangs as $ruang) <!-- Pastikan untuk menggunakan nama yang sesuai -->
               <tr>
-                  <td>{{ $ruangan->gedung }}</td> <!-- Perbaiki nama variabel -->
-                  <td>{{ $ruangan->nama_ruang }}</td> <!-- Perbaiki nama variabel -->
-                  <td>{{ $ruangan->kapasitas_ruang }}</td> <!-- Perbaiki nama variabel -->
+                  <td>{{ $ruang->gedung }}</td> <!-- Perbaiki nama variabel -->
+                  <td>{{ $ruang->nama_ruang }}</td> <!-- Perbaiki nama variabel -->
+                  <td>{{ $ruang->kapasitas }}</td> <!-- Perbaiki nama variabel -->
                   <td>
                       <a href="#" class="btn-action btn-edit">✏️</a> <!-- Edit Button -->
                       <a href="#" class="btn-action btn-delete">🗑️</a> <!-- Delete Button -->

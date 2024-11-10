@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ruangan;
 use Illuminate\Http\Request;
 use App\Models\KetersediaanRuang;
+use Illuminate\Support\Facades\DB;
 
 class KetersediaanRuanganController extends Controller
 {
@@ -18,10 +20,12 @@ class KetersediaanRuanganController extends Controller
     public function index()
     {
         // Mengambil semua data ketersediaan ruang
-        $ketersediaanRuangs = KetersediaanRuang::all();
+        $ruangs = DB::table('ruangan')
+                    ->whereNotNull('kapasitas')
+                    ->get();
 
         // Mengirim data ke view ketersediaan_ruang
-        return view('ketersediaan_ruang', compact('ketersediaanRuangs'));
+        return view('ketersediaan_ruang', compact('ruangs'));
     }
 
     public function store(Request $request)

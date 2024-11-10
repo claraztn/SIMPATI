@@ -6,6 +6,7 @@ use App\Models\Ruangan;
 use Illuminate\Http\Request;
 use App\Models\KetersediaanRuang;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class RuanganController extends Controller
 {
@@ -32,4 +33,15 @@ class RuanganController extends Controller
         $ketersediaanRuangs = KetersediaanRuang::all(); // Ambil semua data ketersediaan ruang
         return view('ketersediaan_ruang', compact('ketersediaanRuangs')); // Kirim data ke view
     }
+
+    public function aturKapasitas(Request $request)
+    {
+
+
+        DB::table('ruangan')
+            ->where('nama_ruang', $request->namaRuang)
+            ->update(['kapasitas' => $request->kapasitas]);
+        return redirect('ketersediaan-ruang')->with('success', 'Kapasitas ruang berhasil ditambahkan!');
+    }
+    
 }

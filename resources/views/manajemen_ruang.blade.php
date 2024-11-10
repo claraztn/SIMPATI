@@ -155,7 +155,8 @@
   <!-- Form Pengisian -->
   <h3 class="w3-text-gray form-title"><b>MANAJEMEN RUANG KELAS</b></h3>
   <div class="form-container">
-    <form>
+    <form action="{{ route('ruangan.aturKapasitas') }}" method="POST">
+      @csrf
       <label for="gedung">Pilih Gedung:</label>
       <select id="gedung" name="gedung" required>
         <option value="">--Pilih Gedung--</option>
@@ -196,7 +197,7 @@ $(document).ready(function() {
               success: function(data) {
                   $('#namaRuang').append('<option value="">--Pilih Nama Ruang--</option>');
                   $.each(data, function(key, value) {
-                      $('#namaRuang').append('<option value="' + value.id_ruang + '" data-kapasitas="' + value.kapasitas_ruang + '">' + value.nama_ruang + '</option>');
+                      $('#namaRuang').append('<option value="' + value.nama_ruang + '" data-kapasitas="' + value.kapasitas_ruang + '">' + value.nama_ruang + '</option>');
                   });
               }
           });
@@ -227,6 +228,8 @@ function toggleSidebar() {
 
   isSidebarOpen = !isSidebarOpen;
 }
+
+
 
 </script>
 </body>
