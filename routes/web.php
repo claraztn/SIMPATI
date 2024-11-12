@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\IrsController;
 use App\Http\Controllers\KetersediaanRuanganController;
 
 Route::get('/', function () {
@@ -40,5 +41,7 @@ Route::delete('/ruangan/{id_ruang}', [RuanganController::class, 'hapus'])->name(
 Route::get('/dashboard_mhs', function () {
     return view('dashboard_mhs'); 
 })->name('dashboard_mhs');
+
+Route::get('/buat_IRS', [IrsController::class, 'BuatIRS'])->name('buat_IRS');
 
 // PEMBIMBING AKADEMIK

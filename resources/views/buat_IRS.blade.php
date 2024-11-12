@@ -3,7 +3,7 @@
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>MANAJEMEN RUANG KELAS</title>
+      <title>PENGISIAN IRS</title>
       <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
       <style>
           .custom-navbar {
@@ -94,9 +94,14 @@
                                 Home
                             </a>                            
                         <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item {{ request()->routeIs('manajemen_ruang') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('manajemen_ruang') }}">
-                                    Manajemen Ruang
+                            <li class="nav-item {{ request()->routeIs('buat_IRS') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('buat_IRS') }}">
+                                    Pengisian IRS
+                                </a>
+                            </li>
+                            <li class="nav-item {{ request()->routeIs('buat_IRS') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('buat_IRS') }}">
+                                    Jadwal Kuliah
                                 </a>
                             </li>
                         </ul>
@@ -120,14 +125,14 @@
         <div class="container">
             <div class="card border-0 shadow my-5">
               <div class="card-header bg-light">
-                  <h3 class="h5 pt-2">MANAJEMEN RUANG KELAS</h3>
+                  <h3 class="h5 pt-2">PENGISIAN IRS</h3>
               </div>
               <div class="card-body">
                   <div class="button-container" style="margin-bottom: 20px;">
-                    <button class="btn-fill" onclick="window.location.href='{{ route('manajemen_ruang') }}'">Pengisian</button>
-                    <button class="btn-history" onclick="window.location.href='{{ route('ketersediaan_ruang') }}'">Riwayat Pengisian</button>
+                    <button class="btn-fill" onclick="window.location.href='{{ route('buat_IRS') }}'">Pengisian IRS</button>
+                    <button class="btn-history" onclick="window.location.href='{{ route('ketersediaan_ruang') }}'">IRS</button>
                   </div>
-                  <div class="form-container">
+                  {{-- <div class="form-container">
                     <form action="{{ route('ruangan.aturKapasitas') }}" method="POST">
                         @csrf
                         <label for="gedung">Pilih Gedung:</label>
@@ -145,12 +150,12 @@
                         <input type="number" id="kapasitas" name="kapasitas" required min="1" />
                         <button type="submit" class="btn-save">Simpan</button>
                     </form>
-                </div>
+                </div> --}}
               </div>
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+        {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function() {
@@ -181,6 +186,6 @@
                     $('#kapasitas').val('');
                 });
             });
-        </script>
+        </script> --}}
     </body>
 </html>
