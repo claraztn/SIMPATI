@@ -34,14 +34,15 @@ class RuanganController extends Controller
         DB::table('ruangan')
             ->where('nama_ruang', $request->namaRuang)
             ->update(['kapasitas' => $request->kapasitas]);
-        return redirect('ketersediaan_ruang')->with('success', 'Kapasitas ruang berhasil ditambahkan!');
+        return redirect('ketersediaan_ruang')->with('success', "Kapasitas ruang {$request->namaRuang} berhasil ditambahkan!");
     }
 
     public function hapus($id_ruang)
     {
         $ruangan = Ruangan::findOrFail($id_ruang);
-        $ruangan->delete();
-        return redirect()->route('ketersediaan_ruang')->with('success', 'Ruang berhasil dihapus!');
+        $ruangan->update(['kapasitas' => null]);
+        $namaRuang = $ruangan->nama_ruang;
+        return redirect()->route('ketersediaan_ruang')->with('success', "Kapasitas ruang $namaRuang berhasil dihapus!");
     }
 
 }

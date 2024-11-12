@@ -187,28 +187,21 @@
             </script>
         @endif
 
-        @if(session('success'))
-            <script>
-                alert('{{ session('success') }}');
-            </script>
-        @endif
-
-
         <div class="container">
             <div class="card border-0 shadow my-5">
-              <div class="card-header bg-light">
-                  <h3 class="h5 pt-2">KETERSEDIAAN RUANG KELAS</h3>
-              </div>
-              <div class="card-body">
-                  <div class="button-container" style="margin-bottom: 20px;">
-                  <button class="btn-fill {{ request()->routeIs('manajemen_ruang') ? 'active' : '' }}" 
-                    onclick="window.location.href='{{ route('manajemen_ruang') }}'">Pengisian
-                  </button>
-                  <button class="btn-history {{ request()->routeIs('ketersediaan_ruang') ? 'active' : '' }}" 
-                    onclick="window.location.href='{{ route('ketersediaan_ruang') }}'">Riwayat Pengisian
-                  </button>              
-                  </div>
-                  <div class="form-container">
+                <div class="card-header bg-light">
+                    <h3 class="h5 pt-2">KETERSEDIAAN RUANG KELAS</h3>
+                </div>
+                <div class="card-body">
+                    <div class="button-container" style="margin-bottom: 20px;">
+                        <button class="btn-fill {{ request()->routeIs('manajemen_ruang') ? 'active' : '' }}" 
+                            onclick="window.location.href='{{ route('manajemen_ruang') }}'">Pengisian
+                        </button>
+                        <button class="btn-history {{ request()->routeIs('ketersediaan_ruang') ? 'active' : '' }}" 
+                            onclick="window.location.href='{{ route('ketersediaan_ruang') }}'">Riwayat Pengisian
+                        </button>          
+                </div>
+                <div class="form-container">
                     <table>
                       <thead>
                           <tr>
@@ -229,8 +222,11 @@
                                       <form action="{{ route('ruangan.hapus', $ruang->id_ruang) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn-action btn-delete" onclick="return confirm('Apakah Anda yakin ingin menghapus ruang ini?')">🗑️</button>
-                                    </form>                                    
+                                        <button type="submit" class="btn-action btn-delete" 
+                                            data-nama-ruang="{{ $ruang->nama_ruang }}" 
+                                            onclick="return confirmHapus(this)">🗑️
+                                        </button>
+                                    </form>                                                                 
                                   </td>
                               </tr>
                           @endforeach
@@ -240,10 +236,8 @@
               </div>
             </div>
         </div>
-
-        <!-- Button Ajukan ke Dekan -->
+        
         <a href="#" class="btn-submit">AJUKAN KE DEKAN</a>
-
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
@@ -275,6 +269,13 @@
                     $('#kapasitas').val('');
                 });
             });
+
+        function confirmHapus(button) {
+            var namaRuang = $(button).data('nama-ruang');
+            var confirmMessage = 'Apakah Anda yakin ingin menghapus ruang ' + namaRuang + '?';
+            return confirm(confirmMessage);
+        }
+
         </script>
     </body>
 </html>
