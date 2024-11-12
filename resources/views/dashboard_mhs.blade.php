@@ -30,15 +30,15 @@
                 <div class="offcanvas-body">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ route('dashboard_BA') }}" style="text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                            <a class="nav-link text-white" href="{{ route('dashboard_mhs') }}" style="text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
                                 Home
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('manajemen_ruang') }}" style="text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
                                 Manajemen Ruang
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                     <ul class="navbar-nav ms-auto"> 
                         <li class="nav-item dropdown">
@@ -59,7 +59,7 @@
         <div class="container">
             <div class="card border-0 shadow my-5">
                 <div class="card-header bg-light">
-                    <h3 class="h5 pt-2">Dashboard Bagian Akademik</h3>
+                    <h3 class="h5 pt-2">Dashboard Mahasiswa</h3>
                 </div>
                 <div class="card-body">
                     You are logged in !!

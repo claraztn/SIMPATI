@@ -35,5 +35,10 @@ Route::delete('/ruangan/{id_ruang}', [RuanganController::class, 'hapus'])->name(
 
 // DEKAN
 // KAPRODI
+
 // MAHASISWA
+Route::get('/dashboard_mhs', function () {
+    return view('dashboard_mhs'); 
+})->name('dashboard_mhs');
+
 // PEMBIMBING AKADEMIK
