@@ -14,6 +14,8 @@ Route::get('/', function () {
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
+
+// BAGIAN AKADEMIK
 Route::get('/dashboard_BA', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::post('/login', function () {
@@ -26,9 +28,12 @@ Route::get('/dashboard_BA', function () {
 
 Route::get('/manajemen_ruang', [RuanganController::class, 'showManajemenRuang'])->name('manajemen_ruang');
 Route::get('/ruangan/gedung', [RuanganController::class, 'getRuangByGedung']);
-
 Route::get('/ketersediaan_ruang', [KetersediaanRuanganController::class, 'index'])->name('ketersediaan_ruang');
 Route::post('/ketersediaan_ruang', [KetersediaanRuanganController::class, 'store'])->name('ketersediaan_ruang.store');
 Route::post('/ruangan/atur-kapasitas', [RuanganController::class, 'aturKapasitas'])->name('ruangan.aturKapasitas');
-
 Route::delete('/ruangan/{id_ruang}', [RuanganController::class, 'hapus'])->name('ruangan.hapus');
+
+// DEKAN
+// KAPRODI
+// MAHASISWA
+// PEMBIMBING AKADEMIK
