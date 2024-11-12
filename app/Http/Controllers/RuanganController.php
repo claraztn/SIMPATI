@@ -12,19 +12,14 @@ class RuanganController extends Controller
 {
     public function showManajemenRuang()
     {
-        // Mengambil semua data ruangan
         $ruangan = DB::table('ruangan')->get();
-        
-        // Mengirim data ruangan ke view
         return view('manajemen_ruang', compact('ruangan'));
     }
 
     public function getRuangByGedung(Request $request)
     {
         $gedung = $request->input('gedung');
-        // Mengambil data ruangan berdasarkan gedung
         $ruangan = DB::table('ruangan')->where('gedung', $gedung)->get();
-        
         return response()->json($ruangan);
     }
 
@@ -36,12 +31,17 @@ class RuanganController extends Controller
 
     public function aturKapasitas(Request $request)
     {
-
-
         DB::table('ruangan')
             ->where('nama_ruang', $request->namaRuang)
             ->update(['kapasitas' => $request->kapasitas]);
         return redirect('ketersediaan_ruang')->with('success', 'Kapasitas ruang berhasil ditambahkan!');
     }
-    
+
+    public function hapus($id_ruang)
+    {
+        $ruangan = Ruangan::findOrFail($id_ruang);
+        $ruangan->delete();
+        return redirect()->route('ketersediaan_ruang')->with('success', 'Ruang berhasil dihapus!');
+    }
+
 }

@@ -1,234 +1,182 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <title>Bagian Akademik</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-  <style>
-    body, h1, h2, h3, h4, h5 { font-family: "Poppins", sans-serif; }
-    body { font-size: 16px; }
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>MANAJEMEN RUANG KELAS</title>
+      <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+      <style>
+          .custom-navbar {
+              background-color: #003f5c; 
+          }
+          .btn-fill, .btn-history {
+              background-color: #003f5c; 
+              color: white;
+              padding: 10px 20px;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+              margin-right: 10px;
+          }
+          .btn-history {
+              background-color: #00bfff;
+          }
+          .btn-fill:hover, .btn-history:hover {
+              background-color: #002a42;
+          }
+          .form-container {
+              max-width: 400px;
+              margin: 5px auto;
+              padding: 5px;
+              background-color: #fff;
+              border-radius: 10px;
+              box-shadow: 0px 0px 100px rgba(0, 0, 0, 0.1);
+          }
+          label, select, input {
+              display: block;
+              width: 100%;
+              margin: 10px 0;
+              padding: 10px;
+          }
+          label {
+              text-align: center; /* Center the text inside the label */
+          }
+          .btn-save {
+              background-color: #28a745; /* Green color */
+              color: white;
+              padding: 10px 20px;
+              border: none;
+              border-radius: 5px;
+              cursor: pointer;
+              width: 100%; /* Make it full-width */
+              margin-top: 20px;
+          }
+          .btn-save:hover {
+              background-color: #218838; /* Darker green on hover */
+          }
+          /* Custom styles for navbar links */
+          .navbar-nav .nav-item .nav-link {
+              color: white;
+              text-decoration: none;
+          }
 
-    /* Header */
-    .w3-header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
-    }
+          /* On hover, add underline */
+          .navbar-nav .nav-item .nav-link:hover {
+              text-decoration: underline;
+          }
 
-    /* Main content */
-    .w3-main {
-      margin-top: 40px;
-      padding: 25px;
-      background-color: #eaeaead1;
-      transition: margin-left 0.3s ease;
-      margin-left: 0;
-      width: calc(100% - 0);
-    }
+          /* Active link: underline stays when the link is active */
+          .navbar-nav .nav-item.active .nav-link {
+              text-decoration: underline;
+              color: white; /* Ensure text color stays white */
+          }
+      </style>
+   </head>
+   <body class="bg-light">
+        <nav class="navbar navbar-expand-md custom-navbar shadow-lg">
+            <div class="container">
+                <a class="navbar-brand text-white" href="#">
+                   <strong>SIMPATI</strong>
+                </a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                    </svg>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item {{ request()->routeIs('manajemen_ruang') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('manajemen_ruang') }}">
+                                    Manajemen Ruang
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ms-auto"> 
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Hello, {{ Auth::user()->name }}
+                                </a>
+                                <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">                          
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>                               
+                </div>
+            </div>
+        </nav>
+        
+        <div class="container">
+            <div class="card border-0 shadow my-5">
+              <div class="card-header bg-light">
+                  <h3 class="h5 pt-2">MANAJEMEN RUANG KELAS</h3>
+              </div>
+              <div class="card-body">
+                  <div class="button-container" style="margin-bottom: 20px;">
+                    <button class="btn-fill" onclick="window.location.href='{{ route('manajemen_ruang') }}'">Pengisian</button>
+                    <button class="btn-history" onclick="window.location.href='{{ route('ketersediaan_ruang') }}'">Riwayat Pengisian</button>
+                  </div>
+                  <div class="form-container">
+                    <form action="{{ route('ruangan.aturKapasitas') }}" method="POST">
+                        @csrf
+                        <label for="gedung">Pilih Gedung:</label>
+                        <select id="gedung" name="gedung" required>
+                            <option value="">--Pilih Gedung--</option>
+                            @foreach($ruangan->unique('gedung') as $item)
+                                <option value="{{ $item->gedung }}">{{ $item->gedung }}</option>
+                            @endforeach
+                        </select>
+                        <label for="namaRuang">Nama Ruang:</label>
+                        <select id="namaRuang" name="namaRuang" required>
+                            <option value="">--Pilih Nama Ruang--</option>
+                        </select>
+                        <label for="kapasitas">Kapasitas:</label>
+                        <input type="number" id="kapasitas" name="kapasitas" required min="1" />
+                        <button type="submit" class="btn-save">Simpan</button>
+                    </form>
+                </div>
+              </div>
+            </div>
+        </div>
 
-    /* Sidebar */
-    .w3-sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 280px;
-      height: 100%;
-      background-color: #333;
-      color: white;
-      padding-top: 60px;
-      transition: transform 0.3s ease;
-      transform: translateX(-100%);
-    }
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#gedung').change(function() {
+                    var gedung = $(this).val();
+                    $('#namaRuang').empty(); 
+                    $('#kapasitas').val('');
+                    
+                    if (gedung) {
+                        $.ajax({
+                            url: '/ruangan/gedung',
+                            type: 'GET',
+                            data: { gedung: gedung },
+                            success: function(data) {
+                                $('#namaRuang').append('<option value="">--Pilih Nama Ruang--</option>');
+                                $.each(data, function(key, value) {
+                                    $('#namaRuang').append('<option value="' + value.nama_ruang + '" data-kapasitas="' + value.kapasitas_ruang + '">' + value.nama_ruang + '</option>');
+                                });
+                            }
+                        });
+                    }
+                });
 
-    /* Colors */
-    .w3-marina { background-color: #003f5c; color: white; }
-    .btn-save { background-color: green; color: white; border-radius: 5px; padding: 10px 20px; text-decoration: none; }
-    .btn-save:hover { background-color: #90ee90; }
-
-    /* Sidebar visibility */
-    .w3-sidebar-visible { transform: translateX(0); }
-
-    /* Profile section */
-    .profile-section { text-align: center; margin: 20px 0; }
-    .btn-profile { background-color: #ff5722; color: white; padding: 10px 20px; border-radius: 5px; }
-    .btn-profile:hover { background-color: #e64a19; }
-
-    .profile-image { width: 150px; height: 150px; }
-
-    /* Form styling */
-    .form-container {
-      max-width: 500px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-    label, select, input {
-      display: block;
-      width: 100%;
-      margin: 10px 0;
-      padding: 10px;
-    }
-
-    /* Sidebar and main content toggle */
-    .btn-submit {
-      background-color: green; color: white; border-radius: 5px; padding: 10px 20px; position: fixed;
-      bottom: 20px; right: 20px; text-decoration: none;
-    }
-    .btn-submit:hover { background-color: #90ee90; }
-
-    /* Button Styling for Pengisian and Riwayat Pengisian */
-    .btn-fill {
-      background-color: #003f5c; /* Biru tua */
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      margin-right: 10px;
-      cursor: pointer;
-    }
-
-    .btn-history {
-      background-color: #00bfff; /* Biru muda */
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    /* Hover efek */
-    .btn-fill:hover {
-      background-color: #002a42;
-    }
-
-    .btn-history:hover {
-      background-color: #87cefa;
-    }
-
-    /* Form title styling */
-    .form-title {
-      text-align: center;
-      margin-top: 20px;
-      color: #003f5c; /* Biru tua untuk judul form */
-    }
-
-  </style>
-</head>
-<body>
-
-<!-- Navbar -->
-<header class="w3-container w3-marina w3-large w3-header">
-  <a href="#" class="w3-button w3-margin-right" onclick="toggleSidebar()">☰</a>
-  <a href="{{ route('dashboard_BA') }}" class="w3-button w3-margin-right" style="text-decoration: none;">Back to Menu</a>
-</header>
-
-<!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-dark-gray w3-large" id="mySidebar">
-  <br><br>
-  <div class="profile-section">
-    <img src="https://via.placeholder.com/150" alt="Profile Picture" class="w3-circle profile-image">
-    <br>
-    <br>
-    <a href="#" class="btn-profile">Lihat Profil</a>
-  </div>
-  <br>
-  <div class="w3-bar-block">
-    <a href="{{ route('dashboard_BA') }}" class="w3-bar-item w3-button w3-hover-white">Dashboard</a> 
-    <a href="{{ route('manajemen_ruang') }}" class="w3-bar-item w3-button w3-hover-white">Manajemen Ruang</a> 
-  </div>
-</nav>
-
-<!-- Main Content -->
-<div class="w3-main" id="mainContent">
-
-  <!-- Tombol Pengisian dan Riwayat Pengisian -->
-  <div class="button-container" style="margin-bottom: 20px;">
-    <button class="btn-fill" onclick="window.location.href='{{ route('manajemen_ruang') }}'">Pengisian</button>
-    <button class="btn-history" onclick="window.location.href='{{ route('ketersediaan_ruang') }}'">Riwayat Pengisian</button>
-  </div>
-
-  <!-- Form Pengisian -->
-  <h3 class="w3-text-gray form-title"><b>MANAJEMEN RUANG KELAS</b></h3>
-  <div class="form-container">
-    <form action="{{ route('ruangan.aturKapasitas') }}" method="POST">
-      @csrf
-      <label for="gedung">Pilih Gedung:</label>
-      <select id="gedung" name="gedung" required>
-        <option value="">--Pilih Gedung--</option>
-        @foreach($ruangan->unique('gedung') as $item) <!-- Mengambil gedung yang unik -->
-          <option value="{{ $item->gedung }}">{{ $item->gedung }}</option>
-        @endforeach
-      </select>
-
-      <!-- Nama Ruang -->
-      <label for="namaRuang">Nama Ruang:</label>
-      <select id="namaRuang" name="namaRuang" required>
-        <option value="">--Pilih Nama Ruang--</option>
-      </select>
-
-      <!-- Kapasitas Ruang -->
-      <label for="kapasitas">Kapasitas:</label>
-      <input type="number" id="kapasitas" name="kapasitas" required min="1" />
-
-      <button type="submit" class="btn-save">Simpan</button>
-    </form>
-  </div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-  $('#gedung').change(function() {
-      var gedung = $(this).val();
-      $('#namaRuang').empty(); // Kosongkan dropdown nama ruang
-      $('#kapasitas').val(''); // Reset input kapasitas
-      $('#maxKapasitasLabel').hide(); // Sembunyikan label kapasitas maksimum
-
-      if (gedung) {
-          $.ajax({
-              url: '/ruangan/gedung',
-              type: 'GET',
-              data: { gedung: gedung },
-              success: function(data) {
-                  $('#namaRuang').append('<option value="">--Pilih Nama Ruang--</option>');
-                  $.each(data, function(key, value) {
-                      $('#namaRuang').append('<option value="' + value.nama_ruang + '" data-kapasitas="' + value.kapasitas_ruang + '">' + value.nama_ruang + '</option>');
-                  });
-              }
-          });
-      }
-  });
-
-  $('#namaRuang').change(function() {
-      var selectedOption = $(this).find(':selected');
-      var kapasitas = selectedOption.data('kapasitas');
-      $('#kapasitas').attr('max', kapasitas); // Set batas maksimum kapasitas
-      $('#kapasitas').val(''); // Reset input kapasitas
-  });
-});
-
-let isSidebarOpen = false;
-
-function toggleSidebar() {
-  const sidebar = document.getElementById("mySidebar");
-  const mainContent = document.getElementById("mainContent");
-
-  if (isSidebarOpen) {
-    sidebar.classList.remove("w3-sidebar-visible"); // Hide sidebar
-    mainContent.style.marginLeft = "0"; // Reset main content margin
-  } else {
-    sidebar.classList.add("w3-sidebar-visible"); // Show sidebar
-    mainContent.style.marginLeft = "280px"; // Adjust main content for sidebar width
-  }
-
-  isSidebarOpen = !isSidebarOpen;
-}
-
-</script>
-</body>
+                $('#namaRuang').change(function() {
+                    var selectedOption = $(this).find(':selected');
+                    var kapasitas = selectedOption.data('kapasitas');
+                    $('#kapasitas').attr('max', kapasitas);
+                    $('#kapasitas').val('');
+                });
+            });
+        </script>
+    </body>
 </html>
