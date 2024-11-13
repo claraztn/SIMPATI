@@ -38,10 +38,10 @@ Route::delete('/ruangan/{id_ruang}', [RuanganController::class, 'hapus'])->name(
 // KAPRODI
 
 // MAHASISWA
-Route::get('/dashboard_mhs', function () {
-    return view('dashboard_mhs'); 
-})->name('dashboard_mhs');
+// Route::get('/dashboard_mhs', function () {
+//     return view('dashboard_mhs'); 
+// })->name('dashboard_mhs');
 
-Route::get('/buat_IRS', [IrsController::class, 'BuatIRS'])->name('buat_IRS');
+// Route::get('/buat_IRS', [IrsController::class, 'BuatIRS'])->name('buat_IRS');
 
 // PEMBIMBING AKADEMIK
