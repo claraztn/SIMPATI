@@ -19,8 +19,7 @@ return new class extends Migration
             $table->string('kode_mk', 10)->index('kode_mk');
             $table->integer('sks');
             $table->enum('status', ['diambil', 'dibatalkan'])->nullable()->default('diambil');
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrentOnUpdate()->useCurrent();
+
         });
     }
 

@@ -10,10 +10,9 @@ class CreateRuanganTable extends Migration
     {
         Schema::create('ruangan', function (Blueprint $table) {
             $table->id('id_ruang');
-            $table->string('nama_ruang', 4);
             $table->char('gedung', 1);
-            $table->integer('kapasitas')->nullable();
-            $table->timestamps();
+            $table->string('nama_ruang', 4);
+            $table->integer('kapasitas')->nullable()->default(NULL);
         });
     }
 

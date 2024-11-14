@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('password');
             $table->enum('role',['bagian_akademik', 'dekan', 'kaprodi', 'pembimbing_akademik', 'mahasiswa'])->default('mahasiswa');
             $table->rememberToken();
-            $table->timestamps();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

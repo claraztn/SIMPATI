@@ -21,8 +21,7 @@ return new class extends Migration
             $table->enum('nilai', ['A', 'B', 'C', 'D', 'E']);
             $table->decimal('ips', 3)->nullable();
             $table->decimal('ipk', 3)->nullable();
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrentOnUpdate()->useCurrent();
+
         });
     }
 
