@@ -7,6 +7,13 @@
 // use App\Http\Controllers\IrsController;
 // use App\Http\Controllers\KetersediaanRuanganController;
 
+<<<<<<< HEAD
+=======
+Route::get('/', function () {
+    return view('login'); 
+    // return view('welcome'); 
+});
+>>>>>>> e5157522f88e7c7308f8d709bb598a754d4fe94e
 
 // Route::get('/login', [LoginController::class, 'index'])->name('login');
 // Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
