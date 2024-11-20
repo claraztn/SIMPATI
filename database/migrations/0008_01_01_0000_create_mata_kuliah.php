@@ -9,22 +9,25 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('mata_kuliah', function (Blueprint $table) {
-            $table->string('kode_mk', 10)->primary();
-            $table->string('nama_mk', 50);
+            $table->string('kode_mk')->primary();
+            $table->string('nama_mk');
             $table->integer('semester');
             $table->integer('sks');
-            $table->string('sifat', 10);
-            $table->integer('id_prodi')->nullable()->index('id_prodi');
+            $table->enum('sifat',['Wajib','Pilihan']);
+            $table->unsignedBigInteger('id_prodi');
+            $table->timestamps();
+
+            $table->foreign('id_prodi')->references('id')->on('program_studi');
         });
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('mata_kuliah');
     }

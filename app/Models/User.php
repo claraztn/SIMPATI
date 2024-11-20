@@ -6,10 +6,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -18,9 +18,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -34,15 +35,29 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    public function mahasiswa()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasOne(MHS::class, 'user_id');
     }
+
+    // Relasi ke tabel 'Dosen'
+    public function dosen()
+    {
+        return $this->hasOne(Dosen::class, 'user_id');
+    }
+
+    // Relasi ke tabel 'Bagian Akademik'
+    public function bagianAkademik()
+    {
+        return $this->hasOne(Operator::class, 'user_id');
+    }
+
 }

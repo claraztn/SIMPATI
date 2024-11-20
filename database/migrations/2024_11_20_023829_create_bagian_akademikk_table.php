@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('program_studi', function (Blueprint $table) {
-            $table->integer('id_prodi');
-            $table->string('nama_prodi', 100);
-            $table->integer('fakultas_id');
+        Schema::create('bagian_akademikk', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -23,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('program_studi');
+        Schema::dropIfExists('bagian_akademikk');
     }
 };
