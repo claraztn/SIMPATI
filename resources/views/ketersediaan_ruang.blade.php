@@ -209,6 +209,7 @@
                               <th>Nama Ruang</th>
                               <th>Kapasitas Ruang</th>
                               <th>Aksi</th>
+                              <th>Status</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -218,13 +219,13 @@
                                   <td>{{ $ruang->nama_ruang }}</td>
                                   <td>{{ $ruang->kapasitas }}</td>
                                   <td>
-                                      <a href="manajemen_ruang" class="btn-action btn-edit">✏️</a>
+                                      <a href="manajemen_ruang" class="btn-action btn-edit">Edit</a>
                                       <form action="{{ route('ruangan.hapus', $ruang->id_ruang) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn-action btn-delete" 
                                             data-nama-ruang="{{ $ruang->nama_ruang }}" 
-                                            onclick="return confirmHapus(this)">🗑️
+                                            onclick="return confirmHapus(this)">Hapus
                                         </button>
                                     </form>                                                                 
                                   </td>

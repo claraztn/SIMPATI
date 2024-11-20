@@ -8,8 +8,8 @@ use App\Http\Controllers\IrsController;
 use App\Http\Controllers\KetersediaanRuanganController;
 
 Route::get('/', function () {
-    // return view('login'); 
-    return view('welcome'); 
+    return view('login'); 
+    // return view('welcome'); 
 });
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
