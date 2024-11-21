@@ -17,10 +17,10 @@ return new class extends Migration
             $table->integer('semester');
             $table->integer('sks');
             $table->enum('sifat',['Wajib','Pilihan']);
-            $table->unsignedBigInteger('id_prodi');
+            $table->string('id_prodi');
             $table->timestamps();
 
-            $table->foreign('id_prodi')->references('id')->on('program_studi');
+            $table->foreign('id_prodi')->references('id_prodi')->on('program_studi');
         });
     }
 

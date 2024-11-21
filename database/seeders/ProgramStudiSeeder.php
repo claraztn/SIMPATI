@@ -10,8 +10,8 @@ class ProgramStudiSeeder extends Seeder
     public function run(): void
     {
         DB::table('program_studi')->insert([
-            ['id' => 1, 'nama_prodi' => 'Teknik Informatika', 'fakultas_id' => 1],
-            ['id' => 2, 'nama_prodi' => 'Manajemen', 'fakultas_id' => 2],
+            ['id_prodi' => '1', 'nama_prodi' => 'Teknik Informatika', 'id_fakultas' => '1'],
+            ['id_prodi' => '2', 'nama_prodi' => 'Manajemen', 'id_fakultas' => '2'],
         ]);
     }
 }

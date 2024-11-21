@@ -13,7 +13,7 @@ class JadwalSeeder extends Seeder
             [
                 'hari' => 'Senin',
                 'id_ruang' => 1,
-                'id_kelas' => 1,
+                'kode_kelas' => 'A',
                 'jam_mulai' => '08:00:00',
                 'sks' => 3,
                 'status' => 'pending',
@@ -21,7 +21,7 @@ class JadwalSeeder extends Seeder
             [
                 'hari' => 'Selasa',
                 'id_ruang' => 2,
-                'id_kelas' => 2,
+                'kode_kelas' => 'A',
                 'jam_mulai' => '10:00:00',
                 'sks' => 4,
                 'status' => 'approved',
@@ -29,7 +29,7 @@ class JadwalSeeder extends Seeder
             [
                 'hari' => 'Rabu',
                 'id_ruang' => 3,
-                'id_kelas' => 1,
+                'kode_kelas' => 'B',
                 'jam_mulai' => '13:00:00',
                 'sks' => 2,
                 'status' => 'pending',
@@ -37,7 +37,7 @@ class JadwalSeeder extends Seeder
             [
                 'hari' => 'Kamis',
                 'id_ruang' => 4,
-                'id_kelas' => 2,
+                'kode_kelas' => 'B',
                 'jam_mulai' => '15:00:00',
                 'sks' => 3,
                 'status' => 'rejected',
@@ -45,7 +45,7 @@ class JadwalSeeder extends Seeder
             [
                 'hari' => 'Jumat',
                 'id_ruang' => 5,
-                'id_kelas' => 3,
+                'kode_kelas' => 'B',
                 'jam_mulai' => '09:00:00',
                 'sks' => 4,
                 'status' => 'approved',

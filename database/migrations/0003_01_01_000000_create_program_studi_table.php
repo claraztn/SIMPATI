@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('program_studi', function (Blueprint $table) {
-            $table->id();
+            $table->string('id_prodi')->primary();
             $table->string('nama_prodi');
-            $table->unsignedBigInteger('fakultas_id');
+            $table->string('id_fakultas');
             $table->timestamps();
 
-            $table->foreign('fakultas_id')->references('id')->on('fakultas');
+            $table->foreign('id_fakultas')->references('id_fakultas')->on('fakultas');
         });
     }
 

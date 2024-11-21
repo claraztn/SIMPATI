@@ -12,12 +12,12 @@ return new class extends Migration
             $table->id('id_jadwal');
             $table->string('hari');
             $table->unsignedBigInteger('id_ruang');
-            $table->unsignedBigInteger('id_kelas');
+            $table->string('kode_kelas');
             $table->time('jam_mulai');
             $table->integer('sks');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->foreign('id_ruang')->references('id_ruang')->on('ruangan')->onDelete('cascade');
-            $table->foreign('id_kelas')->references('id')->on('kelas')->onDelete('cascade');
+            $table->foreign('kode_kelas')->references('kode_kelas')->on('kelas');
             $table->timestamps();
         });
     }

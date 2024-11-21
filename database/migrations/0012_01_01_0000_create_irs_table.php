@@ -18,11 +18,11 @@ return new class extends Migration
             $table->integer('jmlsks')->nullable();
             $table->string('scansks')->nullable();
             $table->boolean('isverified')->default(false);
-            $table->unsignedBigInteger('id_kelas');
+            $table->string('kode_kelas');
             $table->timestamps();
 
             $table->foreign('nim')->references('nim')->on('mahasiswa')->onDelete('cascade');
-            $table->foreign('id_kelas')->references('id')->on('kelas')->onDelete('cascade');
+            $table->foreign('kode_kelas')->references('kode_kelas')->on('kelas');
         });
     }
 

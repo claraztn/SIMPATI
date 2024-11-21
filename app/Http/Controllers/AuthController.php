@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Mahasiswa;
+use App\Models\BagianAkademik;
+use App\Models\Dosen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -9,48 +13,49 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.login'); 
+        return view('auth.login', [
+            'title' => 'auth.login'
+        ]); 
     }
 
     public function authenticate(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
+        $credentials = $request->validate([
+            'email' => 'required',
             'password' => 'required',
         ]);
 
-        $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
             $user = Auth::user();
 
-            // Arahkan pengguna berdasarkan role mereka
-            if ($user->role === 'dosen') {
-                return redirect()->route('select.role');
-            }
-
+            
             switch ($user->role) {
-                case 'bagianAkademik':
-                    return redirect()->route('bagianAkademik.dashboard');
-                case 'mahasiswa':
-                    return redirect()->route('mahasiswa.dashboard');
+                case 'Mahasiswa':
+                        return redirect()->intended('/mahasiswa/dashboard');
+                case 'BagianAkademik':
+                    return redirect()->intended('/pembimbingAkademik/dashboard');
+                case 'Dosen':
+                    return redirect()->intended('/dosen/dashboard');
                 default:
                     return redirect()->route('home');
             }
         }
 
         return back()->withErrors([
-            'email' => 'Login failed. Please check your email and password.',
+            'email' => 'Login gagal! Periksa username dan password Anda.',
         ])->withInput();
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/login')->with('success', 'You have been logged out.');
+
+        return redirect('/')->with('success', 'Anda telah logout.');
     }
 
     public function selectRole()

@@ -7,16 +7,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable , HasRoles;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+    protected $table = 'users';
     protected $fillable = [
         'username',
         'email',
@@ -45,19 +47,19 @@ class User extends Authenticatable
 
     public function mahasiswa()
     {
-        return $this->hasOne(MHS::class, 'user_id');
+        return $this->hasOne(Mahasiswa::class, 'id_user');
     }
 
     // Relasi ke tabel 'Dosen'
     public function dosen()
     {
-        return $this->hasOne(Dosen::class, 'user_id');
+        return $this->hasOne(Dosen::class, 'id_user');
     }
 
     // Relasi ke tabel 'Bagian Akademik'
     public function bagianAkademik()
     {
-        return $this->hasOne(Operator::class, 'user_id');
+        return $this->hasOne(Operator::class, 'id_user');
     }
 
 }
