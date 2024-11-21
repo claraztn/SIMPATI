@@ -29,4 +29,22 @@ class DekanController extends Controller
         return view('dekan.verifikasi_jadwal', compact('jadwalPending', 'jadwalApproved')); // Kirim data ke view
     }
 
+    public function verifikasiRuang($id_ruang, Request $request)
+    {
+        $action = $request->input('action');
+        $ruangan = Ruangan::find($id_ruang);
+
+        if ($ruangan) {
+            if ($action == 'approve') {
+                $ruangan->status = 'approved';  // Mengubah status ruangan menjadi approved
+            } elseif ($action == 'reject') {
+                $ruangan->status = 'rejected';  // Mengubah status ruangan menjadi rejected
+            }
+
+            $ruangan->save();  // Menyimpan perubahan ke database
+            return redirect()->route('verifikasi.ruangan')->with('success', 'Status ruangan telah diperbarui.');
+        }
+
+        return redirect()->route('verifikasi.ruangan')->with('error', 'Ruangan tidak ditemukan.');
+    }
 }
