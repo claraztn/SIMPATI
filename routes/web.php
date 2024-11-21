@@ -8,10 +8,18 @@
 // use App\Http\Controllers\KetersediaanRuanganController;
 
 
+
 Route::get('/', function () {
     return view('login'); 
     // return view('welcome'); 
 });
+
+// Route::get('/', function () {
+//     return view('login'); 
+//     // return view('welcome'); 
+// });
+
+
 
 // Route::get('/login', [LoginController::class, 'index'])->name('login');
 // Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -124,11 +132,20 @@ use App\Http\Controllers\BagianAkademikController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\JadwalController;
 
+
 // Halaman Login
 // Route::get('/login', function () {
 //         return view('auth.login'); 
 //     })->name('login');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('auth.login');
+
+Route::get('/login', function () {
+        return view('auth.login'); 
+    // })->name('login')
+});
+
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+
 Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -157,8 +174,8 @@ Route::get('/dekan/verifikasi-ruangan', [DekanController::class, 'verifikasiRuan
 Route::get('/dekan/verifikasi-jadwal', [DekanController::class, 'verifikasiJadwal'])->name('verifikasi.jadwal');
 
 // Rute untuk Dosen Wali
-Route::get('/dosen-wali/dashboard', [DosenWaliController::class, 'index'])->name('dosen_wali.dashboard');
-Route::get('/dosen-wali/memantau-mahasiswa', [DosenWaliController::class, 'monitorMahasiswa'])->name('dosen_wali.monitor_mahasiswa');
+// Route::get('/dosen-wali/dashboard', [DosenWaliController::class, 'index'])->name('dosen_wali.dashboard');
+// Route::get('/dosen-wali/memantau-mahasiswa', [DosenWaliController::class, 'monitorMahasiswa'])->name('dosen_wali.monitor_mahasiswa');
 
 // Rute untuk Kaprodi
 Route::get('/kaprodi/dashboard', [KaprodiController::class, 'index'])->name('kaprodi.dashboard');
@@ -166,7 +183,7 @@ Route::get('/kaprodi/verifikasi-kurikulum', [KaprodiController::class, 'verifika
 
 // Rute untuk Bagian Akademik
 Route::get('/bagianAkademik/dashboard', [BagianAkademikController::class, 'index'])->name('bagianAkademik.dashboard');
-Route::get('/bagianAkademik/manajemen-ruang', [BagianAkademikController::class, 'manajemenRuang'])->name('bagianAkademik.manajemen_ruangan');
+Route::get('/bagianAkademik/manajemen_ruang', [BagianAkademikController::class, 'manajemenRuang'])->name('bagianAkademik.manajemen_ruangan');
 Route::get('/manajemen_ruang', [RuanganController::class, 'showManajemenRuang'])->name('manajemen_ruang');
 Route::get('/ruangan/gedung', [RuanganController::class, 'getRuangByGedung']);
 

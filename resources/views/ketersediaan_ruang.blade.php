@@ -208,8 +208,8 @@
                               <th>Gedung</th>
                               <th>Nama Ruang</th>
                               <th>Kapasitas Ruang</th>
-                              <th>Aksi</th>
                               <th>Status</th>
+                              <th>Aksi</th>
                           </tr>
                       </thead>
                       <tbody>

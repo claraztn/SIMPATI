@@ -28,7 +28,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Definisi foreign key
-            $table->foreign('nim')->references('nim')->on('mahasiswa')->onDelete('cascade');
+            $table->foreign('nim')->references('nim')->on('mahasiswas')->onDelete('cascade');
             $table->foreign('kode_mk')->references('kode_mk')->on('mata_kuliah')->onDelete('cascade');
         });
     }

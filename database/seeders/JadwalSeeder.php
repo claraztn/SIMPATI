@@ -42,6 +42,7 @@ class JadwalSeeder extends Seeder
                 'sks' => 3,
                 'status' => 'rejected',
             ],
+
             [
                 'hari' => 'Jumat',
                 'id_ruang' => 5,
@@ -50,6 +51,15 @@ class JadwalSeeder extends Seeder
                 'sks' => 4,
                 'status' => 'approved',
             ],
+
+            // [
+            //     'hari' => 'Jumat',
+            //     'id_ruang' => 5,
+            //     'id_kelas' => 3,
+            //     'jam_mulai' => '09:00:00',
+            //     'sks' => 4,
+            //     'status' => 'approved',
+            // ],
         ]);
     }
 }
