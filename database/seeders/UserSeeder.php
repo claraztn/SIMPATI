@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 
 class UserSeeder extends Seeder
 {
@@ -13,43 +14,41 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Data user untuk masing-masing role
-        $users = [
-            [
-                'username' => 'dekan_user',
-                'email' => 'dekan@example.com',
-                'password' => Hash::make('password'),
-                'role' => 'Dekan',
-            ],
-            [
-                'username' => 'kaprodi_user',
-                'email' => 'kaprodi@example.com',
-                'password' => Hash::make('password'),
-                'role' => 'Kaprodi',
-            ],
-            [
-                'username' => 'dosen_wali_user',
-                'email' => 'dosenwali@example.com',
-                'password' => Hash::make('password'),
-                'role' => 'PembimbingAkademik',
-            ],
-            [
-                'username' => 'mahasiswa_user',
-                'email' => 'mahasiswa@example.com',
-                'password' => Hash::make('password'),
-                'role' => 'Mahasiswa',
-            ],
-            [
-                'username' => 'bagian_akademik_user',
-                'email' => 'bagianakademik@example.com',
-                'password' => Hash::make('password'),
-                'role' => 'BagianAkademik',
-            ],
-        ];
+        User::create([
+            'username' => 'student01',
+            'email' => 'student01@example.com',
+            'password' => Hash::make('password123'),
+            'role' => 'Mahasiswa', 
+        ]);
 
-        // Insert data ke dalam tabel users
-        foreach ($users as $user) {
-            User::create($user);
-        }
+        User::create([
+            'username' => 'lecturer01',
+            'email' => 'lecturer01@example.com',
+            'password' => Hash::make('password123'),
+            'role' => 'Dosen',
+        ]);
+
+        User::create([
+            'username' => 'lecturer02',
+            'email' => 'lecturer02@example.com',
+            'password' => Hash::make('password123'),
+            'role' => 'Dosen',
+        ]);
+
+        User::create([
+            'username' => 'lecturer03',
+            'email' => 'lecturer03@example.com',
+            'password' => Hash::make('password123'),
+            'role' => 'Dosen',
+        ]);
+
+        User::create([
+            'username' => 'academic01',
+            'email' => 'academic01@example.com',
+            'password' => Hash::make('password123'),
+            'role' => 'BagianAkademik',
+        ]);
+
+        // Add more users as needed
     }
 }

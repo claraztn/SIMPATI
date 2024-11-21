@@ -17,10 +17,10 @@ return new class extends Migration {
             $table->string('nama');
             $table->string('email')->nullable();
             $table->string('handphone')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('id_user')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users'); // Kunci asing ke kolom 'user_id' pada tabel 'users'
+            $table->foreign('id_user')->references('id')->on('users'); // Kunci asing ke kolom 'user_id' pada tabel 'users'
         });
         
             

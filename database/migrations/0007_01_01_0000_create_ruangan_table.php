@@ -14,12 +14,12 @@ class CreateRuanganTable extends Migration
             $table->string('nama_ruang');
             $table->integer('kapasitas')->nullable();
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending'); // Status ruangan
-            $table->unsignedBigInteger('fakultas_id')->nullable();
-            $table->unsignedBigInteger('prodi_id')->nullable();
+            $table->string('id_fakultas')->nullable();
+            $table->string('id_prodi')->nullable();
 
             // Foreign key constraints
-            $table->foreign('prodi_id')->references('id')->on('program_studi')->onDelete('cascade');
-            $table->foreign('fakultas_id')->references('id')->on('fakultas')->onDelete('cascade');
+            $table->foreign('id_prodi')->references('id_prodi')->on('program_studi')->onDelete('cascade');
+            $table->foreign('id_fakultas')->references('id_fakultas')->on('fakultas')->onDelete('cascade');
 
             $table->timestamps(); // Menambahkan created_at dan updated_at
         });

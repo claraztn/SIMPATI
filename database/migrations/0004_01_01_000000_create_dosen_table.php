@@ -16,14 +16,14 @@ return new class extends Migration
             $table->string('nama_dosen');
             $table->string('alamat_dosen');
             $table->string('no_telepon_dosen');
-            $table->string('email_dosen')->nullable()->unique('email_dosen');
-            $table->enum('role',['Dekan', 'Kaprodi', 'PembimbingAkademik']);
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('prodi_id')->nullable();
+            $table->string('email')->nullable()->unique('email_dosen');
+            $table->enum('role',['Dekan', 'Kaprodi' , 'PembimbingAkademik']);
+            $table->unsignedBigInteger('id_user')->nullable();
+            $table->string('id_prodi')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users'); // Kunci asing ke kolom 'user_id' pada tabel 'users'
-            $table->foreign('prodi_id')->references('id')->on('program_studi'); 
+            $table->foreign('id_user')->references('id')->on('users'); 
+            $table->foreign('id_prodi')->references('id_prodi')->on('program_studi'); 
         });
 
     }

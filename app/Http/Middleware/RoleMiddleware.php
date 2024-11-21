@@ -15,14 +15,15 @@ class RoleMiddleware
      * @param  string  $role
      * @return mixed
      */
-    public function handle($request, Closure $next, $role)
+    public function handle(Request $request, Closure $next, $role)
     {
-        dd('Middleware Role berjalan', $role);
-        if (Auth::check() && Auth::user()->role === $role) {
+        // Memastikan pengguna telah login dan memiliki peran yang benar
+        if (Auth::check() && Auth::user()->hasRole($role)) {
             return $next($request);
         }
 
-        abort(403, 'Unauthorized action.');
+        // Jika pengguna tidak memiliki peran yang diperlukan, arahkan ke halaman login
+        return redirect()->route('auth.login');
     }
 
 }

@@ -8,10 +8,17 @@
 // use App\Http\Controllers\KetersediaanRuanganController;
 
 
+
+Route::get('/', function () {
+    return view('login'); 
+    // return view('welcome'); 
+});
+
 // Route::get('/', function () {
 //     return view('login'); 
 //     // return view('welcome'); 
 // });
+
 
 
 // Route::get('/login', [LoginController::class, 'index'])->name('login');
@@ -125,12 +132,27 @@ use App\Http\Controllers\BagianAkademikController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\JadwalController;
 
+
+// Halaman Login
+// Route::get('/login', function () {
+//         return view('auth.login'); 
+//     })->name('login');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('auth.login');
+
+
+// Halaman Login
+// Route::get('/login', function () {
+//         return view('auth.login'); 
+//     })->name('login');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('auth.login');
+
 Route::get('/', function () {
         return view('auth.login'); 
     // })->name('login')
 });
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+
 Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -139,11 +161,19 @@ Route::get('/select-role', [AuthController::class, 'selectRole'])->name('select.
 Route::post('/select-role', [AuthController::class, 'processRole'])->name('process.role');
 
 // Rute untuk Mahasiswa
-Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
-Route::get('/mahasiswa/irs', [MahasiswaController::class, 'showIRS'])->name('mahasiswa.irs');
-Route::post('/mahasiswa/irs', [MahasiswaController::class, 'submitIRS'])->name('irs.submit');
-Route::get('/mahasiswa/registrasi', [MahasiswaController::class, 'showRegistrasi'])->name('mahasiswa.registrasi');
-Route::post('/mahasiswa/registrasi', [MahasiswaController::class, 'submitRegistrasi'])->name('registrasi.submit');
+Route::middleware(['auth', 'role:Mahasiswa'])->group(function () {
+    Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+    Route::get('/mahasiswa/irs', [MahasiswaController::class, 'showIRS'])->name('mahasiswa.irs');
+    Route::post('/mahasiswa/irs', [MahasiswaController::class, 'submitIRS'])->name('irs.submit');
+    Route::get('/mahasiswa/registrasi', [MahasiswaController::class, 'showRegistrasi'])->name('mahasiswa.registrasi');
+    Route::post('/mahasiswa/registrasi', [MahasiswaController::class, 'submitRegistrasi'])->name('registrasi.submit');
+});
+// // Rute untuk Mahasiswa
+// Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+// Route::get('/mahasiswa/irs', [MahasiswaController::class, 'showIRS'])->name('mahasiswa.irs');
+// Route::post('/mahasiswa/irs', [MahasiswaController::class, 'submitIRS'])->name('irs.submit');
+// Route::get('/mahasiswa/registrasi', [MahasiswaController::class, 'showRegistrasi'])->name('mahasiswa.registrasi');
+// Route::post('/mahasiswa/registrasi', [MahasiswaController::class, 'submitRegistrasi'])->name('registrasi.submit');
 
 // Rute untuk Dekan
 Route::get('/dekan/dashboard', [DekanController::class, 'index'])->name('dekan.dashboard');

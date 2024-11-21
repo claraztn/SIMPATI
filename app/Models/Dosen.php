@@ -10,6 +10,7 @@ class Dosen extends Model
     use HasFactory;
 
     protected $table = 'dosen';
+    protected $primaryKey = 'nip';
     // Field yang dapat diisi (mass assignable)
     protected $fillable = [
         'nip', 
