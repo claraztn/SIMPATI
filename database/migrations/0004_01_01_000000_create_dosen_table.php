@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('alamat_dosen');
             $table->string('no_telepon_dosen');
             $table->string('email_dosen')->nullable()->unique('email_dosen');
-            $table->enum('role',['Dekan', 'Kaprodi' , 'PembimbingAkademik']);
+            $table->enum('role',['Dekan', 'Kaprodi', 'PembimbingAkademik']);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('prodi_id')->nullable();
             $table->timestamps();

@@ -16,7 +16,7 @@ class DosenSeeder extends Seeder
             'email_dosen' => 'dekan@example.com',
             'alamat_dosen' => 'Jl. Teknik No. 1',
             'no_telepon_dosen' => '08123456789',
-            'role' => 'dekan',
+            'role' => 'Dekan',
             'user_id' => 1, 
         ]);
 
@@ -27,7 +27,7 @@ class DosenSeeder extends Seeder
             'email_dosen' => 'dosenwali@example.com',
             'alamat_dosen' => 'Jl. Ilmu No. 2',
             'no_telepon_dosen' => '08198765432',
-            'role' => 'pembimbing_akademik',
+            'role' => 'PembimbingAkademik',
             'user_id' => 2,
         ]);
 
@@ -38,7 +38,7 @@ class DosenSeeder extends Seeder
             'email_dosen' => 'kaprodi@example.com',
             'alamat_dosen' => 'Jl. Prodi No. 3',
             'no_telepon_dosen' => '08133322244',
-            'role' => 'kaprodi',
+            'role' => 'Kaprodi',
             'user_id' => 3, 
         ]);
     }

@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Mahasiswa;
 
-class MahasiswaTableSeeder extends Seeder
+class MahasiswaSeeder extends Seeder
 {
     public function run()
     {
