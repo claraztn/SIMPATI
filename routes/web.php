@@ -160,7 +160,7 @@ Route::get('/kaprodi/verifikasi-kurikulum', [KaprodiController::class, 'verifika
 
 // Rute untuk Bagian Akademik
 Route::get('/bagianAkademik/dashboard', [BagianAkademikController::class, 'index'])->name('bagianAkademik.dashboard');
-Route::get('/bagianAkademik/manajemen-ruang', [BagianAkademikController::class, 'manajemenRuang'])->name('bagianAkademik.manajemen_ruangan');
+Route::get('/bagianAkademik/manajemen_ruang', [BagianAkademikController::class, 'manajemenRuang'])->name('bagianAkademik.manajemen_ruangan');
 Route::get('/manajemen_ruang', [RuanganController::class, 'showManajemenRuang'])->name('manajemen_ruang');
 Route::get('/ruangan/gedung', [RuanganController::class, 'getRuangByGedung']);
 

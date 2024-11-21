@@ -41,5 +41,15 @@ class DosenSeeder extends Seeder
             'role' => 'Kaprodi',
             'user_id' => 3, 
         ]);
+
+        // Dosen::create([
+        //     'nip' => '197108111997021004',
+        //     'nama_dosen' => 'Dr. Aris Sugiharto, S.Si., M.Kom.',
+        //     'alamat_dosen' => 'Jl. Merdeka No. 10, Semarang',
+        //     'no_telepon_dosen' => '081234567890',
+        //     'email_dosen' => 'arissugiharto@lecturer.undip.ac.id',
+        //     'role' => 'Dekan',
+        //     'user_id' => 1, 
+        // ]);
     }
 }
