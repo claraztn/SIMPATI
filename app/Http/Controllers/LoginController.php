@@ -16,13 +16,13 @@ class LoginController extends Controller
                                                                                                                  
     public function authenticate(Request $request) {
         $validator = Validator::make($request->all(),[
-            'email' => 'required|email',
+            'email' => 'required',
             'password' => 'required'
         ]);
 
         if ($validator->passes()) {
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-                return redirect()->route('dashboard_BA');
+                return redirect()->route('bagianAkademik/dashboard');
             } else {
                 return redirect()->route('login')->with('error', 'Either email or password is incorrect!');
             } 

@@ -125,7 +125,7 @@ use App\Http\Controllers\BagianAkademikController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\JadwalController;
 
-Route::get('/login', function () {
+Route::get('/', function () {
         return view('auth.login'); 
     // })->name('login')
 });
@@ -160,7 +160,7 @@ Route::get('/kaprodi/verifikasi-kurikulum', [KaprodiController::class, 'verifika
 
 // Rute untuk Bagian Akademik
 Route::get('/bagianAkademik/dashboard', [BagianAkademikController::class, 'index'])->name('bagianAkademik.dashboard');
-Route::get('/bagianAkademik/manajemen_ruang', [BagianAkademikController::class, 'manajemenRuang'])->name('bagianAkademik.manajemen_ruangan');
+Route::get('/bagianAkademik/manajemen_ruang', [BagianAkademikController::class, 'manajemenRuang'])->name('ba    ');
 Route::get('/manajemen_ruang', [RuanganController::class, 'showManajemenRuang'])->name('manajemen_ruang');
 Route::get('/ruangan/gedung', [RuanganController::class, 'getRuangByGedung']);
 
