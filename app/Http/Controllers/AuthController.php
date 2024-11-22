@@ -29,11 +29,10 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
-
             
             switch ($user->role) {
                 case 'Mahasiswa':
-                        return redirect()->intended('/mahasiswa/dashboard');
+                    return redirect()->intended('/mahasiswa/dashboard');
                 case 'BagianAkademik':
                     return redirect()->intended('/pembimbingAkademik/dashboard');
                 case 'Dosen':

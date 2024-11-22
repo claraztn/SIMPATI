@@ -9,10 +9,10 @@
 
 
 
-Route::get('/', function () {
-    return view('login'); 
-    // return view('welcome'); 
-});
+// Route::get('/', function () {
+//     return view('login'); 
+//     // return view('welcome'); 
+// });
 
 // Route::get('/', function () {
 //     return view('login'); 
@@ -139,14 +139,7 @@ use App\Http\Controllers\JadwalController;
 //     })->name('login');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('auth.login');
 
-
-// Halaman Login
-// Route::get('/login', function () {
-//         return view('auth.login'); 
-//     })->name('login');
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('auth.login');
-
-Route::get('/', function () {
+Route::get('/login', function () {
         return view('auth.login'); 
     // })->name('login')
 });
@@ -190,7 +183,7 @@ Route::get('/kaprodi/verifikasi-kurikulum', [KaprodiController::class, 'verifika
 
 // Rute untuk Bagian Akademik
 Route::get('/bagianAkademik/dashboard', [BagianAkademikController::class, 'index'])->name('bagianAkademik.dashboard');
-Route::get('/bagianAkademik/manajemen_ruang', [BagianAkademikController::class, 'manajemenRuang'])->name('ba    ');
+Route::get('/bagianAkademik/manajemen_ruang', [BagianAkademikController::class, 'manajemenRuang'])->name('bagianAkademik.manajemen_ruangan');
 Route::get('/manajemen_ruang', [RuanganController::class, 'showManajemenRuang'])->name('manajemen_ruang');
 Route::get('/ruangan/gedung', [RuanganController::class, 'getRuangByGedung']);
 
