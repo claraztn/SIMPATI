@@ -3,7 +3,7 @@
    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>MANAJEMEN RUANG KELAS</title>
+      <title>IRS MAHASISWA</title>
       <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
       <style>
           .custom-navbar {
@@ -106,8 +106,8 @@
                         <ul class="navbar-nav ms-auto"> 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Hello, {{ Auth::user()->name }}
-                                    
+                                    Hello,
+                                    {{-- Hello, {{ Auth::user()->name }} --}}
                                 </a>
                                 <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">                          
                                     <li>
@@ -124,7 +124,7 @@
         <div class="container">
             <div class="card border-0 shadow my-5">
               <div class="card-header bg-light">
-                  <h3 class="h5 pt-2">MANAJEMEN RUANG KELAS</h3>
+                  <h3 class="h5 pt-2">IRS MAHASISWA</h3>
               </div>
               <div class="card-body">
                 <div class="button-container" style="margin-bottom: 20px;">
