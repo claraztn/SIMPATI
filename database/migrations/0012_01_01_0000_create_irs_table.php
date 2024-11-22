@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('kode_kelas');
             $table->timestamps();
 
-            $table->foreign('nim')->references('nim')->on('mahasiswa')->onDelete('cascade');
+            $table->foreign('nim')->references('nim')->on('mahasiswa');
             $table->foreign('kode_kelas')->references('kode_kelas')->on('kelas');
 
         });
