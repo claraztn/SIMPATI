@@ -1,0 +1,47 @@
+{
+	"folders": [
+		{
+			"path": "D:/JAVA"
+		},
+		{
+			"path": "D:/C"
+		},
+		{
+			"path": "D:/PYTHON"
+		},
+		{
+			"path": "D:/SEMESTER 5/PRAK PBP"
+		},
+		{
+			"path": "../../../../../praktikum2"
+		},
+		{
+			"path": "../../../../../Widiawati Sihaloho_24060122120037_Pertemuan4_C1"
+		},
+		{
+			"path": "../../../../ProyekPBP"
+		},
+		{
+			"path": "../../.."
+		},
+		{
+			"path": "../../../../Sistem-Monitoring-Akademik-main"
+		},
+		{
+			"path": "../../../../PBP2/ProyekPBP-master 2"
+		}
+	],
+	"settings": {
+		"java.project.sourcePaths": [],
+		"java.dependency.packagePresentation": "hierarchical",
+		"java.dependency.syncWithFolderExplorer": false,
+		"files.associations": {
+			"assert.h": "c",
+			"fcntl.h": "c",
+			"totpenjualanpensil": "c",
+			"stdlib.h": "c",
+			"algorithm": "c"
+		},
+		"liveServer.settings.multiRootWorkspaceName": "SIMPATI"
+	}
+}

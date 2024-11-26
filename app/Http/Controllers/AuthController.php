@@ -11,71 +11,61 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function showLoginForm()
+    public function index()
     {
-        return view('auth.login', [
-            'title' => 'auth.login'
-        ]); 
+        return view('auth.login', ['title' => 'Login']); 
     }
 
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required',
         ]);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-
             $user = Auth::user();
-
             
-            switch ($user->role) {
-                case 'Mahasiswa':
-                        return redirect()->intended('/mahasiswa/dashboard');
-                case 'BagianAkademik':
-                    return redirect()->intended('/bagianAkademik/dashboard');
-                case 'Dosen':
-                    return redirect()->intended('/dosen/dashboard');
-                default:
-                    return redirect()->route('home');
+            if ($user->role === 'Dosen') {
+                return redirect()->route('select.role'); // arahkan ke halaman pemilihan role
             }
+
+            // Arahkan berdasarkan peran pengguna
+            return match ($user->role) {
+                'Mahasiswa' => redirect()->intended('/mahasiswa/dashboard'),
+                'BagianAkademik' => redirect()->intended('/bagianAkademik/dashboard'),
+                // 'Dekan' => redirect()->intended('/dekan/dashboard'),
+                // 'Kaprodi' => redirect()->intended('/kaprodi/dashboard'),
+                // 'PembimbingAkademik' => redirect()->intended('/pembimbingAkademik/dashboard'),
+                default => redirect()->route('home')
+            };
         }
 
-        return back()->withErrors([
-            'email' => 'Login gagal! Periksa username dan password Anda.',
-        ])->withInput();
+        return back()->withErrors(['email' => 'Login gagal! Periksa email dan kata sandi Anda.'])->withInput();
     }
 
-    public function logout(Request $request)
-    {
-        Auth::logout();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('/')->with('success', 'Anda telah logout.');
-    }
-
+    
     public function selectRole()
     {
         $user = Auth::user();
-
-        if ($user->dosen) {
+        
+        if ($user && $user->dosen) {
+            // dd($user->dosen);
             $roles = [];
 
+            // Tambahkan peran berdasarkan atribut role di model Dosen
             if ($user->dosen->role === 'Dekan') {
                 $roles[] = 'dekan';
             }
-
-            if ($user->dosen->role === 'Dosen Wali') {
-                $roles[] = 'dosen_wali';
+            if ($user->dosen->role === 'PembimbingAkademik') {
+                $roles[] = 'pembimbingAkademik';
             }
-
             if ($user->dosen->role === 'Kaprodi') {
                 $roles[] = 'kaprodi';
             }
+
+             
 
             return view('auth.select_role', compact('roles'));
         }
@@ -86,18 +76,23 @@ class AuthController extends Controller
     public function processRole(Request $request)
     {
         $request->validate([
-            'role' => 'required|in:dekan,dosen_wali,kaprodi',
+            'role' => 'required|in:dekan,pembimbingAkademik,kaprodi',
         ]);
+        
+        // Arahkan berdasarkan peran yang dipilih
+        return match ($request->role) {
+            'dekan' => redirect()->route('dekan.dashboard'),
+            'pembimbingAkademik' => redirect()->route('pembimbingAkademik.dashboard'),
+            'kaprodi' => redirect()->route('kaprodi.dashboard'),
+            default => redirect()->route('home')
+        };
+    }
 
-        switch ($request->role) {
-            case 'dekan':
-                return redirect()->route('dekan.dashboard');
-            case 'dosen_wali':
-                return redirect()->route('dosen_wali.dashboard');
-            case 'kaprodi':
-                return redirect()->route('kaprodi.dashboard');
-            default:
-                return redirect()->route('home');
-        }
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/')->with('success', 'Anda telah logout.');
     }
 }

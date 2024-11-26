@@ -18,6 +18,7 @@
                         <option value="{{ $role }}">{{ ucfirst($role) }}</option>
                     @endforeach
                 </select>
+
             </div>
             <button type="submit" class="btn btn-primary w-100">Lanjutkan</button>
         </form>

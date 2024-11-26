@@ -9,14 +9,21 @@ use App\Models\Jadwal;
 class DekanController extends Controller
 {
     public function index()
-    {
-        return view('dekan.dashboard'); // Dashboard utama Dekan
+    {   
+        // $ruanganVerified = Ruangan::where('status', 'approved')->count();
+        // $ruanganPending = Ruangan::where('status', 'pending')->count();
+    
+        // // Mengambil jumlah jadwal yang sudah diverifikasi dan yang belum diverifikasi
+        // $jadwalVerified = Jadwal::where('status', 'approved')->count();
+        // $jadwalPending = Jadwal::where('status', 'pending')->count();
+        return view('dekan.dashboard'); 
     }
 
     public function verifikasiRuangan()
     {
         $ruanganPending = Ruangan::where('status', 'pending')->get(); // Data ruangan menunggu verifikasi
         $ruanganApproved = Ruangan::where('status', 'approved')->get(); // Data ruangan yang disetujui
+        $ruanganApproved = Ruangan::where('status', 'rejected')->get();
 
         return view('dekan.verifikasi_ruangan', compact('ruanganPending', 'ruanganApproved')); // Kirim data ke view
     }

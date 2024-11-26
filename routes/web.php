@@ -10,7 +10,7 @@
 
 
 Route::get('/', function () {
-    return view('login'); 
+    return view('auth.login'); 
     // return view('welcome'); 
 });
 
@@ -122,72 +122,126 @@ Route::get('/', function () {
 
 // TESSS
 
-use Illuminate\Support\Facades\Route;
+// use Illuminate\Support\Facades\Route;
+// use App\Http\Controllers\AuthController;
+// use App\Http\Controllers\MahasiswaController;
+// use App\Http\Controllers\DekanController;
+// use App\Http\Controllers\DosenWaliController;
+// use App\Http\Controllers\KaprodiController;
+// use App\Http\Controllers\BagianAkademikController;
+// use App\Http\Controllers\RuanganController;
+// use App\Http\Controllers\JadwalController;
+
+
+
+// Route::get('/login', function () {
+//         return view('auth.login'); 
+//     })->name('login');
+
+
+// Route::get('/login', function () {
+//         return view('auth.login'); 
+//     // })->name('login')
+// });
+
+// Route::get('/login', [AuthController::class, 'index'])->name('login');
+
+// Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
+// Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// // Pemilihan Peran untuk Dosen
+// Route::get('/select-role', [AuthController::class, 'selectRole'])->name('select.role');
+// Route::post('/select-role', [AuthController::class, 'processRole'])->name('process.role');
+
+
+// // // Rute untuk Mahasiswa
+// Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+// Route::get('/mahasiswa/irs', [MahasiswaController::class, 'showIRS'])->name('mahasiswa.irs');
+// Route::post('/mahasiswa/irs', [MahasiswaController::class, 'submitIRS'])->name('irs.submit');
+// Route::get('/mahasiswa/registrasi', [MahasiswaController::class, 'showRegistrasi'])->name('mahasiswa.registrasi');
+// Route::post('/mahasiswa/registrasi', [MahasiswaController::class, 'submitRegistrasi'])->name('registrasi.submit');
+
+// // Rute untuk Dekan
+// Route::get('/dekan/dashboard', [DekanController::class, 'index'])->name('dekan.dashboard');
+// Route::get('/dekan/verifikasi-ruangan', [DekanController::class, 'verifikasiRuangan'])->name('verifikasi.ruangan');
+// Route::post('/dekan/verifikasi.ruangan/{id_ruang}', [DekanController::class, 'verifikasiRuangan'])->name('dekan.verifikasi.ruangan');
+// Route::get('/dekan/verifikasi-jadwal', [DekanController::class, 'verifikasiJadwal'])->name('verifikasi.jadwal');
+
+// // Rute untuk Dosen Wali
+// // Route::get('/dosen-wali/dashboard', [DosenWaliController::class, 'index'])->name('dosen_wali.dashboard');
+// // Route::get('/dosen-wali/memantau-mahasiswa', [DosenWaliController::class, 'monitorMahasiswa'])->name('dosen_wali.monitor_mahasiswa');
+
+// // Rute untuk Kaprodi
+// Route::get('/kaprodi/dashboard', [KaprodiController::class, 'index'])->name('kaprodi.dashboard');
+// // Route::get('/kaprodi/verifikasi-kurikulum', [KaprodiController::class, 'verifikasiKurikulum'])->name('kaprodi.verifikasi_kurikulum');
+
+// // Rute untuk Bagian Akademik
+// Route::get('/bagianAkademik/dashboard', [BagianAkademikController::class, 'index'])->name('bagianAkademik.dashboard');
+// Route::get('/bagianAkademik/manajemen_ruang', [BagianAkademikController::class, 'manajemenRuang'])->name('bagianAkademik.manajemen_ruangan');
+// Route::get('/manajemen_ruang', [RuanganController::class, 'showManajemenRuang'])->name('manajemen_ruang');
+// Route::get('/ruangan/gedung', [RuanganController::class, 'getRuangByGedung']);
+
+// // Rute Umum untuk Semua Role
+// Route::get('/ruangan', [RuanganController::class, 'index'])->name('ruangan.index');
+// Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
+
+
+// baru 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\DekanController;
-use App\Http\Controllers\DosenWaliController;
 use App\Http\Controllers\KaprodiController;
 use App\Http\Controllers\BagianAkademikController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\JadwalController;
 
-
-// Halaman Login
-// Route::get('/login', function () {
-//         return view('auth.login'); 
-//     })->name('login');
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('auth.login');
-
-Route::get('/login', function () {
-        return view('auth.login'); 
-    // })->name('login')
-});
-
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-
+// Rute untuk login dan logout
+Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Pemilihan Peran untuk Dosen
-Route::get('/select-role', [AuthController::class, 'selectRole'])->name('select.role');
-Route::post('/select-role', [AuthController::class, 'processRole'])->name('process.role');
+// Rute untuk Pemilihan Peran Dosen
+Route::get('/select-role', [AuthController::class, 'selectRole'])->name('select.role')->middleware('auth');
+Route::post('/select-role', [AuthController::class, 'processRole'])->name('process.role')->middleware('auth');
 
 // Rute untuk Mahasiswa
-// Route::middleware(['auth', 'role:Mahasiswa'])->group(function () {
-//     Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
-//     Route::get('/mahasiswa/irs', [MahasiswaController::class, 'showIRS'])->name('mahasiswa.irs');
-//     Route::post('/mahasiswa/irs', [MahasiswaController::class, 'submitIRS'])->name('irs.submit');
-//     Route::get('/mahasiswa/registrasi', [MahasiswaController::class, 'showRegistrasi'])->name('mahasiswa.registrasi');
-//     Route::post('/mahasiswa/registrasi', [MahasiswaController::class, 'submitRegistrasi'])->name('registrasi.submit');
-// });
-// // Rute untuk Mahasiswa
-Route::get('/mahasiswa/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
-Route::get('/mahasiswa/irs', [MahasiswaController::class, 'showIRS'])->name('mahasiswa.irs');
-Route::post('/mahasiswa/irs', [MahasiswaController::class, 'submitIRS'])->name('irs.submit');
-Route::get('/mahasiswa/registrasi', [MahasiswaController::class, 'showRegistrasi'])->name('mahasiswa.registrasi');
-Route::post('/mahasiswa/registrasi', [MahasiswaController::class, 'submitRegistrasi'])->name('registrasi.submit');
+Route::prefix('mahasiswa')->middleware('auth')->group(function () {
+    Route::get('/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+    Route::get('/irs', [MahasiswaController::class, 'showIRS'])->name('mahasiswa.irs');
+    Route::post('/irs', [MahasiswaController::class, 'submitIRS'])->name('irs.submit');
+    Route::get('/registrasi', [MahasiswaController::class, 'showRegistrasi'])->name('mahasiswa.registrasi');
+    Route::post('/registrasi', [MahasiswaController::class, 'submitRegistrasi'])->name('registrasi.submit');
+});
 
 // Rute untuk Dekan
-Route::get('/dekan/dashboard', [DekanController::class, 'index'])->name('dekan.dashboard');
-Route::get('/dekan/verifikasi-ruangan', [DekanController::class, 'verifikasiRuangan'])->name('verifikasi.ruangan');
-Route::post('/dekan/verifikasi.ruangan/{id_ruang}', [DekanController::class, 'verifikasiRuang'])->name('dekan.verifikasi.ruangan');
-Route::get('/dekan/verifikasi-jadwal', [DekanController::class, 'verifikasiJadwal'])->name('verifikasi.jadwal');
-
-// Rute untuk Dosen Wali
-// Route::get('/dosen-wali/dashboard', [DosenWaliController::class, 'index'])->name('dosen_wali.dashboard');
-// Route::get('/dosen-wali/memantau-mahasiswa', [DosenWaliController::class, 'monitorMahasiswa'])->name('dosen_wali.monitor_mahasiswa');
+Route::prefix('dekan')->middleware('auth')->group(function () {
+    Route::get('/dashboard', [DekanController::class, 'index'])->name('dekan.dashboard');
+    Route::get('/verifikasi-ruangan', [DekanController::class, 'verifikasiRuangan'])->name('verifikasi.ruangan');
+    Route::post('/verifikasi-ruangan/{id_ruang}', [DekanController::class, 'verifikasiRuangan'])->name('verifikasi.ruangan');
+    Route::get('/verifikasi-jadwal', [DekanController::class, 'verifikasiJadwal'])->name('verifikasi.jadwal');
+});
 
 // Rute untuk Kaprodi
-Route::get('/kaprodi/dashboard', [KaprodiController::class, 'index'])->name('kaprodi.dashboard');
-// Route::get('/kaprodi/verifikasi-kurikulum', [KaprodiController::class, 'verifikasiKurikulum'])->name('kaprodi.verifikasi_kurikulum');
+Route::prefix('kaprodi')->middleware('auth')->group(function () {
+    Route::get('/dashboard', [KaprodiController::class, 'index'])->name('kaprodi.dashboard');
+    // Tambahkan rute lain untuk Kaprodi di sini jika diperlukan
+    // Route::get('/verifikasi-kurikulum', [KaprodiController::class, 'verifikasiKurikulum'])->name('kaprodi.verifikasi_kurikulum');
+});
 
 // Rute untuk Bagian Akademik
-Route::get('/bagianAkademik/dashboard', [BagianAkademikController::class, 'index'])->name('bagianAkademik.dashboard');
-Route::get('/bagianAkademik/manajemen_ruang', [BagianAkademikController::class, 'manajemenRuang'])->name('bagianAkademik.manajemen_ruangan');
-Route::get('/manajemen_ruang', [RuanganController::class, 'showManajemenRuang'])->name('manajemen_ruang');
-Route::get('/ruangan/gedung', [RuanganController::class, 'getRuangByGedung']);
+Route::prefix('bagianAkademik')->middleware('auth')->group(function () {
+    Route::get('/dashboard', [BagianAkademikController::class, 'index'])->name('bagianAkademik.dashboard');
+    Route::get('/manajemen-ruang', [BagianAkademikController::class, 'manajemenRuang'])->name('bagianAkademik.manajemen_ruangan');
+});
 
-// Rute Umum untuk Semua Role
-Route::get('/ruangan', [RuanganController::class, 'index'])->name('ruangan.index');
-Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
+// Rute untuk Manajemen Ruangan
+Route::prefix('ruangan')->middleware('auth')->group(function () {
+    Route::get('/', [RuanganController::class, 'index'])->name('ruangan.index');
+    Route::get('/gedung', [RuanganController::class, 'getRuangByGedung'])->name('ruangan.by_gedung');
+    Route::get('/manajemen', [RuanganController::class, 'showManajemenRuang'])->name('manajemen_ruang');
+});
+
+// Rute untuk Jadwal
+Route::prefix('jadwal')->middleware('auth')->group(function () {
+    Route::get('/', [JadwalController::class, 'index'])->name('jadwal.index');
+});

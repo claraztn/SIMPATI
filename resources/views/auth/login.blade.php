@@ -15,16 +15,20 @@
                         <h4>Login</h4>
                     </div>
                     <div class="card-body">
-                        @if(session('error'))
+                        @if($errors->any())
                             <div class="alert alert-danger">
-                                {{ session('error') }}
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
                         @endif
-                        <form action="{{ route('authenticate') }}" method="POST">
+                        <form action="{{ route('authenticate') }}" method="POST" autocomplete="off">
                             @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" name="email" id="email" class="form-control" required>
+                                <input type="email" name="email" id="email" class="form-control" required value="{{ old('email') }}">
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
