@@ -13,48 +13,48 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return view('auth.login', ['title' => 'Login']); 
+        return view('auth.login', ['title' => 'Login']);
     }
 
     public function authenticate(Request $request)
     {
+        // Validasi kredensial login
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
+        // Cek apakah kredensial cocok
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             $user = Auth::user();
-            
+
+            // Jika peran adalah 'Dosen', arahkan ke halaman pemilihan peran
             if ($user->role === 'Dosen') {
-                return redirect()->route('select.role'); // arahkan ke halaman pemilihan role
+                return redirect()->route('select.role'); // Arahkan ke halaman pemilihan role
             }
 
             // Arahkan berdasarkan peran pengguna
             return match ($user->role) {
                 'Mahasiswa' => redirect()->intended('/mahasiswa/dashboard'),
                 'BagianAkademik' => redirect()->intended('/bagianAkademik/dashboard'),
-                // 'Dekan' => redirect()->intended('/dekan/dashboard'),
-                // 'Kaprodi' => redirect()->intended('/kaprodi/dashboard'),
-                // 'PembimbingAkademik' => redirect()->intended('/pembimbingAkademik/dashboard'),
-                default => redirect()->route('home')
+                default => redirect()->route('home'),
             };
         }
 
+        // Jika login gagal
         return back()->withErrors(['email' => 'Login gagal! Periksa email dan kata sandi Anda.'])->withInput();
     }
 
-    
     public function selectRole()
     {
         $user = Auth::user();
-        
-        if ($user && $user->dosen) {
-            // dd($user->dosen);
+
+        // Cek apakah user adalah Dosen
+        if ($user && $user->role === 'Dosen') {
             $roles = [];
 
-            // Tambahkan peran berdasarkan atribut role di model Dosen
+            // Tentukan peran yang tersedia bagi Dosen
             if ($user->dosen->role === 'Dekan') {
                 $roles[] = 'dekan';
             }
@@ -65,31 +65,33 @@ class AuthController extends Controller
                 $roles[] = 'kaprodi';
             }
 
-             
-
+            // Kirimkan data peran ke tampilan untuk pemilihan peran
             return view('auth.select_role', compact('roles'));
         }
 
+        // Jika bukan Dosen, arahkan ke halaman utama
         return redirect()->route('home');
     }
 
     public function processRole(Request $request)
     {
+        // Validasi peran yang dipilih
         $request->validate([
             'role' => 'required|in:dekan,pembimbingAkademik,kaprodi',
         ]);
-        
+
         // Arahkan berdasarkan peran yang dipilih
         return match ($request->role) {
             'dekan' => redirect()->route('dekan.dashboard'),
             'pembimbingAkademik' => redirect()->route('pembimbingAkademik.dashboard'),
             'kaprodi' => redirect()->route('kaprodi.dashboard'),
-            default => redirect()->route('home')
+            default => redirect()->route('home'),
         };
     }
 
     public function logout(Request $request)
     {
+        // Logout dan hapus sesi
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
