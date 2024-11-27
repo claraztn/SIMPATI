@@ -9,10 +9,10 @@
 <body class="bg-light">
     <div class="container my-5">
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="card shadow">
                     <div class="card-header text-center bg-primary text-white">
-                        <h4>Login</h4>
+                        <h4>SIMPATI</h4>
                     </div>
                     <div class="card-body">
                         @if($errors->any())
