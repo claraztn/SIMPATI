@@ -90,12 +90,12 @@
                     </div>
                     <div class="offcanvas-body">
                         <ul class="navbar-nav flex-grow-1">
-                            <a class="nav-link" href="{{ route('dashboard_BA') }}" style="color: white;">
+                            <a class="nav-link" href="{{ route('bagianAkademik.dashboard') }}" style="color: white;">
                                 Home
                             </a>                            
                         <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item {{ request()->routeIs('manajemen_ruang') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('manajemen_ruang') }}">
+                            <li class="nav-item {{ request()->routeIs('bagianAkademik.manajemen_ruang') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('bagianAkademik.manajemen_ruang') }}">
                                     Manajemen Ruang
                                 </a>
                             </li>
@@ -125,7 +125,7 @@
               </div>
               <div class="card-body">
                   <div class="button-container" style="margin-bottom: 20px;">
-                    <button class="btn-fill" onclick="window.location.href='{{ route('manajemen_ruang') }}'">Pengisian</button>
+                    <button class="btn-fill" onclick="window.location.href='{{ route('bagianAkademik.manajemen_ruang') }}'">Pengisian</button>
                     <button class="btn-history" onclick="window.location.href='{{ route('ketersediaan_ruang') }}'">Riwayat Pengisian</button>
                   </div>
                   <div class="form-container">

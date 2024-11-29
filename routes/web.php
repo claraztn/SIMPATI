@@ -9,10 +9,10 @@
 
 
 
-Route::get('/', function () {
-    return view('auth.login'); 
-    // return view('welcome'); 
-});
+// Route::get('/', function () {
+//     return view('auth.login'); 
+//     // return view('welcome'); 
+// });
 
 
 // Route::get('/', function () {
@@ -188,13 +188,15 @@ Route::get('/', function () {
 
 
 // baru 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\DekanController;
-use App\Http\Controllers\KaprodiController;
-use App\Http\Controllers\BagianAkademikController;
-use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\KaprodiController;
+use App\Http\Controllers\RuanganController;
+use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\BagianAkademikController;
+use App\Http\Controllers\KetersediaanRuanganController;
 
 // Rute untuk login dan logout
 Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
@@ -232,15 +234,29 @@ Route::prefix('kaprodi')->middleware('auth')->group(function () {
 // Rute untuk Bagian Akademik
 Route::prefix('bagianAkademik')->middleware('auth')->group(function () {
     Route::get('/dashboard', [BagianAkademikController::class, 'index'])->name('bagianAkademik.dashboard');
-    Route::get('/manajemen-ruang', [BagianAkademikController::class, 'manajemenRuang'])->name('bagianAkademik.manajemen_ruangan');
+    Route::get('/manajemen_ruang', [RuanganController::class, 'showManajemenRuang'])->name('bagianAkademik.manajemen_ruang');
 });
+
+// Rute untuk Ketersediaan Ruang
+Route::get('/ketersediaan_ruang', [KetersediaanRuanganController::class, 'index'])->name('ketersediaan_ruang');
+Route::post('/ketersediaan_ruang', [KetersediaanRuanganController::class, 'store'])->name('ketersediaan_ruang.store');
 
 // Rute untuk Manajemen Ruangan
 Route::prefix('ruangan')->middleware('auth')->group(function () {
+    // Daftar Ruangan
     Route::get('/', [RuanganController::class, 'index'])->name('ruangan.index');
-    Route::get('/gedung', [RuanganController::class, 'getRuangByGedung'])->name('ruangan.by_gedung');
-    Route::get('/manajemen', [RuanganController::class, 'showManajemenRuang'])->name('manajemen_ruang');
+
+    // Mendapatkan ruangan berdasarkan gedung
+    Route::get('/gedung', [RuanganController::class, 'getRuangByGedung']);
+
+    // Atur Kapasitas Ruang
+    Route::post('/atur-kapasitas', [RuanganController::class, 'aturKapasitas'])->name('ruangan.aturKapasitas');
+
+    // Hapus Kapasitas Ruang
+    Route::delete('/{id_ruang}', [RuanganController::class, 'hapus'])->name('ruangan.hapus');
 });
+
+
 
 // Rute untuk Jadwal
 Route::prefix('jadwal')->middleware('auth')->group(function () {

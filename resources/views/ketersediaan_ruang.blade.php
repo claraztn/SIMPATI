@@ -152,8 +152,8 @@
                     </div>
                     <div class="offcanvas-body">
                         <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item {{ request()->routeIs('manajemen_ruang') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('manajemen_ruang') }}">
+                            <li class="nav-item {{ request()->routeIs('bagianAkademik.manajemen_ruang') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('bagianAkademik.manajemen_ruang') }}">
                                     Manajemen Ruang
                                 </a>
                             </li>
@@ -194,12 +194,12 @@
                 </div>
                 <div class="card-body">
                     <div class="button-container" style="margin-bottom: 20px;">
-                        <button class="btn-fill {{ request()->routeIs('manajemen_ruang') ? 'active' : '' }}" 
-                            onclick="window.location.href='{{ route('manajemen_ruang') }}'">Pengisian
+                        <button class="btn-fill {{ request()->routeIs('bagianAkademik.manajemen_ruang') ? 'active' : '' }}" 
+                            onclick="window.location.href='{{ route('bagianAkademik.manajemen_ruang') }}'">Pengisian
                         </button>
                         <button class="btn-history {{ request()->routeIs('ketersediaan_ruang') ? 'active' : '' }}" 
                             onclick="window.location.href='{{ route('ketersediaan_ruang') }}'">Riwayat Pengisian
-                        </button>          
+                        </button>                                
                 </div>
                 <div class="form-container">
                     <table>
@@ -208,7 +208,6 @@
                               <th>Gedung</th>
                               <th>Nama Ruang</th>
                               <th>Kapasitas Ruang</th>
-                              <th>Status</th>
                               <th>Aksi</th>
                           </tr>
                       </thead>
@@ -219,7 +218,7 @@
                                   <td>{{ $ruang->nama_ruang }}</td>
                                   <td>{{ $ruang->kapasitas }}</td>
                                   <td>
-                                      <a href="manajemen_ruang" class="btn-action btn-edit">Edit</a>
+                                      <a href="bagianAkaademik.manajemen_ruang" class="btn-action btn-edit">Edit</a>
                                       <form action="{{ route('ruangan.hapus', $ruang->id_ruang) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
