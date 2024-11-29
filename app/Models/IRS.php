@@ -17,7 +17,7 @@ class IRS extends Model
         'jmlsks',
         'scansks',
         'isverified',
-        'id_kelas',
+        'kode_kelas',
     ];
 
     public function mahasiswa()
@@ -27,6 +27,6 @@ class IRS extends Model
 
     public function kelas()
     {
-        return $this->belongsTo(Kelas::class, 'id_kelas', 'id');
+        return $this->belongsTo(Kelas::class, 'kode_kelas', 'kode_kelas');
     }
 }

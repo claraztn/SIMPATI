@@ -15,40 +15,40 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'username' => 'student01',
-            'email' => 'student01@example.com',
-            'password' => Hash::make('password123'),
+            'username' => 'Widiawati Sihaloho',
+            'email' => 'widiasihaloho@students.undip.ac.id',
+            'password' => Hash::make('widia'),
             'role' => 'Mahasiswa', 
         ]);
 
         User::create([
-            'username' => 'lecturer01',
-            'email' => 'lecturer01@example.com',
-            'password' => Hash::make('password123'),
+            'username' => 'Kusworo Adi',
+            'email' => 'kusworoadi@lecturer.undip.ac.id',
+            'password' => Hash::make('kusworo'),
             'role' => 'Dosen',
         ]);
 
         User::create([
-            'username' => 'lecturer02',
-            'email' => 'lecturer02@example.com',
-            'password' => Hash::make('password123'),
+            'username' => 'Aris Sugiharto',
+            'email' => 'arissugiharto@lecturer.undip.ac.id',
+            'password' => Hash::make('aris'),
             'role' => 'Dosen',
         ]);
 
         User::create([
-            'username' => 'lecturer03',
-            'email' => 'lecturer03@example.com',
-            'password' => Hash::make('password123'),
+            'username' => 'Sutikno',
+            'email' => 'sutikno@lecturer.undip.ac.id',
+            'password' => Hash::make('sutikno'),
             'role' => 'Dosen',
         ]);
 
         User::create([
-            'username' => 'academic01',
-            'email' => 'academic01@example.com',
-            'password' => Hash::make('password123'),
+            'username' => 'Beny',
+            'email' => 'beny@academic.undip.ac.id',
+            'password' => Hash::make('beny'),
             'role' => 'BagianAkademik',
         ]);
 
-        // Add more users as needed
+        
     }
 }

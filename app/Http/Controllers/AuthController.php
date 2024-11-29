@@ -31,7 +31,7 @@ class AuthController extends Controller
 
             // Jika peran adalah 'Dosen', arahkan ke halaman pemilihan peran
             if ($user->role === 'Dosen') {
-                return redirect()->route('select.role'); // Arahkan ke halaman pemilihan role
+                return redirect()->route('select.role'); 
             }
 
             // Arahkan berdasarkan peran pengguna
@@ -50,16 +50,11 @@ class AuthController extends Controller
     {
         $user = Auth::user();
 
-        // Cek apakah user adalah Dosen
         if ($user && $user->role === 'Dosen') {
-            $roles = [];
+            $roles = ['pembimbingAkademik']; 
 
-            // Tentukan peran yang tersedia bagi Dosen
             if ($user->dosen->role === 'Dekan') {
                 $roles[] = 'dekan';
-            }
-            if ($user->dosen->role === 'PembimbingAkademik') {
-                $roles[] = 'pembimbingAkademik';
             }
             if ($user->dosen->role === 'Kaprodi') {
                 $roles[] = 'kaprodi';

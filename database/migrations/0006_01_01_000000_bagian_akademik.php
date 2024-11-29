@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_user')->nullable();
             $table->timestamps();
 
-            $table->foreign('id_user')->references('id')->on('users'); // Kunci asing ke kolom 'user_id' pada tabel 'users'
+            $table->foreign('id_user')->references('id')->on('users'); 
         });
         
             
@@ -34,7 +34,7 @@ return new class extends Migration {
     public function down()
     {
         Schema::table('bagianAkademik', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
+            $table->dropForeign(['id_user']);
         });
 
         Schema::dropIfExists('bagianAkademik');

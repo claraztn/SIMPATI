@@ -16,10 +16,10 @@ class DosenSeeder extends Seeder
         DB::table('dosen')->insert([
             [
                 'nip' => '1234567890',
-                'nama_dosen' => 'Dr. John Doe',
+                'nama_dosen' => 'Prof. Dr. Kusworo Adi S.Si., M.T',
                 'alamat_dosen' => 'Jl. Akademik No.1, Jakarta',
                 'no_telepon_dosen' => '081234567890',
-                'email' => 'lecturer01@example.com',
+                'email' => 'kusworoadi@lecturer.undip.ac.id',
                 'role' => 'Dekan',
                 'id_user' => 2, 
                 'id_prodi' => '1', 
@@ -28,10 +28,10 @@ class DosenSeeder extends Seeder
             ],
             [
                 'nip' => '9876543210',
-                'nama_dosen' => 'Prof. Jane Smith',
+                'nama_dosen' => 'Dr. Aris Sugiharto, S.Si., M.Kom.',
                 'alamat_dosen' => 'Jl. Pendidikan No.2, Jakarta',
                 'no_telepon_dosen' => '082345678901',
-                'email_dosen' => 'lecturer02@example.com',
+                'email_dosen' => 'arissugiharto@lecturer.undip.ac.id',
                 'role' => 'Kaprodi',
                 'id_user' => 3,
                 'id_prodi' => '2',
@@ -40,10 +40,10 @@ class DosenSeeder extends Seeder
             ],
             [
                 'nip' => '1112233445',
-                'nama_dosen' => 'Dr. Sarah Lee',
+                'nama_dosen' => 'Dr. Sutikno, S.T., M.Cs',
                 'alamat_dosen' => 'Jl. Teknologi No.3, Jakarta',
                 'no_telepon_dosen' => '083456789012',
-                'email_dosen' => 'lecturer03@example.com',
+                'email_dosen' => 'sutikno@lecturer.undip.ac.id',
                 'role' => 'PembimbingAkademik',
                 'id_user' => 4,
                 'id_prodi' => '1',

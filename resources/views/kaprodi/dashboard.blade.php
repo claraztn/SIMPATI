@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard Dekan</title>
+    <title>Dashboard Ketua Program Studi</title>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <style>
         .custom-navbar {
@@ -39,20 +39,16 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" href="#" style="text-decoration: none;">Home</a>
                         </li>
-                        <!-- Menu Verifikasi Ruangan -->
+                        <!-- Menu Atur Jadwal -->
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ route('verifikasi.ruangan') }}" style="text-decoration: none;">Verifikasi Ruangan</a>
-                        </li>
-                        <!-- Menu Verifikasi Jadwal -->
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ route('verifikasi.jadwal') }}" style="text-decoration: none;">Verifikasi Jadwal</a>
+                            <a class="nav-link text-white" href="{{ route('kaprodi.atur-jadwal') }}" style="text-decoration: none;">Atur Jadwal</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto"> 
                         <!-- Dropdown User -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hello, Dekan
+                                Hello, Ketua Program Studi
                             </a>
                             <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">                          
                                 <li>
@@ -70,10 +66,10 @@
     <div class="container">
         <div class="card border-0 shadow my-5">
             <div class="card-header bg-light">
-                <h3 class="h5 pt-2">Dashboard Dekan</h3>
+                <h3 class="h5 pt-2">Dashboard Ketua Program Studi</h3>
             </div>
             <div class="card-body">
-                <p>Welcome to the Dekan dashboard</p>
+                <p>Welcome to the Ketua Program Studi dashboard</p>
             </div>
         </div>
     </div>

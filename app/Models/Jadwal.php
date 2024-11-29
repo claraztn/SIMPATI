@@ -20,7 +20,7 @@ class Jadwal extends Model
     protected $fillable = [
         'hari',
         'id_ruang',
-        'id_kelas',
+        'kode_kelas',
         'jam_mulai',
         'sks',
         'status',
@@ -35,6 +35,6 @@ class Jadwal extends Model
     // Relasi ke Kelas
     public function kelas()
     {
-        return $this->belongsTo(Kelas::class, 'id_kelas', 'id');
+        return $this->belongsTo(Kelas::class, 'kode_kelas', 'kode_kelas');
     }
 }

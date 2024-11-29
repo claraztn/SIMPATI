@@ -1,21 +1,22 @@
-
-
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard Dekan</title>
+    <title>Dashboard Kaprodi</title>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <style>
         .custom-navbar {
             background-color: #003f5c;
         }
+
         .nav-link:hover {
             text-decoration: underline;
         }
     </style>
 </head>
+
 <body class="bg-light">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md custom-navbar shadow-lg">
@@ -35,33 +36,29 @@
                 </div>
                 <div class="offcanvas-body">
                     <ul class="navbar-nav flex-grow-1">
-                        <!-- Menu Home -->
+                        <!-- Menu IRS Mahasiswa -->
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#" style="text-decoration: none;">Home</a>
+                            <a class="nav-link text-white" href="{{ route('pembimbingAkademik.irs-mahasiswa') }}" style="text-decoration: none;">IRS Mahasiswa</a>
                         </li>
-                        <!-- Menu Verifikasi Ruangan -->
+                        <!-- Menu Jadwal Mengajar -->
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ route('verifikasi.ruangan') }}" style="text-decoration: none;">Verifikasi Ruangan</a>
-                        </li>
-                        <!-- Menu Verifikasi Jadwal -->
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ route('verifikasi.jadwal') }}" style="text-decoration: none;">Verifikasi Jadwal</a>
+                            <a class="nav-link text-white" href="{{ route('pembimbingAkademik.jadwal-mengajar') }}" style="text-decoration: none;">Jadwal Mengajar</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav ms-auto"> 
+                    <ul class="navbar-nav ms-auto">
                         <!-- Dropdown User -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hello, Dekan
+                                Hello, Pembimbing Akademik
                             </a>
-                            <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">                          
+                            <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+                                <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                                 </li>
                             </ul>
                         </li>
                     </ul>
-                </div>                               
+                </div>
             </div>
         </div>
     </nav>
@@ -70,10 +67,11 @@
     <div class="container">
         <div class="card border-0 shadow my-5">
             <div class="card-header bg-light">
-                <h3 class="h5 pt-2">Dashboard Dekan</h3>
+                <h3 class="h5 pt-2">Dashboard Pembimbing Akademik</h3>
             </div>
             <div class="card-body">
-                <p>Welcome to the Dekan dashboard</p>
+                <p>Welcome to the Pembimbing Akademik dashboard</p>
+                
             </div>
         </div>
     </div>
@@ -81,4 +79,5 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
+
 </html>

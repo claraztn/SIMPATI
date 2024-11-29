@@ -5,62 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-image: url('{{ asset('img/bg.jpeg') }}');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: Arial, sans-serif;
-        }
-        .card {
-            background-color: rgba(255, 255, 255, 0.9); 
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px; 
-        }
-        
-        .card-header {
-            border-radius: 10px 10px 0 0;
-            font-size: 1.25rem;
-            background-color: #003f5c; 
-        }
-        .form-control {
-            border-radius: 20px; 
-            padding: 10px 15px; 
-        }
-        
-        .btn-primary {
-            border-radius: 20px; 
-            font-weight: bold;
-            background-color: #005C76; 
-            border-color: #005C76; 
-        }
-
-        .btn-primary:hover {
-            background-color: #003f5c; 
-            border-color: #003f5c;
-        }
-        .logo {
-            width: 50px; 
-            height: auto; 
-            margin-bottom: 10px; 
-        }
-    </style>
 </head>
-<body>
-    <div class="container">
+<body class="bg-light">
+    <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow">
-                    <div class="card-header text-center text-white">
-                        <img src="{{ asset('img/logo.png') }}" alt="Logo" class="logo">
-                        <h4>Single Sign On<br>SSO</h4>
+                    <div class="card-header text-center bg-primary text-white">
+                        <h4>Login</h4>
                     </div>
                     <div class="card-body">
                         @if($errors->any())

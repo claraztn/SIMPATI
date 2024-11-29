@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Jadwal;
 use App\Models\Ruangan;
 use App\Models\Kelas;
+use App\Models\MataKuliah;
+use App\Models\DosenMataKuliah;
 use Illuminate\Http\Request;
 
 class JadwalController extends Controller
@@ -26,6 +28,16 @@ class JadwalController extends Controller
         $ruangan = Ruangan::all(); // Ambil semua ruangan
         $kelas = Kelas::all(); // Ambil semua kelas
         return view('jadwal.create', compact('ruangan', 'kelas')); // Kirim data ke view
+    }
+
+    public function aturJadwal()
+    {
+        $kelas = Kelas::with('mataKuliah', 'jadwal')->get();
+        $mataKuliah = MataKuliah::all();
+        $ruangan = Ruangan::where('status', 'approved')->get();
+        $dosenMataKuliah = DosenMataKuliah::with('dosen')->get();
+
+        return view('kaprodi.atur_jadwal', compact('kelas', 'mataKuliah', 'ruangan', 'dosenMataKuliah'));
     }
 
     /**
