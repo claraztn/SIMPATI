@@ -174,67 +174,6 @@
                             <li><a class="dropdown-item" href="#">Transkrip</a></li>
                         </ul>
                     </div>
-
-                    <div class="card shadow mb-4">
-                        <div class="card-body">
-                            <p class="mb-0">IPS: <strong>3.50</strong></p>
-                            <p class="mb-0">IPK: <strong>3.70</strong></p>
-                            <p class="mb-0">Semester: <strong>5</strong></p>
-                            <p>Total SKS yang dapat diambil: <strong>30 SKS</strong></p>
-                        </div>
-                    </div>
-
-                    <form method="POST" action="{{ route('irs.submit') }}">
-                        @csrf
-                        <div class="card shadow">
-                            <div class="card-header bg-primary text-white">
-                                <h6 class="mb-0">Daftar Mata Kuliah</h6>
-                            </div>
-                            <div class="card-body">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr class="table-header">
-                                            <th>No</th>
-                                            <th>Kode MK</th>
-                                            <th>Nama MK</th>
-                                            <th>Hari & Jam</th>
-                                            <th>Ruang</th>
-                                            <th>Semester</th>
-                                            <th>SKS</th>
-                                            <th>Dosen</th>
-                                            <th>Pilih</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>MK101</td>
-                                            <td>Matematika Dasar</td>
-                                            <td>Senin, 08:00 - 10:00</td>
-                                            <td>Ruangan A101</td>
-                                            <td>Semester 5</td>
-                                            <td>3</td>
-                                            <td>Dr. A</td>
-                                            <td><input type="checkbox" name="mk1"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>MK102</td>
-                                            <td>Fisika Dasar</td>
-                                            <td>Selasa, 10:00 - 12:00</td>
-                                            <td>Ruangan B202</td>
-                                            <td>Semester 5</td>
-                                            <td>3</td>
-                                            <td>Prof. B</td>
-                                            <td><input type="checkbox" name="mk2"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <button type="submit" class="btn-save">Simpan</button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

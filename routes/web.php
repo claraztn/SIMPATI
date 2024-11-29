@@ -9,9 +9,9 @@
 
 
 
-Route::get('/', function () {
-    return view('auth.login'); 
-});
+// Route::get('/', function () {
+//     return view('auth.login'); 
+// });
 
 
 // Route::get('/', function () {
@@ -138,12 +138,6 @@ Route::get('/', function () {
 //         return view('auth.login'); 
 //     })->name('login');
 
-
-// Route::get('/login', function () {
-//         return view('auth.login'); 
-//     // })->name('login')
-// });
-
 // Route::get('/login', [AuthController::class, 'index'])->name('login');
 
 // Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
@@ -198,6 +192,10 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\BagianAkademikController;
 use App\Http\Controllers\KetersediaanRuanganController;
 
+Route::get('/', function () {
+    return view('auth.login'); 
+});
+
 // Rute untuk login dan logout
 Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
@@ -237,28 +235,19 @@ Route::prefix('bagianAkademik')->middleware('auth')->group(function () {
     Route::get('/manajemen_ruang', [RuanganController::class, 'showManajemenRuang'])->name('bagianAkademik.manajemen_ruang');
 });
 
-
-
-// Pembimbing Akademik
-Route::prefix('pembimbing-akademik')->middleware('auth')->group(function () {
-    Route::get('/dashboard', [PembimbingAkademikController::class, 'index'])->name('pembimbingAkademik.dashboard');
-    Route::get('/irs-mahasiswa', [PembimbingAkademikController::class, 'irsMahasiswa'])->name('pembimbingAkademik.irs-mahasiswa');
-    Route::get('/jadwal-mengajar', [PembimbingAkademikController::class, 'jadwalMengajar'])->name('pembimbingAkademik.jadwal-mengajar');
-});
-
-
 // Rute untuk Ketersediaan Ruang
 Route::get('/ketersediaan_ruang', [KetersediaanRuanganController::class, 'index'])->name('ketersediaan_ruang');
 Route::post('/ketersediaan_ruang', [KetersediaanRuanganController::class, 'store'])->name('ketersediaan_ruang.store');
-
 
 // Rute untuk Manajemen Ruangan
 Route::prefix('ruangan')->middleware('auth')->group(function () {
     // Daftar Ruangan
     Route::get('/', [RuanganController::class, 'index'])->name('ruangan.index');
-
+    // Mendapatkan ruangan berdasarkan prodi
+    Route::get('/prodi', [RuanganController::class, 'getRuangByProdi']);
     // Mendapatkan ruangan berdasarkan gedung
-    Route::get('/gedung', [RuanganController::class, 'getRuangByGedung']);
+    Route::get('/gedung', [RuanganController::class, 'getRuangByGedung'])->name('ruangan.getRuanganByGedung');
+    // Route::get('/getRuanganByGedung/{gedung}', [RuanganController::class, 'getRuangByGedung']);
 
     // Atur Kapasitas Ruang
     Route::post('/atur-kapasitas', [RuanganController::class, 'aturKapasitas'])->name('ruangan.aturKapasitas');
@@ -267,6 +256,12 @@ Route::prefix('ruangan')->middleware('auth')->group(function () {
     Route::delete('/{id_ruang}', [RuanganController::class, 'hapus'])->name('ruangan.hapus');
 });
 
+// Pembimbing Akademik
+Route::prefix('pembimbing-akademik')->middleware('auth')->group(function () {
+    Route::get('/dashboard', [PembimbingAkademikController::class, 'index'])->name('pembimbingAkademik.dashboard');
+    Route::get('/irs-mahasiswa', [PembimbingAkademikController::class, 'irsMahasiswa'])->name('pembimbingAkademik.irs-mahasiswa');
+    Route::get('/jadwal-mengajar', [PembimbingAkademikController::class, 'jadwalMengajar'])->name('pembimbingAkademik.jadwal-mengajar');
+});
 
 // Rute untuk Jadwal
 Route::prefix('jadwal')->middleware('auth')->group(function () {

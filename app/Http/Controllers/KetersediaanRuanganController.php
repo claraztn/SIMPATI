@@ -54,6 +54,8 @@ class KetersediaanRuanganController extends Controller
         $ruang->gedung = $request->gedung;
         $ruang->nama_ruang = $request->namaRuang;
         $ruang->kapasitas_ruang = $request->kapasitas;
+        $ruang->status = $request->status;
+        $ruang->id_prodi = $request->id_prodi;
         $ruang->save();
     
         return redirect()->route('ketersediaan_ruang')->with('success', 'Data ruang berhasil disimpan!');

@@ -27,7 +27,7 @@ class ProgramStudi extends Model
     // Relasi ke Ruangan (One-to-Many, jika relevan)
     public function ruangan()
     {
-        return $this->hasMany(Ruangan::class, 'prodi_id', 'id');
+        return $this->hasMany(Ruangan::class, 'id_prodi', 'id');
     }
 
     public function mataKuliah()
