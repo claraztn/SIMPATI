@@ -256,8 +256,6 @@ Route::prefix('ruangan')->middleware('auth')->group(function () {
     Route::delete('/{id_ruang}', [RuanganController::class, 'hapus'])->name('ruangan.hapus');
 });
 
-
-
 // Rute untuk Jadwal
 Route::prefix('jadwal')->middleware('auth')->group(function () {
     Route::get('/', [JadwalController::class, 'index'])->name('jadwal.index');
