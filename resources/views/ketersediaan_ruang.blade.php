@@ -218,7 +218,7 @@
                                   <td>{{ $ruang->nama_ruang }}</td>
                                   <td>{{ $ruang->kapasitas }}</td>
                                   <td>
-                                      <a href="bagianAkaademik.manajemen_ruang" class="btn-action btn-edit">Edit</a>
+                                    <a href="{{ route('bagianAkademik.manajemen_ruang')}}" class="btn-action btn-edit">Edit</a>
                                       <form action="{{ route('ruangan.hapus', $ruang->id_ruang) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
