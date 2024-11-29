@@ -268,7 +268,7 @@ Route::prefix('ruangan')->middleware('auth')->group(function () {
 });
 
 
-// // Rute untuk Jadwal
-// Route::prefix('jadwal')->middleware('auth')->group(function () {
-//     Route::get('/', [JadwalController::class, 'index'])->name('jadwal.index');
-// });
+// Rute untuk Jadwal
+Route::prefix('jadwal')->middleware('auth')->group(function () {
+    Route::get('/', [JadwalController::class, 'index'])->name('jadwal.index');
+});
