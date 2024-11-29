@@ -13,7 +13,7 @@ class RuanganController extends Controller
     public function showManajemenRuang()
     {
         $ruangan = Ruangan::all();
-        return view('manajemen_ruang', compact('ruangan'));
+        return view('bagianAkademik.manajemen_ruang', compact('ruangan'));
     }
 
     /**

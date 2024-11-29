@@ -121,17 +121,52 @@
               border-radius: 5px;
           }
 
-          .btn-edit {
-              background-color: #ffc107;
-          }
+        /* Edit button (yellow) */
+        .btn-edit {
+            background-color: #ffc107;  /* Kuning untuk Edit */
+            color: white;
+            padding: 5px 10px; /* Ukuran tombol lebih kecil */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            margin-right: 10px;
+            font-size: 14px; /* Ukuran font lebih kecil */
+            text-decoration: none; 
+        }
 
-          .btn-delete {
-              background-color: #dc3545;
-          }
+        .btn-edit:hover {
+            background-color: #e0a800; /* Kuning lebih gelap saat hover */
+        }
 
-          .btn-action:hover {
-              opacity: 0.8;
-          }
+        /* Delete button (red) */
+        .btn-delete {
+            background-color: #dc3545;  /* Merah untuk Hapus */
+            color: white;
+            padding: 5px 10px; /* Ukuran tombol lebih kecil */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            display: inline-block;
+            font-size: 14px; /* Ukuran font lebih kecil */
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333; /* Merah lebih gelap saat hover */
+        }
+
+        /* Umum untuk tombol aksi */
+        .btn-action {
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-action:hover {
+            opacity: 0.8;  /* Efek hover untuk tombol */
+        }
+
       </style>
    </head>
    <body class="bg-light">
@@ -152,8 +187,8 @@
                     </div>
                     <div class="offcanvas-body">
                         <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item {{ request()->routeIs('manajemen_ruang') ? 'active' : '' }}">
-                                <a class="nav-link" href="{{ route('manajemen_ruang') }}">
+                            <li class="nav-item {{ request()->routeIs('bagianAkademik.manajemen_ruang') ? 'active' : '' }}">
+                                <a class="nav-link" href="{{ route('bagianAkademik.manajemen_ruang') }}">
                                     Manajemen Ruang
                                 </a>
                             </li>
@@ -194,12 +229,12 @@
                 </div>
                 <div class="card-body">
                     <div class="button-container" style="margin-bottom: 20px;">
-                        <button class="btn-fill {{ request()->routeIs('manajemen_ruang') ? 'active' : '' }}" 
-                            onclick="window.location.href='{{ route('manajemen_ruang') }}'">Pengisian
+                        <button class="btn-fill {{ request()->routeIs('bagianAkademik.manajemen_ruang') ? 'active' : '' }}" 
+                            onclick="window.location.href='{{ route('bagianAkademik.manajemen_ruang') }}'">Pengisian
                         </button>
                         <button class="btn-history {{ request()->routeIs('ketersediaan_ruang') ? 'active' : '' }}" 
                             onclick="window.location.href='{{ route('ketersediaan_ruang') }}'">Riwayat Pengisian
-                        </button>          
+                        </button>                                
                 </div>
                 <div class="form-container">
                     <table>
@@ -208,7 +243,6 @@
                               <th>Gedung</th>
                               <th>Nama Ruang</th>
                               <th>Kapasitas Ruang</th>
-                              <th>Status</th>
                               <th>Aksi</th>
                           </tr>
                       </thead>
@@ -219,16 +253,19 @@
                                   <td>{{ $ruang->nama_ruang }}</td>
                                   <td>{{ $ruang->kapasitas }}</td>
                                   <td>
-                                      <a href="manajemen_ruang" class="btn-action btn-edit">Edit</a>
-                                      <form action="{{ route('ruangan.hapus', $ruang->id_ruang) }}" method="POST" style="display: inline;">
+                                    <!-- Edit button -->
+                                    <a href="{{ route('bagianAkademik.manajemen_ruang') }}" class="btn-action btn-edit">Edit</a>
+                                
+                                    <!-- Delete button -->
+                                    <form action="{{ route('ruangan.hapus', $ruang->id_ruang) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn-action btn-delete" 
                                             data-nama-ruang="{{ $ruang->nama_ruang }}" 
-                                            onclick="return confirmHapus(this)">Hapus
-                                        </button>
+                                            onclick="return confirmHapus(this)">Hapus</button>
                                     </form>                                                                 
-                                  </td>
+                                </td>
+                                                             
                               </tr>
                           @endforeach
                       </tbody>

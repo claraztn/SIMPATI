@@ -42,7 +42,7 @@
                         <!-- Menu Atur Jadwal -->
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('kaprodi.atur-jadwal') }}" style="text-decoration: none;">Atur Jadwal</a>
-                        </li>
+                        </li> 
                     </ul>
                     <ul class="navbar-nav ms-auto"> 
                         <!-- Dropdown User -->

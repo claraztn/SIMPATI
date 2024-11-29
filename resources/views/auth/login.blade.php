@@ -56,7 +56,7 @@
 <body>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <div class="card shadow">
                     <div class="card-header text-center text-white">
                         <img src="{{ asset('img/logo.png') }}" alt="Logo" class="logo">
