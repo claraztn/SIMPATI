@@ -35,7 +35,7 @@
                     <ul class="navbar-nav flex-grow-1">
                         <!-- Menu Home -->
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#" style="text-decoration: none;">Home</a>
+                            <a class="nav-link text-white" href="{{ route('mahasiswa.dashboard') }}" style="text-decoration: none;">Home</a>
                         </li>
                         <!-- Menu Registrasi -->
                         <li class="nav-item">

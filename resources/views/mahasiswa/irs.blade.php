@@ -105,7 +105,7 @@
                     <div class="offcanvas-body">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#" style="text-decoration: none;">Home</a>
+                            <a class="nav-link text-white" href="{{ route('mahasiswa.dashboard') }}" style="text-decoration: none;">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('mahasiswa.registrasi') }}" style="text-decoration: none;">Registrasi</a>
