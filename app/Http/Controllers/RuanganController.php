@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ruangan;
+use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
 
 class RuanganController extends Controller
@@ -13,23 +14,28 @@ class RuanganController extends Controller
     public function showManajemenRuang()
     {
         $ruangan = Ruangan::all();
-        return view('bagianAkademik.manajemen_ruang', compact('ruangan'));
+        $prodi = ProgramStudi::all();  // Fetch program studi (prodi)
+        return view('bagianAkademik.manajemen_ruang', compact('ruangan', 'prodi')); // Pass both variables to the view
     }
+    
 
-    /**
-     * Mengambil data ruangan berdasarkan gedung.
-     */
-    public function getRuangByGedung(Request $request)
+    public function getRuangByProdi(Request $request)
     {
-        $gedung = $request->input('gedung');
-        
-        if (!$gedung) {
-            return response()->json(['error' => 'Gedung tidak valid'], 400);
+        $prodi = $request->input('prodi');
+        if (!$prodi) {
+            return response()->json(['error' => 'Prodi tidak valid'], 400);
         }
-
-        $ruangan = Ruangan::where('gedung', $gedung)->get();
+        $ruangan = Ruangan::where('id_prodi', $prodi)->get();    
         return response()->json($ruangan);
     }
+    
+
+    public function getRuanganByGedung(Request $request)
+    {
+        $gedung = $request->get('gedung');
+        $ruangs = Ruangan::where('gedung', $gedung)->get(['nama_ruang', 'kapasitas_ruang']);
+        return response()->json($ruangs);
+    }    
 
     /**
      * Menampilkan halaman ketersediaan ruang.
@@ -37,7 +43,8 @@ class RuanganController extends Controller
     public function index()
     {
         $ruangan = Ruangan::all();
-        return view('ketersediaan_ruang', compact('ruangan'));
+        $prodi = ProgramStudi::all(); 
+        return view('ketersediaan_ruang', compact('ruangan', 'prodi'));
     }
 
     /**
@@ -45,16 +52,25 @@ class RuanganController extends Controller
      */
     public function aturKapasitas(Request $request)
     {
+        // Validasi input
         $validated = $request->validate([
+            'prodi' => 'required|exists:prodi,id_prodi',  // Validasi untuk prodi
+            'gedung' => 'required|string',  // Validasi untuk gedung
             'namaRuang' => 'required|string|exists:ruangan,nama_ruang',
             'kapasitas' => 'required|integer|min:1',
         ]);
-
-        $ruangan = Ruangan::where('nama_ruang', $validated['namaRuang'])->firstOrFail();
+    
+        // Cari ruangan berdasarkan nama ruang dan prodi
+        $ruangan = Ruangan::where('nama_ruang', $validated['namaRuang'])
+                          ->where('id_prodi', $validated['prodi'])
+                          ->firstOrFail();
+    
+        // Update kapasitas ruangan
         $ruangan->update(['kapasitas' => $validated['kapasitas']]);
-
+    
         return redirect()->route('ketersediaan_ruang')->with('success', "Kapasitas ruang {$ruangan->nama_ruang} berhasil diperbarui!");
     }
+    
 
     /**
      * Menghapus kapasitas ruangan.

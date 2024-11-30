@@ -8,15 +8,19 @@
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <style>
         .navbar-custom {
-            background-color: #003f5c; 
+            background-color: #003f5c;
         }
+
         .card-header {
             background-color: #ffc107;
         }
+
         .card-header h5 {
             margin: 0;
         }
-        .table th, .table td {
+
+        .table th,
+        .table td {
             text-align: center;
         }
     </style>
@@ -45,7 +49,6 @@
             </div>
         </div>
     </nav>
-
     <!-- Main Content -->
     <div class="container my-5">
         <h1 class="h3 mb-4 text-center">Atur Jadwal Kuliah</h1>
@@ -64,7 +67,7 @@
                         <select name="kode_kelas" id="kode_kelas" class="form-select" required>
                             <option value="">Pilih Kelas</option>
                             @foreach($kelas as $kls)
-                                <option value="{{ $kls->kode_kelas }}">{{ $kls->kode_kelas }} - {{ $kls->mataKuliah->nama_mk }}</option>
+                            <option value="{{ $kls->kode_kelas }}">{{ $kls->kode_kelas }} - {{ $kls->mataKuliah->nama_mk }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -86,7 +89,7 @@
                         <select name="id_ruang" id="id_ruang" class="form-select" required>
                             <option value="">Pilih Ruangan</option>
                             @foreach($ruangan as $rg)
-                                <option value="{{ $rg->id_ruang }}">{{ $rg->nama_ruang }} ({{ $rg->gedung }})</option>
+                            <option value="{{ $rg->id_ruang }}">{{ $rg->nama_ruang }} ({{ $rg->gedung }})</option>
                             @endforeach
                         </select>
                     </div>
@@ -129,18 +132,18 @@
                     </thead>
                     <tbody>
                         @foreach($kelas as $key => $kls)
-                            @if($kls->jadwal)
-                                <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $kls->kode_kelas }} - {{ $kls->mataKuliah->nama_mk }}</td>
-                                    <td>{{ $kls->jadwal->hari }}</td>
-                                    <td>{{ $kls->jadwal->ruangan->nama_ruang ?? 'Belum ditentukan' }}</td>
-                                    <td>{{ $kls->jadwal->jam_mulai }}</td>
-                                    <td>{{ $kls->jadwal->sks }}</td>
-                                    <td>{{ ucfirst($kls->jadwal->status) }}</td>
-                                    <td>{{ $kls->dosenMataKuliah->dosen->nama ?? 'Belum Ditentukan' }}</td>
-                                </tr>
-                            @endif
+                        @if($kls->jadwal)
+                        <tr>
+                            <td>{{ $key + 1 }}</td>
+                            <td>{{ $kls->kode_kelas }} - {{ $kls->mataKuliah->nama_mk }}</td>
+                            <td>{{ $kls->jadwal->hari }}</td>
+                            <td>{{ $kls->jadwal->ruangan->nama_ruang ?? 'Belum ditentukan' }}</td>
+                            <td>{{ $kls->jadwal->jam_mulai }}</td>
+                            <td>{{ $kls->jadwal->sks }}</td>
+                            <td>{{ ucfirst($kls->jadwal->status) }}</td>
+                            <td>{{ $kls->dosenMataKuliah->dosen->nama ?? 'Belum Ditentukan' }}</td>
+                        </tr>
+                        @endif
                         @endforeach
                     </tbody>
                 </table>

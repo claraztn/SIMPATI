@@ -187,6 +187,10 @@
                     </div>
                     <div class="offcanvas-body">
                         <ul class="navbar-nav flex-grow-1">
+                            <a class="nav-link" href="{{ route('bagianAkademik.dashboard') }}" style="color: white;">
+                                Home
+                            </a>                            
+                        <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item {{ request()->routeIs('bagianAkademik.manajemen_ruang') ? 'active' : '' }}">
                                 <a class="nav-link" href="{{ route('bagianAkademik.manajemen_ruang') }}">
                                     Manajemen Ruang
@@ -243,6 +247,7 @@
                               <th>Gedung</th>
                               <th>Nama Ruang</th>
                               <th>Kapasitas Ruang</th>
+                              <th>Status</th>
                               <th>Aksi</th>
                           </tr>
                       </thead>
@@ -317,4 +322,3 @@
         </script>
     </body>
 </html>
-

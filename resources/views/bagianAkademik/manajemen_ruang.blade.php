@@ -119,17 +119,30 @@
         
         <div class="container">
             <div class="card border-0 shadow my-5">
-              <div class="card-header bg-light">
-                  <h3 class="h5 pt-2">MANAJEMEN RUANG KELAS</h3>
-              </div>
-              <div class="card-body">
-                  <div class="button-container" style="margin-bottom: 20px;">
-                    <button class="btn-fill" onclick="window.location.href='{{ route('bagianAkademik.manajemen_ruang') }}'">Pengisian</button>
-                    <button class="btn-history" onclick="window.location.href='{{ route('ketersediaan_ruang') }}'">Riwayat Pengisian</button>
-                  </div>
-                  <div class="form-container">
+                <div class="card-header bg-light">
+                    <h3 class="h5 pt-2">MANAJEMEN RUANG KELAS</h3>
+                </div>
+                <div class="card-body">
+                    <div class="button-container" style="margin-bottom: 20px;">
+                        <button class="btn-fill" onclick="window.location.href='{{ route('bagianAkademik.manajemen_ruang') }}'">Pengisian</button>
+                        <button class="btn-history" onclick="window.location.href='{{ route('ketersediaan_ruang') }}'">Riwayat Pengisian</button>
+                    </div>
+
+                <!-- Form to configure room capacity -->
+                <div class="form-container mt-4">
                     <form action="{{ route('ruangan.aturKapasitas') }}" method="POST">
                         @csrf
+
+                        <!-- "Pilih Prodi" Field -->
+                        <label for="prodi">Pilih Prodi:</label>
+                        <select id="prodi" name="prodi" required>
+                            <option value="">--Pilih Prodi--</option>
+                            @foreach($prodi as $item)
+                                <option value="{{ $item->id_prodi }}">{{ $item->nama_prodi }}</option>
+                            @endforeach
+                        </select>
+
+                        <!-- "Pilih Gedung" Field -->
                         <label for="gedung">Pilih Gedung:</label>
                         <select id="gedung" name="gedung" required>
                             <option value="">--Pilih Gedung--</option>
@@ -137,50 +150,63 @@
                                 <option value="{{ $item->gedung }}">{{ $item->gedung }}</option>
                             @endforeach
                         </select>
+
+                        <!-- "Nama Ruang" Field -->
                         <label for="namaRuang">Nama Ruang:</label>
                         <select id="namaRuang" name="namaRuang" required>
                             <option value="">--Pilih Nama Ruang--</option>
                         </select>
+
+                        <!-- "Kapasitas" Field -->
                         <label for="kapasitas">Kapasitas:</label>
                         <input type="number" id="kapasitas" name="kapasitas" required min="1" />
+
+                        <!-- Submit Button -->
                         <button type="submit" class="btn-save">Simpan</button>
                     </form>
                 </div>
-              </div>
+                </div>
             </div>
         </div>
+           
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-            $(document).ready(function() {
-                $('#gedung').change(function() {
-                    var gedung = $(this).val();
-                    $('#namaRuang').empty(); 
-                    $('#kapasitas').val('');
-                    
-                    if (gedung) {
-                        $.ajax({
-                            url: '/ruangan/gedung',
-                            type: 'GET',
-                            data: { gedung: gedung },
-                            success: function(data) {
-                                $('#namaRuang').append('<option value="">--Pilih Nama Ruang--</option>');
-                                $.each(data, function(key, value) {
-                                    $('#namaRuang').append('<option value="' + value.nama_ruang + '" data-kapasitas="' + value.kapasitas_ruang + '">' + value.nama_ruang + '</option>');
-                                });
-                            }
-                        });
-                    }
-                });
+        $(document).ready(function() {
+            // Ketika gedung dipilih
+            $('#gedung').change(function() {
+                var gedung = $(this).val();
+                $('#namaRuang').empty();  // Kosongkan dropdown nama ruang
+                $('#kapasitas').val('');  // Kosongkan input kapasitas
 
-                $('#namaRuang').change(function() {
-                    var selectedOption = $(this).find(':selected');
-                    var kapasitas = selectedOption.data('kapasitas');
-                    $('#kapasitas').attr('max', kapasitas);
-                    $('#kapasitas').val('');
-                });
+                if (gedung) {
+                    $.ajax({
+                        url: '{{ route("ruangan.getRuanganByGedung") }}',  // Pastikan URL sesuai dengan route yang ada
+                        type: 'GET',
+                        data: { gedung: gedung },
+                        success: function(data) {
+                            $('#namaRuang').append('<option value="">--Pilih Nama Ruang--</option>');
+                            // Isi dropdown nama ruang dengan data yang diterima
+                            $.each(data, function(key, value) {
+                                $('#namaRuang').append('<option value="' + value.nama_ruang + '" data-kapasitas="' + value.kapasitas_ruang + '">' + value.nama_ruang + '</option>');
+                            });
+                        },
+                        error: function() {
+                            alert('Gagal mengambil data ruangan.');
+                        }
+                    });
+                }
             });
+
+            // Ketika nama ruang dipilih
+            $('#namaRuang').change(function() {
+                var selectedOption = $(this).find(':selected');
+                var kapasitas = selectedOption.data('kapasitas');
+                $('#kapasitas').attr('max', kapasitas);  // Set kapasitas maksimal berdasarkan ruang yang dipilih
+                $('#kapasitas').val('');  // Kosongkan input kapasitas
+            });
+        });
         </script>
     </body>
 </html>
