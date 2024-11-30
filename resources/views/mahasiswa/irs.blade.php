@@ -101,9 +101,21 @@
               background-color: #f0f0f0;
           }
 
+          /* Hover effect on table rows */
+          .table tbody tr:hover {
+              background-color: #f1f1f1;
+          }
+
+          /* Adjust checkbox size */
           .table td input {
-              width: 20px;
-              height: 20px;
+              width: 30px;
+              height: 30px;
+          }
+
+          /* Custom header for 'Daftar Mata Kuliah' */
+          .card-header {
+              background-color: #003f5c;
+              color: white;
           }
       </style>
    </head>
@@ -187,13 +199,13 @@
                     <form method="POST" action="{{ route('irs.submit') }}">
                         @csrf
                         <div class="card shadow">
-                            <div class="card-header bg-primary text-white">
+                            <div class="card-header">
                                 <h6 class="mb-0">Daftar Mata Kuliah</h6>
                             </div>
                             <div class="card-body">
                                 <table class="table table-bordered">
                                     <thead>
-                                        <tr class="table-header">
+                                        <tr>
                                             <th>No</th>
                                             <th>Kode MK</th>
                                             <th>Nama MK</th>
@@ -230,16 +242,16 @@
                                         </tr>
                                     </tbody>
                                 </table>
-
-                                <button type="submit" class="btn-save">Simpan</button>
                             </div>
                         </div>
+
+                        <button class="btn-save" type="submit">Simpan</button>
                     </form>
                 </div>
             </div>
         </div>
 
-        <!-- Bootstrap JS and Popper.js -->
+        <!-- Bootstrap JS -->
         <script src="https://unpkg.com/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
+   </body>
 </html>
