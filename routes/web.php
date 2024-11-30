@@ -208,8 +208,8 @@ Route::post('/select-role', [AuthController::class, 'processRole'])->name('proce
 // Rute untuk Mahasiswa
 Route::prefix('mahasiswa')->middleware('auth')->group(function () {
     Route::get('/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
-    Route::get('/irs', [MahasiswaController::class, 'showIRS'])->name('mahasiswa.irs');
-    Route::post('/irs', [MahasiswaController::class, 'submitIRS'])->name('irs.submit');
+    // Route::get('/irs', [MahasiswaController::class, 'showIRS'])->name('mahasiswa.irs');
+    // Route::post('/irs', [MahasiswaController::class, 'submitIRS'])->name('irs.submit');
     Route::get('/registrasi', [MahasiswaController::class, 'showRegistrasi'])->name('mahasiswa.registrasi');
     Route::post('/registrasi', [MahasiswaController::class, 'submitRegistrasi'])->name('registrasi.submit');
 });
@@ -263,7 +263,18 @@ Route::prefix('pembimbing-akademik')->middleware('auth')->group(function () {
     Route::get('/jadwal-mengajar', [PembimbingAkademikController::class, 'jadwalMengajar'])->name('pembimbingAkademik.jadwal-mengajar');
 });
 
-// Rute untuk Jadwal
-Route::prefix('jadwal')->middleware('auth')->group(function () {
-    Route::get('/', [JadwalController::class, 'index'])->name('jadwal.index');
-});
+// // Rute untuk Jadwal
+// Route::prefix('jadwal')->middleware('auth')->group(function () {
+//     Route::get('/', [JadwalController::class, 'index'])->name('jadwal.index');
+// });
+
+########### IRS ###########
+// Route::resource('irs', IRSController::class);
+Route::get('irs/show', [IrsController::class, 'show'])->name('irs.show');
+Route::get('irs/showApproved', [IrsController::class, 'showApproved'])->name('irs.showApproved');
+Route::get('irs', [IrsController::class, 'index'])->name('irs.index');
+
+########### JADWAL ###########
+Route::get('jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
+
+

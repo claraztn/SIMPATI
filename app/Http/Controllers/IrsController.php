@@ -3,15 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
-class IrsController extends Controller{
-
-    public function BuatIrs()
+class IRSController extends Controller
+{
+    function index(): View
     {
-        $irs = DB::table('irs')->get();
-        return view('buat_IRS', compact('irs'));
+        return view('page.irs.index');
     }
 
-}
+    function show(): View
+    {
+        return view('page.irs.show');
+    }
 
+    function showApproved(): View
+    {
+        return view('page.irs.showApproved');
+    }
+}
