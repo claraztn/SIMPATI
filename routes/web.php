@@ -208,8 +208,8 @@ Route::post('/select-role', [AuthController::class, 'processRole'])->name('proce
 // Rute untuk Mahasiswa
 Route::prefix('mahasiswa')->middleware('auth')->group(function () {
     Route::get('/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
-    // Route::get('/irs', [MahasiswaController::class, 'showIRS'])->name('mahasiswa.irs');
-    // Route::post('/irs', [MahasiswaController::class, 'submitIRS'])->name('irs.submit');
+    Route::get('/irs', [MahasiswaController::class, 'showIRS'])->name('mahasiswa.irs');
+    Route::post('/irs', [MahasiswaController::class, 'submitIRS'])->name('irs.submit');
     Route::get('/registrasi', [MahasiswaController::class, 'showRegistrasi'])->name('mahasiswa.registrasi');
     Route::post('/registrasi', [MahasiswaController::class, 'submitRegistrasi'])->name('registrasi.submit');
 });

@@ -18,7 +18,6 @@ class MahasiswaController extends Controller
         $mataKuliah = MataKuliah::all(); 
         return view('mahasiswa.irs', compact('mataKuliah'));
     }
-    
 
     public function showRegistrasi()
     {
