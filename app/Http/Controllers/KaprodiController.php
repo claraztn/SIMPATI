@@ -20,7 +20,7 @@ class KaprodiController extends Controller
 
     public function aturJadwal()
     {   
-        $kelas = Kelas::with('mataKuliah', 'jadwal','jadwal.ruangan')->get();
+        $kelas = Kelas::with('mataKuliah', 'jadwal','jadwal.ruangan','dosenMataKuliah.dosen')->get();
         $mataKuliah = MataKuliah::all();
         $ruangan = Ruangan::where('status', 'approved')->get();
         $dosenMataKuliah = DosenMataKuliah::with('dosen')->get();

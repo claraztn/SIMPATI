@@ -229,6 +229,7 @@ Route::prefix('kaprodi')->middleware('auth')->group(function () {
     Route::get('/dashboard', [KaprodiController::class, 'index'])->name('kaprodi.dashboard');
     Route::get('/atur-jadwal', [KaprodiController::class, 'aturJadwal'])->name('kaprodi.atur-jadwal');  
     Route::post('/store-jadwal', [KaprodiController::class, 'storeJadwal'])->name('kaprodi.store-jadwal');
+    // Route::post('/ajukan-ke-dekan/{jadwal}', [KaprodiController::class, 'ajukanKeDekan'])->name('kaprodi.ajukan-ke-dekan');
 });
 
 // Rute untuk Bagian Akademik

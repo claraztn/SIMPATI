@@ -31,5 +31,9 @@ class Kelas extends Model
     {
         return $this->hasMany(IRS::class, 'kode_kelas', 'kode_kelas');
     }
+    public function dosenMataKuliah()
+    {
+        return $this->hasOne(DosenMataKuliah::class, 'kode_mk', 'kode_mk');
+    }
 }
 

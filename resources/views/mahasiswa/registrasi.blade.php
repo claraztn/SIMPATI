@@ -115,8 +115,18 @@
                               <option value="2">2</option>
                               <option value="3">3</option>
                               <option value="4">4</option>
+                              <option value="1">5</option>
+                              <option value="2">6</option>
+                              <option value="3">7</option>
+                              <option value="4">8</option>
+                              <option value="1">9</option>
+                              <option value="2">10</option>
+                              <option value="3">11</option>
+                              <option value="4">12</option>
+                              <option value="1">13</option>
+                              <option value="2">14</option>
                           </select>
-                          <button type="submit" class="btn-fill">Daftar</button>
+                          <button type="submit" class="btn-fill">Registrasi</button>
                       </form>
                   </div>
               </div>
