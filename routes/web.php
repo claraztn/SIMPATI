@@ -182,16 +182,19 @@
 
 // baru 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\IrsController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DekanController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\JadwalController;
-use App\Http\Controllers\PembimbingAkademikController;
 use App\Http\Controllers\KaprodiController;
 use App\Http\Controllers\RuanganController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\BagianAkademikController;
+use App\Http\Controllers\PembimbingAkademikController;
 use App\Http\Controllers\KetersediaanRuanganController;
-use App\Http\Controllers\IRSController;
+
 
 Route::get('/', function () {
     return view('auth.login'); 
