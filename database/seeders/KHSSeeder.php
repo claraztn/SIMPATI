@@ -10,7 +10,7 @@ class KHSSeeder extends Seeder
     public function run(): void
     {
         DB::table('khs')->insert([
-            ['nim' => '24060122120037', 'semester' => '5', 'kode_mk' => 'TI101', 'tahun' => '2023', 'skssemester' => 20, 'skskumulatif' => 100, 'ipsemester' => 3.75, 'ipkumulatif' => 3.65, 'scankhs' => 'file_path_1.pdf', 'isverified' => 1],
+            ['nim' => '24060122120037', 'semester' => '3', 'kode_mk' => 'PAIK6304', 'tahun' => '2023', 'skssemester' => 20, 'skskumulatif' => 100, 'ipsemester' => 3.75, 'ipkumulatif' => 3.65, 'scankhs' => 'file_path_1.pdf', 'isverified' => 1],
 
             
 

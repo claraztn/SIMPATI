@@ -191,6 +191,7 @@ use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\BagianAkademikController;
 use App\Http\Controllers\KetersediaanRuanganController;
+use App\Http\Controllers\IRSController;
 
 Route::get('/', function () {
     return view('auth.login'); 
@@ -212,6 +213,7 @@ Route::prefix('mahasiswa')->middleware('auth')->group(function () {
     Route::post('/irs', [MahasiswaController::class, 'submitIRS'])->name('irs.submit');
     Route::get('/registrasi', [MahasiswaController::class, 'showRegistrasi'])->name('mahasiswa.registrasi');
     Route::post('/registrasi', [MahasiswaController::class, 'submitRegistrasi'])->name('registrasi.submit');
+
 });
 
 // Dekan

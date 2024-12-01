@@ -126,8 +126,8 @@
                             <th>Ruangan</th>
                             <th>Jam Mulai</th>
                             <th>SKS</th>
-                            <th>Status</th>
                             <th>Nama Pengampu</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -140,8 +140,8 @@
                             <td>{{ $kls->jadwal->ruangan->nama_ruang ?? 'Belum ditentukan' }}</td>
                             <td>{{ $kls->jadwal->jam_mulai }}</td>
                             <td>{{ $kls->jadwal->sks }}</td>
-                            <td>{{ ucfirst($kls->jadwal->status) }}</td>
                             <td>{{ $kls->dosenMataKuliah->dosen->nama ?? 'Belum Ditentukan' }}</td>
+                            <td>{{ ucfirst($kls->jadwal->status) }}</td>
                         </tr>
                         @endif
                         @endforeach

@@ -174,28 +174,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>MK101</td>
-                                                <td>Matematika Dasar</td>
-                                                <td>Senin, 08:00 - 10:00</td>
-                                                <td>Ruangan A101</td>
-                                                <td>Semester 5</td>
-                                                <td>3</td>
-                                                <td>Dr. A</td>
-                                                <td><input type="checkbox" name="mk1"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>MK102</td>
-                                                <td>Fisika Dasar</td>
-                                                <td>Selasa, 10:00 - 12:00</td>
-                                                <td>Ruangan B202</td>
-                                                <td>Semester 5</td>
-                                                <td>3</td>
-                                                <td>Prof. B</td>
-                                                <td><input type="checkbox" name="mk2"></td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -350,7 +328,7 @@
             document.getElementById('transkripAccordion').style.display = 'none';
 
             // Sembunyikan Tabel Mata Kuliah dan Button Simpan
-            document.getElementById('matkulTable').closest('div').style.display = 'none'; // Hide the parent div of the table
+            document.getElementById('matkulTable').closest('div').style.display = 'none'; 
             document.querySelector('button.btn-save').style.display = 'none';
 
             // Menampilkan konten yang dipilih

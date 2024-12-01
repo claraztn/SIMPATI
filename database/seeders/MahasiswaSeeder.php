@@ -20,7 +20,7 @@ class MahasiswaSeeder extends Seeder
                 'tanggal_lahir' => '2002-05-14',
                 'jenis_kelamin' => 'Perempuan',
                 'status' => 'Aktif',
-                'angkatan' => 2022,
+                'angkatan' => 2023,
                 'dosen_wali' => '1234567890', 
                 'id_user' => 1,  
                 'id_prodi' => '1', 
