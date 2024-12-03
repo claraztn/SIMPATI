@@ -62,20 +62,20 @@
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body">
-                <ul class="navbar-nav flex-grow-1">
-                    <!-- Menu Home -->
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('mahasiswa.dashboard') }}" style="text-decoration: none;">Home</a>
-                    </li>
-                    <!-- Menu Registrasi -->
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('mahasiswa.registrasi') }}" style="text-decoration: none;">Registrasi</a>
-                    </li>
-                    <!-- Menu IRS -->
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="{{ route('mahasiswa.irs') }}" style="text-decoration: none;">IRS</a>
-                    </li>
-                </ul>
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ route('mahasiswa.dashboard') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ route('mahasiswa.registrasi') }}">Registrasi</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ route('mahasiswa.irs') }}">IRS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ route('mahasiswa.detail-irs-khs') }}">Detail IRS & KHS</a>
+                        </li>
+                    </ul>
                     <ul class="navbar-nav ms-auto"> 
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -24,6 +24,13 @@ class MahasiswaController extends Controller
         return view('mahasiswa.registrasi'); 
     }
 
+    public function showDetail()
+    {
+        $mataKuliah = MataKuliah::all(); 
+        
+        return view('mahasiswa.detail_irs_khs', compact('mataKuliah'));
+    }
+
     public function submitRegistrasi(Request $request)
     {
         $validated = $request->validate([
@@ -53,7 +60,7 @@ class MahasiswaController extends Controller
             IRS::create([
                 'nim' => auth()->user()->nim,
                 'kode_mk' => $mkId,
-                'semester' => 5, // Contoh, sesuaikan dengan input sebenarnya
+                'semester' => 3,
                 'jmlsks' => MataKuliah::find($mkId)->sks,
                 'isverified' => false,
             ]);

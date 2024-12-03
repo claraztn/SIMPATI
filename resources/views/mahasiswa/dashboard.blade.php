@@ -64,6 +64,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('mahasiswa.irs') }}">IRS</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ route('mahasiswa.detail-irs-khs') }}">Detail IRS & KHS</a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item dropdown">
@@ -89,7 +92,7 @@
         </div>
     </div>
     <!-- Ganti 'my-5' menjadi kelas margin yang lebih kecil atau kosongkan -->
-    <div class="container my-2">
+    <div class="container my-5">
         <!-- Alert -->
         <div class="alert alert-success d-flex align-items-center" role="alert">
             <i class="bi bi-check-circle-fill me-2"></i>
