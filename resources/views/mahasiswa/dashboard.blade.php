@@ -69,19 +69,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('mahasiswa.dashboard') }}">Home</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('mahasiswa.registrasi') }}">Registrasi</a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('mahasiswa.irs') }}">IRS</a>
                         </li>
                         <li class="nav-item">
-<<<<<<< HEAD
                             <a class="nav-link text-white" href="{{ route('mahasiswa.detail-irs-khs') }}">Detail IRS &
                                 KHS</a>
-=======
-                            <a class="nav-link text-white" href="{{ route('mahasiswa.detail-irs-khs') }}">Detail IRS & KHS</a>
->>>>>>> 97cbb3aca2c0ba92c27428880912265a3201bfdb
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
@@ -114,7 +110,7 @@
         </div>
     </div>
     <!-- Ganti 'my-5' menjadi kelas margin yang lebih kecil atau kosongkan -->
-    <div class="container my-5">
+    <div class="container my-2">
         <!-- Alert -->
         <div class="alert alert-success d-flex align-items-center" role="alert">
             <i class="bi bi-check-circle-fill me-2"></i>
@@ -199,8 +195,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-<<<<<<< HEAD
 
-=======
->>>>>>> 97cbb3aca2c0ba92c27428880912265a3201bfdb
 </html>
