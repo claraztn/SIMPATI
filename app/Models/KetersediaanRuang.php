@@ -9,6 +9,9 @@ class KetersediaanRuang extends Model
 {
     use HasFactory;
     
-    protected $table = 'ketersediaan_ruangs'; // Nama tabel
-    protected $fillable = ['gedung', 'nama_ruang', 'kapasitas_ruang']; // Kolom yang bisa diisi massal
+    // Nama tabel
+    protected $table = 'ketersediaan_ruangs'; 
+
+    // Kolom yang bisa diisi massal
+    protected $fillable = ['gedung', 'nama_ruang', 'kapasitas_ruang']; 
 }

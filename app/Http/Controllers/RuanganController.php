@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jadwal;
 use App\Models\Ruangan;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
@@ -14,10 +15,10 @@ class RuanganController extends Controller
     public function showManajemenRuang()
     {
         $ruangan = Ruangan::all();
-        $prodi = ProgramStudi::all();  // Fetch program studi (prodi)
+        $prodi = ProgramStudi::where('id_fakultas', 1)->get();  // Fetch program studi (prodi)
         return view('bagianAkademik.manajemen_ruang', compact('ruangan', 'prodi')); // Pass both variables to the view
     }
-    
+
 
     public function getRuangByProdi(Request $request)
     {
@@ -25,17 +26,22 @@ class RuanganController extends Controller
         if (!$prodi) {
             return response()->json(['error' => 'Prodi tidak valid'], 400);
         }
-        $ruangan = Ruangan::where('id_prodi', $prodi)->get();    
+        $ruangan = Ruangan::where('id_prodi', $prodi)->get();
         return response()->json($ruangan);
     }
-    
+
 
     public function getRuanganByGedung(Request $request)
     {
         $gedung = $request->get('gedung');
+
+        if (!$gedung) {
+            return response()->json(['error' => 'Gedung tidak valid'], 400);
+        }
+
         $ruangs = Ruangan::where('gedung', $gedung)->get(['nama_ruang', 'kapasitas_ruang']);
         return response()->json($ruangs);
-    }    
+    }
 
     /**
      * Menampilkan halaman ketersediaan ruang.
@@ -43,8 +49,11 @@ class RuanganController extends Controller
     public function index()
     {
         $ruangan = Ruangan::all();
-        $prodi = ProgramStudi::all(); 
-        return view('ketersediaan_ruang', compact('ruangan', 'prodi'));
+        $prodi = ProgramStudi::all();
+
+        $ruangs = Ruangan::with('programStudi')->orderBy('created_at', 'desc')->get();
+
+        return view('ketersediaan_ruang', compact('ruangan', 'prodi', 'ruangs'));
     }
 
     /**
@@ -52,25 +61,68 @@ class RuanganController extends Controller
      */
     public function aturKapasitas(Request $request)
     {
-        // Validasi input
         $validated = $request->validate([
-            'prodi' => 'required|exists:prodi,id_prodi',  // Validasi untuk prodi
-            'gedung' => 'required|string',  // Validasi untuk gedung
-            'namaRuang' => 'required|string|exists:ruangan,nama_ruang',
+            'id_prodi' => 'required|exists:program_studi,id_prodi',
+            'gedung' => 'required|string',
+            'nama_ruang' => 'required|string',
             'kapasitas' => 'required|integer|min:1',
         ]);
-    
-        // Cari ruangan berdasarkan nama ruang dan prodi
-        $ruangan = Ruangan::where('nama_ruang', $validated['namaRuang'])
-                          ->where('id_prodi', $validated['prodi'])
-                          ->firstOrFail();
-    
-        // Update kapasitas ruangan
-        $ruangan->update(['kapasitas' => $validated['kapasitas']]);
-    
-        return redirect()->route('ketersediaan_ruang')->with('success', "Kapasitas ruang {$ruangan->nama_ruang} berhasil diperbarui!");
+
+        $prodi = ProgramStudi::find($validated['id_prodi']);
+        $id_fakultas = $prodi->id_fakultas;
+        // dd($id_fakultas);
+
+        $existRuangan = Ruangan::where('gedung', $validated['gedung'])
+            ->where('nama_ruang', $validated['nama_ruang'])
+            ->where(function ($query) use ($validated, $id_fakultas) {
+                $query->where('id_fakultas', $id_fakultas)  // fakultas sama
+                    ->where('id_prodi', '!=', $validated['id_prodi'])  // beda prodi
+                    ->orWhere(function ($query) use ($validated) {
+                        // OR kondisi: (exact duplicate)
+                        $query->where('id_prodi', $validated['id_prodi']);
+                    });
+            })
+            ->first();
+
+        if ($existRuangan) {
+            return redirect()->back()->with('error', "Ruangan \"{$validated['nama_ruang']}\" sudah dibuat atau sudah terdaftar untuk prodi lain!");
+        }
+
+        Ruangan::create([
+            'id_prodi' => $validated['id_prodi'],
+            'id_fakultas' => $id_fakultas,
+            'gedung' => $validated['gedung'],
+            'nama_ruang' => $validated['nama_ruang'],
+            'kapasitas' => $validated['kapasitas'],
+        ]);
+
+        return redirect()->route('ketersediaan_ruang')
+            ->with('success', "Kapasitas ruangan \"{$validated['nama_ruang']}\" berhasil diperbarui!");
     }
-    
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'gedung' => 'required|string|max:255',
+            'nama_ruang' => 'required|string|max:255',
+            'kapasitas' => 'required|integer|min:1',
+        ]);
+
+        $ruang = Ruangan::findOrFail($id);
+
+        $ruang->gedung = $request->gedung;
+        $ruang->nama_ruang = $request->nama_ruang;
+        $ruang->kapasitas = $request->kapasitas;
+
+        $ruang->save();
+
+        Ruangan::where('id_ruang', $ruang->id_ruang)->update([
+            'status' => 'pending',
+        ]);
+
+
+        return redirect()->route('ketersediaan_ruang')->with('success', 'Data ruang berhasil diperbarui!');
+    }
 
     /**
      * Menghapus kapasitas ruangan.
@@ -78,9 +130,18 @@ class RuanganController extends Controller
     public function hapus($id_ruang)
     {
         $ruangan = Ruangan::findOrFail($id_ruang);
-        $ruangan->update(['kapasitas' => null]);
+        $jadwalCount = Jadwal::where('id_ruang', $id_ruang)->count();
 
-        return redirect()->route('ketersediaan_ruang')->with('success', "Kapasitas ruang {$ruangan->nama_ruang} berhasil dihapus!");
+        if ($jadwalCount > 0) {
+            return response()->json([
+                'status' => 'error',
+                'message' => "Ruang {$ruangan->nama_ruang} tidak dapat dihapus karena sudah terpakai di jadwal!"
+            ], 400);
+        }
+
+        $ruangan->delete();
+
+        return redirect()->route('ketersediaan_ruang')->with('success', "Ruang {$ruangan->nama_ruang} berhasil dihapus!");
     }
 
     /**

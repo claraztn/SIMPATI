@@ -54,4 +54,9 @@ class Dosen extends Model
     {
         return $this->hasMany(DosenMataKuliah::class, 'nip', 'nip');
     }
+
+    public function jadwals()
+    {
+        return $this->hasManyThrough(Jadwal::class, DosenMataKuliah::class, 'nip', 'kode_mk', 'nip', 'kode_mk');
+    }
 }

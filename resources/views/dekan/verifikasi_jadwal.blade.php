@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <style>
         .navbar-custom {
-            background-color: #003f5c; 
+            background-color: #003f5c;
         }
     </style>
 </head>
@@ -22,25 +22,78 @@
             </button>
 
             <a class="navbar-brand text-white" href="#">SIMPATI</a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="/dekan/dashboard">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="/dekan/verifikasi-ruangan">Verifikasi Ruangan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="/dekan/verifikasi-jadwal">Verifikasi Jadwal</a>
-                    </li>
-                </ul>
-                <span class="navbar-text text-white">Hello, Dekan</span>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                    class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                </svg>
+            </button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav flex-grow-1">
+                        <!-- Menu Home -->
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#" style="text-decoration: none;">Home</a>
+                        </li>
+                        <!-- Menu Verifikasi Ruangan -->
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ route('verifikasi.ruangan') }}"
+                                style="text-decoration: none;">Verifikasi Ruangan</a>
+                        </li>
+                        <!-- Menu Verifikasi Jadwal -->
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ route('verifikasi.jadwal') }}"
+                                style="text-decoration: none;">Verifikasi Jadwal</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <!-- Dropdown User -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Hello, Dekan
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
 
     <div class="container my-5">
+        @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
         <h1 class="h3 mb-4 text-center">Verifikasi dan Jadwal Disetujui</h1>
+        <!-- Dropdown Pilih Prodi -->
+        <div class="mb-4">
+            <label for="prodiSelect" class="form-label">Pilih Program Studi</label>
+            <select class="form-select" id="prodiSelect" aria-label="Pilih Program Studi">
+                <option selected>Pilih Prodi...</option>
+                <option value="1">Informatika</option>
+                <option value="2">Matematika</option>
+                <option value="2">Statistika</option>
+                <option value="3">Fisika</option>
+                <option value="4">Kimia</option>
+                <option value="5">Biologi</option>
+                <option value="5">Bioteknologi</option>
+
+            </select>
+        </div>
 
         <!-- Tabel Verifikasi Jadwal -->
         <div class="card shadow mb-5">
@@ -60,19 +113,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($jadwalPending as $key => $item)
+                        @forelse ($jadwalPending as $key => $item)
                             <tr>
                                 <td class="text-center">{{ $key + 1 }}</td>
-                                <td>{{ $item->mata_kuliah }}</td>
+                                <td>{{ $item->mataKuliah->nama_mk }}</td>
                                 <td>{{ $item->ruangan->nama_ruang }}</td>
                                 <td>{{ $item->hari }}</td>
-                                <td>{{ $item->jam }}</td>
+                                <td>{{ $item->jam_mulai }}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-success btn-sm">Setujui</button>
-                                    <button class="btn btn-danger btn-sm">Tolak</button>
+                                    <form
+                                        action="{{ route('verifikasi.jadwal.submit', ['id_jadwal' => $item->id_jadwal]) }}"
+                                        method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" name="action" value="approve"
+                                            class="btn btn-success btn-sm">Setujui</button>
+                                        <button type="submit" name="action" value="reject"
+                                            class="btn btn-danger btn-sm">Tolak</button>
+                                    </form>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center">Tidak ada jadwal yang menunggu verifikasi.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -98,21 +163,20 @@
                         @foreach ($jadwalApproved as $key => $item)
                             <tr>
                                 <td class="text-center">{{ $key + 1 }}</td>
-                                <td>{{ $item->mata_kuliah }}</td>
+                                <td>{{ $item->mataKuliah->nama_mk }}</td>
                                 <td>{{ $item->ruangan->nama_ruang }}</td>
                                 <td>{{ $item->hari }}</td>
-                                <td>{{ $item->jam }}</td>
+                                <td>{{ $item->jam_mulai }}</td>
+
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Icon Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/bootstrap-icons.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Icon Library -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/bootstrap-icons.min.js"></script>
 </body>
-
 </html>

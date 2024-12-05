@@ -15,7 +15,6 @@ class BagianAkademikController extends Controller
     public function manajemenRuang()
     {
         $ruangan = Ruangan::all();
-        // Logika untuk manajemen ruang
         return view('bagianAkademik.manajemen_ruang');
     }
 }

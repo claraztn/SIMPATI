@@ -9,6 +9,8 @@ class Mahasiswa extends Model
 {
     use HasFactory;
 
+    protected $table = 'mahasiswa';
+
     // Menentukan primary key untuk tabel 'mahasiswa'
     protected $primaryKey = 'nim';
     public $incrementing = false;
@@ -21,6 +23,11 @@ class Mahasiswa extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'id_user', 'id');
+    }
+
+    public function statusAkademik()
+    {
+        return $this->belongsTo(StatusAkademik::class, 'nim', 'nim');
     }
 
     /**
@@ -50,6 +57,18 @@ class Mahasiswa extends Model
         return $this->hasMany(IRS::class, 'nim', 'nim');
     }
 
+    public function IRSItem()
+    {
+        return $this->hasMany(IrsItemMahasiswa::class, 'nim', 'nim');
+    }
+
+    // Karena irs nya akan banyak arsipnya, maka di pembimbing akademik ambil yang terbaruu
+    // public function latestIRS()
+    // {
+    //     return $this->hasOne(IRS::class, 'nim', 'nim')->latest('created_at');
+    // }
+
+
     /**
      * Relasi ke KHS (One to Many).
      * Mahasiswa memiliki banyak KHS.
@@ -62,7 +81,7 @@ class Mahasiswa extends Model
     // Jika ada kolom-kolom lain yang harus diisi seperti 'status', 'alamat', dll.
     // Anda bisa menambahkan properti untuk mengatur mass assignment.
     protected $fillable = [
-        'nim', 
+        'nim',
         'nama_mahasiswa',
         'email',
         'alamat_mahasiswa',
@@ -78,7 +97,7 @@ class Mahasiswa extends Model
 
     // Jika ada kolom yang tidak perlu di-serialize, Anda dapat menambahkannya
     protected $hidden = [
-        'created_at', 
+        'created_at',
         'updated_at',
     ];
 }

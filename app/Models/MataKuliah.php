@@ -25,7 +25,7 @@ class MataKuliah extends Model
 
     public function programStudi()
     {
-        return $this->belongsTo(ProgramStudi::class, 'id_prodi', 'id');
+        return $this->belongsTo(ProgramStudi::class, 'id_prodi', 'id_prodi');
     }
 
     public function KHS()
@@ -43,5 +43,8 @@ class MataKuliah extends Model
         return $this->hasMany(DosenMataKuliah::class, 'kode_mk', 'kode_mk');
     }
 
-
+    // public function jadwalKuliah()
+    // {
+    //     return $this->hasMany(Jadwal::class, 'kode_mk', 'kode_mk');
+    // }
 }

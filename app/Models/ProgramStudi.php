@@ -1,3 +1,4 @@
+
 <?php
 
 namespace App\Models;
@@ -11,6 +12,10 @@ class ProgramStudi extends Model
 
     // Nama tabel (opsional jika mengikuti konvensi Laravel)
     protected $table = 'program_studi';
+
+    protected $primaryKey = 'id_prodi';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     // Kolom yang dapat diisi (fillable)
     protected $fillable = [
@@ -27,12 +32,12 @@ class ProgramStudi extends Model
     // Relasi ke Ruangan (One-to-Many, jika relevan)
     public function ruangan()
     {
-        return $this->hasMany(Ruangan::class, 'id_prodi', 'id');
+        return $this->hasMany(Ruangan::class, 'id_prodi', 'id_prodi');
     }
 
     public function mataKuliah()
     {
-        return $this->hasMany(MataKuliah::class, 'id_prodi', 'id');
+        return $this->hasMany(MataKuliah::class, 'id_prodi', 'id_prodi');
     }
 
     public function dosen()

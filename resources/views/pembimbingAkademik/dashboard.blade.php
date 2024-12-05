@@ -21,15 +21,19 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md custom-navbar shadow-lg">
         <div class="container">
-            <a class="navbar-brand text-white" href="#">
+            <a class="navbar-brand text-white" href="/pembimbing-akademik/dashboard">
                 <strong>SIMPATI</strong>
             </a>
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                    class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
                 </svg>
             </button>
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -38,22 +42,25 @@
                     <ul class="navbar-nav flex-grow-1">
                         <!-- Menu IRS Mahasiswa -->
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ route('pembimbingAkademik.irs-mahasiswa') }}" style="text-decoration: none;">IRS Mahasiswa</a>
+                            <a class="nav-link text-white" href="{{ route('pembimbingAkademik.irs-mahasiswa') }}"
+                                style="text-decoration: none;">IRS Mahasiswa</a>
                         </li>
                         <!-- Menu Jadwal Mengajar -->
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ route('pembimbingAkademik.jadwal-mengajar') }}" style="text-decoration: none;">Jadwal Mengajar</a>
+                            <a class="nav-link text-white" href="{{ route('pembimbingAkademik.jadwal-mengajar') }}"
+                                style="text-decoration: none;">Jadwal Mengajar</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <!-- Dropdown User -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Hello, Pembimbing Akademik
                             </a>
                             <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">
                                 <li>
-                                <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                                 </li>
                             </ul>
                         </li>
@@ -71,13 +78,14 @@
             </div>
             <div class="card-body">
                 <p>Welcome to the Pembimbing Akademik dashboard</p>
-                
+
             </div>
         </div>
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    </script>
 </body>
-
 </html>
