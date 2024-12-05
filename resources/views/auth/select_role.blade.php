@@ -1,3 +1,27 @@
+Skip to content
+Navigation Menu
+
+Code
+Issues
+Pull requests
+Actions
+Projects
+Breadcrumbssimpati_project_nov/resources/views/auth
+/select_role.blade.php
+Latest commit
+author
+claraztn
+revisi ui pilih role lagi
+d4908c1
+ · 
+5 days ago
+History
+95 lines (87 loc) · 3.79 KB
+File metadata and controls
+
+Code
+
+Blame
 <!DOCTYPE html>
 <html lang="en">
 <head>
