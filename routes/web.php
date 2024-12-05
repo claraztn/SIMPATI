@@ -70,8 +70,6 @@ Route::prefix('bagianAkademik')->middleware('auth')->group(function () {
     Route::post('/update_kapasitas{id}', [RuanganController::class, 'update'])->name('bagianAkademik.ruangan.update');
 });
 
-// Rute untuk Ketersediaan Ruang
-
 // Rute untuk Manajemen Ruangan
 Route::prefix('ruangan')->middleware('auth')->group(function () {
     // Daftar Ruangan
