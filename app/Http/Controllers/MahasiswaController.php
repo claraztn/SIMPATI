@@ -54,10 +54,27 @@ class MahasiswaController extends Controller
     {
         $maksimalSKS = 0;
 
+<<<<<<< HEAD
         // htung berdasarkan semester
         if ($semester == 1 || $semester == 2) {
             // smester 1 dan 2 default 20 SKS
             $maksimalSKS = 20;
+=======
+    public function showDetail()
+    {
+        $mataKuliah = MataKuliah::all(); 
+        
+        return view('mahasiswa.detail_irs_khs', compact('mataKuliah'));
+    }
+
+    public function submitRegistrasi(Request $request)
+    {
+        $validated = $request->validate([
+            'nama' => 'required|string|max:255',
+            'nim' => 'required|string|max:20|unique:mahasiswa,nim',
+            'semester' => 'required|integer',
+        ]);
+>>>>>>> 97cbb3aca2c0ba92c27428880912265a3201bfdb
 
             if ($semester == 2 && $ipk !== null && $ipk < 2.0) {
                 $maksimalSKS = 18;
@@ -91,6 +108,7 @@ class MahasiswaController extends Controller
             'kode_mk.required' => 'Mata kuliah harus dipilih!',
         ]);
 
+<<<<<<< HEAD
         // dd($request->all());
 
         $kodeMk = $request->kode_mk;
@@ -141,6 +159,15 @@ class MahasiswaController extends Controller
                 'jam_mulai' => $jamMulai[$index],
                 'jam_selesai' => $jamSelesai[$index],
                 'ruang' => $ruang[$index],
+=======
+        foreach ($validated['mata_kuliah'] as $mkId) {
+            IRS::create([
+                'nim' => auth()->user()->nim,
+                'kode_mk' => $mkId,
+                'semester' => 3,
+                'jmlsks' => MataKuliah::find($mkId)->sks,
+                'isverified' => false,
+>>>>>>> 97cbb3aca2c0ba92c27428880912265a3201bfdb
             ]);
         }
 

@@ -266,11 +266,12 @@
                             <th>Jam Mulai</th>
                             <th>Jam Selesai</th>
                             <th>SKS</th>
-                            <th>Status</th>
                             <th>Nama Pengampu</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
+<<<<<<< HEAD
                         @php
                             $i = 1;
                         @endphp
@@ -292,6 +293,21 @@
                                     @endforeach
                                 </td>
                             </tr>
+=======
+                        @foreach($kelas as $key => $kls)
+                        @if($kls->jadwal)
+                        <tr>
+                            <td>{{ $key + 1 }}</td>
+                            <td>{{ $kls->kode_kelas }} - {{ $kls->mataKuliah->nama_mk }}</td>
+                            <td>{{ $kls->jadwal->hari }}</td>
+                            <td>{{ $kls->jadwal->ruangan->nama_ruang ?? 'Belum ditentukan' }}</td>
+                            <td>{{ $kls->jadwal->jam_mulai }}</td>
+                            <td>{{ $kls->jadwal->sks }}</td>
+                            <td>{{ $kls->jadwal && $kls->jadwal->dosens ? implode(', ', $kls->jadwal->dosens->pluck('nama')->toArray()) : 'Belum ada dosen' }}</td>
+                            <td>{{ $kls->jadwal->status }}</td>
+                        </tr>
+                        @endif
+>>>>>>> 97cbb3aca2c0ba92c27428880912265a3201bfdb
                         @endforeach
                     </tbody>
                 </table>

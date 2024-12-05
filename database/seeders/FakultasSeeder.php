@@ -12,9 +12,9 @@ class FakultasSeeder extends Seeder
         DB::table('fakultas')->insert([
             [
                 'id_fakultas' => '1',
-                'nama_fakultas' => 'Fakultas Teknik',
+                'nama_fakultas' => 'Fakultas Sains dan Matematika',
                 'no_telepon_fakultas' => '021123456',
-                'email_fakultas' => 'teknik@universitas.ac.id',
+                'email_fakultas' => 'fsm@universitas.ac.id',
             ],
             [
                 'id_fakultas' => '2',

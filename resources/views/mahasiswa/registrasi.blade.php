@@ -83,11 +83,18 @@
                             <a class="nav-link text-white" href="{{ route('mahasiswa.irs') }}">IRS</a>
                         </li>
                         <li class="nav-item">
+<<<<<<< HEAD
                             <a class="nav-link text-white" href="{{ route('mahasiswa.detail-irs-khs') }}">Detail IRS &
                                 KHS</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
+=======
+                            <a class="nav-link text-white" href="{{ route('mahasiswa.detail-irs-khs') }}">Detail IRS & KHS</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto"> 
+>>>>>>> 97cbb3aca2c0ba92c27428880912265a3201bfdb
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#" id="accountDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
