@@ -77,7 +77,10 @@
                 {{ session('success') }}
             </div>
         @endif
-        <h1 class="h3 mb-4 text-center">Daftar Mahasiswa</h1>
+        <h1 class="h3 mb-4 text-center">JADWAL DOSEN {{ $infoDosen->nama_dosen }}
+            <br> TAHUN AJARAN 2024 SEMESTER GANJIL
+            <br> UNIVERSITAS NUSANTARA
+        </h1>
         <!-- Tabel Verifikasi Jadwal -->
         <div class="card shadow mb-5">
 
@@ -86,50 +89,29 @@
                     <thead class="text-center table-primary">
                         <tr>
                             <th>No</th>
-                            <th>Nama</th>
-                            <th>NIM</th>
+                            <th>Hari</th>
+                            <th>Waktu</th>
+                            <th>Mata Kuliah</th>
                             <th>Semester</th>
-                            <th>Jumlah SKS</th>
-                            <th>Beban SKS Maks</th>
-                            <th>IPS</th>
-                            {{-- <th>IPK</th> --}}
-                            <th>Rencana Studi</th>
-                            <th>Status</th>
+                            <th>Kelas</th>
+                            <th>Ruang</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
                             $i = 1;
                         @endphp
-                        @forelse ($mahasiswaRelated as $item)
+                        @foreach ($mkRelated as $item)
                             <tr class="text-center">
                                 <td> {{ $i++ }}</td>
-                                <td> {{ $item->nama_mahasiswa }}</td>
-                                <td> {{ $item->nim }}</td>
-                                <td>{{ $item->IRS->first()?->semester ?? '-' }}</td>
-                                <td>{{ $item->IRS->first()?->jmlsks ?? '-' }}</td>
-                                <td> {{ $item->statusAkademik->batas_sks }}</td>
-                                <td> {{ $item->statusAkademik->ipk_komulatif }}</td>
-                                <td> <a href="{{ route('pembimbingAkademik.irs-detail', $item->IRS->first()?->id) }}"
-                                        class="btn btn-secondary btn-sm">
-                                        Detail
-                                    </a></td>
-                                <td>
-                                    @if ($item->IRS->first()?->isverified === 1)
-                                        <span class="badge bg-success"> Telah Disetujui</span>
-                                    @elseif ($item->IRS->first()?->isverified === 0)
-                                        <span class="badge bg-danger"> Belum Disetujui</span>
-                                    @else
-                                        -
-                                    @endif
-                                </td>
-
+                                <td> {{ $item->jadwal->hari }}</td>
+                                <td> {{ $item->jadwal->jam_mulai }} - {{ $item->jadwal->jam_selesai }}</td>
+                                <td> {{ $item->mataKuliah->nama_mk }}</td>
+                                <td> {{ $item->mataKuliah->semester }}</td>
+                                <td> {{ $item->jadwal->kode_kelas }}</td>
+                                <td> {{ $item->jadwal->ruangan->nama_ruang }}</td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="10" class="text-center">Tidak ada mahasiswa ditemukan.</td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
