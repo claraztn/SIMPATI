@@ -12,7 +12,6 @@ use App\Http\Controllers\BagianAkademikController;
 use App\Http\Controllers\PembimbingAkademikController;
 use App\Http\Controllers\KetersediaanRuanganController;
 
-
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -29,23 +28,14 @@ Route::post('/select-role', [AuthController::class, 'processRole'])->name('proce
 // Rute untuk Mahasiswa
 Route::prefix('mahasiswa')->middleware('auth')->group(function () {
     Route::get('/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
-<<<<<<< HEAD
     Route::get('/irs', [MahasiswaController::class, 'showIRS'])->name('mahasiswa.irs');
     Route::post('/irs', [MahasiswaController::class, 'submitIRS'])->name('irs.submit');
     Route::get('/detail_irs_khs', [MahasiswaController::class, 'showDetail'])->name('mahasiswa.detail-irs-khs');
     // Route::get('/registrasi', [MahasiswaController::class, 'showRegistrasi'])->name('mahasiswa.registrasi');
     Route::post('/registrasi-submit', [MahasiswaController::class, 'submitRegistrasi'])->name('registrasi.submit');
-=======
-    Route::get('/registrasi', [MahasiswaController::class, 'showRegistrasi'])->name('mahasiswa.registrasi');
-    Route::post('/registrasi', [MahasiswaController::class, 'submitRegistrasi'])->name('registrasi.submit');
-    Route::get('/irs', [MahasiswaController::class, 'showIRS'])->name('mahasiswa.irs');
-    Route::post('/irs', [MahasiswaController::class, 'submitIRS'])->name('irs.submit');
-    Route::get('/detail_irs_khs', [MahasiswaController::class, 'showDetail'])->name('mahasiswa.detail-irs-khs');
-
->>>>>>> 97cbb3aca2c0ba92c27428880912265a3201bfdb
 });
 
-// Rute untuk Dekan
+// Dekan
 Route::prefix('dekan')->middleware('auth')->group(function () {
     Route::get('/dashboard', [DekanController::class, 'index'])->name('dekan.dashboard');
     Route::get('/verifikasi-ruangan', [DekanController::class, 'verifikasiRuangan'])->name('verifikasi.ruangan');
@@ -80,6 +70,8 @@ Route::prefix('bagianAkademik')->middleware('auth')->group(function () {
     Route::post('/update_kapasitas{id}', [RuanganController::class, 'update'])->name('bagianAkademik.ruangan.update');
 });
 
+// Rute untuk Ketersediaan Ruang
+
 // Rute untuk Manajemen Ruangan
 Route::prefix('ruangan')->middleware('auth')->group(function () {
     // Daftar Ruangan
@@ -88,8 +80,11 @@ Route::prefix('ruangan')->middleware('auth')->group(function () {
     Route::get('/prodi', [RuanganController::class, 'getRuangByProdi'])->name('ruangan.getRuanganByProdi');
     // Mendapatkan ruangan berdasarkan gedung
     Route::get('/gedung', [RuanganController::class, 'getRuangByGedung'])->name('ruangan.getRuanganByGedung');
+    // Route::get('/getRuanganByGedung/{gedung}', [RuanganController::class, 'getRuangByGedung']);
+
     // Atur Kapasitas Ruang
     Route::post('/atur-kapasitas', [RuanganController::class, 'aturKapasitas'])->name('ruangan.aturKapasitas');
+
     // Hapus Kapasitas Ruang
     Route::delete('/{id_ruang}', [RuanganController::class, 'hapus'])->name('ruangan.hapus');
 });
