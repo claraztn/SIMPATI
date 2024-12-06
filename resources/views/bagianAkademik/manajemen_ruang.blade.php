@@ -135,7 +135,11 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
+<<<<<<< HEAD
                                     Hello, {{ Auth::user()->role }}
+=======
+                                    Hello, {{ auth()->user()->username ?? 'BagianAkademik' }}
+>>>>>>> 7ade62540e5bd0d7bdc68d62f34c6e998a67af8a
                                 </a>
                                 <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">
                                     <li>
@@ -208,7 +212,14 @@
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<<<<<<< HEAD
 
 </body>
 
 </html>
+=======
+
+</body>
+
+</html>
+>>>>>>> 7ade62540e5bd0d7bdc68d62f34c6e998a67af8a

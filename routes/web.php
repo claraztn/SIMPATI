@@ -1,5 +1,6 @@
 <?php
 
+
 // use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\LoginController;
 // use App\Http\Controllers\RuanganController;
@@ -286,7 +287,6 @@
 
 
 // JOY
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DekanController;
@@ -357,7 +357,9 @@ Route::prefix('bagianAkademik')->middleware('auth')->group(function () {
     Route::post('/update_kapasitas{id}', [RuanganController::class, 'update'])->name('bagianAkademik.ruangan.update');
 });
 
+
 // Rute untuk Ketersediaan Ruang
+
 
 // Rute untuk Manajemen Ruangan
 Route::prefix('ruangan')->middleware('auth')->group(function () {
@@ -383,4 +385,6 @@ Route::prefix('pembimbing-akademik')->middleware('auth')->group(function () {
     Route::get('/irs-detail/{id_irs}', [PembimbingAkademikController::class, 'irsDetail'])->name('pembimbingAkademik.irs-detail');
     Route::post('/irs-verifikasi', [PembimbingAkademikController::class, 'verifikasiIrs'])->name('pembimbingAkademik.irs.verifikasi');
     Route::get('/jadwal-mengajar', [PembimbingAkademikController::class, 'jadwalMengajar'])->name('pembimbingAkademik.jadwal-mengajar');
+
 });
+

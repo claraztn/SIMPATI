@@ -231,6 +231,7 @@
                                         onclick="showContent('transkrip')">Transkrip</a>
                                 </li>
                             </ul>
+
                         </div>
                         <div class="info">
                             <h6 id="totalSks" class="me-5 text-primary">Maks. SKS anda: {{ $batasSKS }} </h6>

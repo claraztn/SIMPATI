@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('kelas', function (Blueprint $table) {
             $table->string('kode_kelas')->primary();
-            $table->string('kode_mk');
+            // $table->string('kode_mk');
             $table->integer('tahun');
             $table->integer('kuota');
             $table->timestamps();
-
-            $table->foreign('kode_mk')->references('kode_mk')->on('mata_kuliah');
         });
     }
 

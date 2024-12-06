@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class MahasiswaSeeder extends Seeder
 {
     public function run()
-    {   
+    {
         DB::table('mahasiswa')->insert([
             [
                 'nim' => '24060122120037',
@@ -20,10 +20,18 @@ class MahasiswaSeeder extends Seeder
                 'tanggal_lahir' => '2002-05-14',
                 'jenis_kelamin' => 'Perempuan',
                 'status' => 'Aktif',
+<<<<<<< HEAD
+                'angkatan' => 2022,
+                'kode_kelas' => 'A',
+                'dosen_wali' => '1234567890',
+                'id_user' => 1,
+                'id_prodi' => '1',
+=======
                 'angkatan' => 2023,
                 'dosen_wali' => '1234567890', 
                 'id_user' => 1,  
                 'id_prodi' => '1', 
+>>>>>>> 97cbb3aca2c0ba92c27428880912265a3201bfdb
             ],
         ]);
     }
