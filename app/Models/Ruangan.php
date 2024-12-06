@@ -41,4 +41,5 @@ class Ruangan extends Model
     {
         return $this->hasMany(Jadwal::class, 'id_ruang', 'id_ruang');
     }
+
 }

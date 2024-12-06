@@ -79,7 +79,8 @@
         @endif
         <h1 class="h3 mb-4 text-center">JADWAL DOSEN {{ $infoDosen->nama_dosen }}
             <br> TAHUN AJARAN 2024 SEMESTER GANJIL
-            <br> UNIVERSITAS NUSANTARA
+            <br> UNIVERSITAS DIPONEGORO
+
         </h1>
         <!-- Tabel Verifikasi Jadwal -->
         <div class="card shadow mb-5">
@@ -123,5 +124,6 @@
             integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
         </script>
 </body>
+
 
 </html>

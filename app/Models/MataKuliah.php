@@ -47,4 +47,5 @@ class MataKuliah extends Model
     // {
     //     return $this->hasMany(Jadwal::class, 'kode_mk', 'kode_mk');
     // }
+
 }

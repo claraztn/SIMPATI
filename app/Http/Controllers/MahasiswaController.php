@@ -194,4 +194,5 @@ class MahasiswaController extends Controller
 
     //     return redirect()->route('mahasiswa.dashboard')->with('successRegist', 'Registrasi semester baru berhasil!');
     // }
+
 }

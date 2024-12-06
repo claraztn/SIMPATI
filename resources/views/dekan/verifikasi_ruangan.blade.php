@@ -72,7 +72,11 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
+<<<<<<< HEAD
+                                Hello, Dekan
+=======
                                 Hello, {{ auth()->user()->username ?? 'Dekan' }}
+>>>>>>> 7ade62540e5bd0d7bdc68d62f34c6e998a67af8a
                             </a>
                             <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">
                                 <li>
@@ -268,4 +272,5 @@
 
     <script src="https://unpkg.com/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

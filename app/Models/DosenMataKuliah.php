@@ -14,6 +14,7 @@ class DosenMataKuliah extends Model
     protected $fillable = [
         'nip',
         'kode_mk',
+        'id_jadwal',
         'tahun',
     ];
 

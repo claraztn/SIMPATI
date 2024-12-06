@@ -27,4 +27,5 @@ class StatusAkademik extends Model
     {
         return $this->belongsTo(Dosen::class, 'nip', 'nip');
     }
+
 }

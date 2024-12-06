@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory; 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Dosen extends Model
@@ -13,7 +13,7 @@ class Dosen extends Model
     protected $primaryKey = 'nip';
     // Field yang dapat diisi (mass assignable)
     protected $fillable = [
-        'nip', 
+        'nip',
         'nama_dosen',
         'alamat_dosen',
         'no_telepon_dosen',
