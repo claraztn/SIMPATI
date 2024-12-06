@@ -31,7 +31,7 @@
                         <a class="nav-link text-white" href="/dekan/verifikasi-jadwal">Verifikasi Jadwal</a>
                     </li>
                 </ul>
-                <span class="navbar-text text-white">Hello, Dekan</span>
+                <span class="navbar-text text-white">Hello, {{ auth()->user()->username ?? 'Dekan' }}</span>
             </div>
         </div>
     </nav>

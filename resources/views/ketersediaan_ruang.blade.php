@@ -241,7 +241,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Hello, {{ Auth::user()->role }}
+                                    Hello, {{ auth()->user()->username ?? 'BagianAkademik' }}
                                 </a>
                                 <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">
                                     <li>

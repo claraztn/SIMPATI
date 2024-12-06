@@ -40,7 +40,7 @@
                     <ul class="navbar-nav flex-grow-1">
                         <!-- Menu Home -->
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#" style="text-decoration: none;">Home</a>
+                            <a class="nav-link text-white" href="{{ route('dekan.dashboard') }}" style="text-decoration: none;">Home</a>
                         </li>
                         <!-- Menu Verifikasi Ruangan -->
                         <li class="nav-item">
@@ -58,7 +58,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hello, Dekan
+                                Hello, {{ auth()->user()->username ?? 'Dekan' }}
                             </a>
                             <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">
                                 <li>

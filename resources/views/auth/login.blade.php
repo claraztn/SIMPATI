@@ -123,7 +123,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <form action="{{ route('authenticate') }}" method="POST" autocomplete="off">
+                        <form action="{{ route('authenticate') }}" method="POST" autocomplete="on">
                             @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>

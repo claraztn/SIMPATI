@@ -219,18 +219,6 @@
                         <div class="action">
                             <button class="btn-fill" onclick="window.location.href='{{ route('mahasiswa.irs') }}'">Buat
                                 IRS</button>
-                            <button class="btn-fill" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Detail
-                                <i class="fas fa-chevron-down"></i> <!-- Ikon panah Font Awesome -->
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="#" onclick="showContent('irs')">IRS</a></li>
-                                <li><a class="dropdown-item" href="#" onclick="showContent('khs')">KHS</a></li>
-                                <li><a class="dropdown-item" href="#"
-                                        onclick="showContent('transkrip')">Transkrip</a>
-                                </li>
-                            </ul>
                         </div>
                         <div class="info">
                             <h6 id="totalSks" class="me-5 text-primary">Maks. SKS anda: {{ $batasSKS }} </h6>
