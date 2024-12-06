@@ -41,8 +41,5 @@ class Ruangan extends Model
     {
         return $this->hasMany(Jadwal::class, 'id_ruang', 'id_ruang');
     }
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 7ade62540e5bd0d7bdc68d62f34c6e998a67af8a

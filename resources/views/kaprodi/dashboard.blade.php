@@ -92,8 +92,5 @@
     </script>
 </body>
 
-<<<<<<< HEAD
+
 </html>
-=======
-</html>
->>>>>>> 7ade62540e5bd0d7bdc68d62f34c6e998a67af8a

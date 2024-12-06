@@ -33,8 +33,5 @@ class IrsItemMahasiswa extends Model
     {
         return $this->belongsTo(MataKuliah::class, 'kode_mk', 'kode_mk');
     }
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 7ade62540e5bd0d7bdc68d62f34c6e998a67af8a
