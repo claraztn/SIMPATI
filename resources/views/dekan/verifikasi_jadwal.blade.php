@@ -40,11 +40,7 @@
                     <ul class="navbar-nav flex-grow-1">
                         <!-- Menu Home -->
                         <li class="nav-item">
-<<<<<<< HEAD
-                            <a class="nav-link text-white" href="#" style="text-decoration: none;">Home</a>
-=======
                             <a class="nav-link text-white" href="{{ route('dekan.dashboard') }}" style="text-decoration: none;">Home</a>
->>>>>>> 7ade62540e5bd0d7bdc68d62f34c6e998a67af8a
                         </li>
                         <!-- Menu Verifikasi Ruangan -->
                         <li class="nav-item">
@@ -62,11 +58,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-<<<<<<< HEAD
-                                Hello, Dekan
-=======
                                 Hello, {{ auth()->user()->username ?? 'Dekan' }}
->>>>>>> 7ade62540e5bd0d7bdc68d62f34c6e998a67af8a
                             </a>
                             <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">
                                 <li>
@@ -87,8 +79,7 @@
             </div>
         @endif
         <h1 class="h3 mb-4 text-center">Verifikasi dan Jadwal Disetujui</h1>
-<<<<<<< HEAD
-=======
+
         <!-- Dropdown Pilih Prodi -->
         <div class="mb-4">
             <label for="prodiSelect" class="form-label">Pilih Program Studi</label>
