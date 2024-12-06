@@ -21,7 +21,7 @@ class Ruangan extends Model
         'nama_ruang',
         'kapasitas',
         'status',
-        'fakultas_id',
+        'id_fakultas',
         'id_prodi',
     ];
 
@@ -34,13 +34,11 @@ class Ruangan extends Model
     // Relasi ke Program Studi (Many-to-One)
     public function programStudi()
     {
-        return $this->belongsTo(ProgramStudi::class, 'id_prodi', 'id');
+        return $this->belongsTo(ProgramStudi::class, 'id_prodi', 'id_prodi');
     }
 
     public function jadwal()
     {
         return $this->hasMany(Jadwal::class, 'id_ruang', 'id_ruang');
     }
-
-
 }

@@ -14,12 +14,18 @@ class DosenMataKuliah extends Model
     protected $fillable = [
         'nip',
         'kode_mk',
+        'id_jadwal',
         'tahun',
     ];
 
     public function dosen()
     {
         return $this->belongsTo(Dosen::class, 'nip', 'nip');
+    }
+
+    public function jadwal()
+    {
+        return $this->belongsTo(Jadwal::class, 'kode_mk', 'kode_mk');
     }
 
     public function mataKuliah()

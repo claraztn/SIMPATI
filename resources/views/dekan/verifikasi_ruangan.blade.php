@@ -35,28 +35,108 @@
                 <i class="bi bi-arrow-left-circle"></i>
             </button>
             <a class="navbar-brand text-white" href="#">SIMPATI</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                    class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                </svg>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="/dekan/dashboard">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="/dekan/verifikasi-ruangan">Verifikasi Ruangan</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="/dekan/verifikasi-jadwal">Verifikasi Jadwal</a>
-                    </li>
-                </ul>
-                <span class="navbar-text text-white">Hello, Dekan</span>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav flex-grow-1">
+                        <!-- Menu Home -->
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#" style="text-decoration: none;">Home</a>
+                        </li>
+                        <!-- Menu Verifikasi Ruangan -->
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ route('verifikasi.ruangan') }}"
+                                style="text-decoration: none;">Verifikasi Ruangan</a>
+                        </li>
+                        <!-- Menu Verifikasi Jadwal -->
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ route('verifikasi.jadwal') }}"
+                                style="text-decoration: none;">Verifikasi Jadwal</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <!-- Dropdown User -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Hello, Dekan
+                            </a>
+                            <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
 
     <div class="container my-5">
+        @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
         <h1 class="h3 mb-4 text-center">Verifikasi dan Ruangan Disetujui</h1>
+
+        <!-- Tabel Verifikasi Ruangan -->
+        <div class="card shadow mb-5">
+            <div class="card-header card-header-warning text-center">
+                <h5 class="mb-0">Daftar Ruangan Berdasarkan Verifikasi Prodi</h5>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="text-center table-warning">
+                        <tr>
+                            <th>No</th>
+                            <th>Request Prodi</th>
+                            <th>Jumlah Ruangan Menunggu</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($ruangans as $key => $item)
+                            <tr>
+                                <td class="text-center">{{ $loop->iteration }}</td>
+
+                                <td>{{ $item->programStudi->nama_prodi }}</td>
+
+                                <td class="text-center">{{ $item->jumlah_ruangan }}</td>
+
+                                <td class="text-center">
+                                    <form method="POST"
+                                        action="{{ route('verifikasi.ruangan.prodi.submit', $item->id_prodi) }}">
+                                        @csrf
+                                        @method('PATCH')
+
+                                        <button type="submit" name="action" value="approve"
+                                            class="btn btn-success btn-sm">Setujui Semua</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center">Tidak ada ruangan yang menunggu verifikasi.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
         <!-- Tabel Verifikasi Ruangan -->
         <div class="card shadow mb-5">
@@ -70,30 +150,37 @@
                             <th>No</th>
                             <th>Nama Ruangan</th>
                             <th>Gedung</th>
+                            <th>Request Prodi</th>
                             <th>Kapasitas</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($ruanganPending as $key => $item)
-                        <tr>
-                            <td class="text-center">{{ $key + 1 }}</td>
-                            <td>{{ $item->nama_ruang }}</td>
-                            <td class="text-center">{{ $item->gedung }}</td>
-                            <td class="text-center">{{ $item->kapasitas }}</td>
-                            <td class="text-center">
-                                <form action="{{ route('verifikasi.ruangan', ['id_ruang' => $item->id_ruang]) }}" method="POST">
-                                    @csrf
-                                    @method('PATCH')
-                                    <button type="submit" name="action" value="approve" class="btn btn-success btn-sm">Setujui</button>
-                                    <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Tolak</button>
-                                </form>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td class="text-center">{{ $key + 1 }}</td>
+                                <td>{{ $item->nama_ruang }}</td>
+                                <td class="text-center">{{ $item->gedung }}</td>
+                                <td class="text-center">{{ $item->programStudi->nama_prodi }}</td>
+                                <td class="text-center">{{ $item->kapasitas }}</td>
+                                <td class="text-center">
+                                    <form
+                                        action="{{ route('verifikasi.ruangan.submit', ['id_ruang' => $item->id_ruang]) }}"
+                                        method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <button type="submit" name="action" value="approve"
+                                            class="btn btn-success btn-sm">Setujui</button>
+                                        <button type="submit" name="action" value="reject"
+                                            class="btn btn-danger btn-sm">Tolak</button>
+                                    </form>
+                                </td>
+                            </tr>
                         @empty
-                        <tr>
-                            <td colspan="5" class="text-center">Tidak ada ruangan yang menunggu verifikasi.</td>
-                        </tr>
+                            <tr>
+                                <td colspan="6" class="text-center">Tidak ada ruangan yang menunggu verifikasi.
+                                </td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -112,60 +199,66 @@
                             <th>No</th>
                             <th>Nama Ruangan</th>
                             <th>Gedung</th>
+                            <th>Request Prodi</th>
                             <th>Kapasitas</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($ruanganApproved as $key => $item)
-                        <tr>
-                            <td class="text-center">{{ $key + 1 }}</td>
-                            <td>{{ $item->nama_ruang }}</td>
-                            <td class="text-center">{{ $item->gedung }}</td>
-                            <td class="text-center">{{ $item->kapasitas }}</td>
-                        </tr>
+                            <tr>
+                                <td class="text-center">{{ $key + 1 }}</td>
+                                <td>{{ $item->nama_ruang }}</td>
+                                <td class="text-center">{{ $item->gedung }}</td>
+                                <td class="text-center">{{ $item->programStudi->nama_prodi }}</td>
+                                <td class="text-center">{{ $item->kapasitas }}</td>
+                            </tr>
                         @empty
+                            <tr>
+                                <td colspan="5" class="text-center">Tidak ada ruangan yang disetujui.</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tabel Ruangan Ditolak -->
+        <div class="card shadow mt-3">
+            <div class="card-header card-header-danger text-center">
+                <h5 class="mb-0">Daftar Ruangan yang Ditolak</h5>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="text-center table-danger">
                         <tr>
-                            <td colspan="4" class="text-center">Tidak ada ruangan yang disetujui.</td>
+                            <th>No</th>
+                            <th>Nama Ruangan</th>
+                            <th>Gedung</th>
+                            <th>Request Prodi</th>
+                            <th>Kapasitas</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($ruanganRejected as $key => $item)
+                            <tr>
+                                <td class="text-center">{{ $key + 1 }}</td>
+                                <td>{{ $item->nama_ruang }}</td>
+                                <td class="text-center">{{ $item->gedung }}</td>
+                                <td class="text-center">{{ $item->programStudi->nama_prodi }}</td>
+                                <td class="text-center">{{ $item->kapasitas }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="text-center">Tidak ada ruangan yang ditolak.</td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    
-    <!-- Tabel Ruangan Ditolak -->
-    <div class="card shadow">
-        <div class="card-header card-header-danger text-center">
-            <h5 class="mb-0">Daftar Ruangan yang Ditolak</h5>
-        </div>
-        <div class="card-body table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead class="text-center table-danger">
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Ruangan</th>
-                        <th>Gedung</th>
-                        <th>Kapasitas</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($ruanganRejected as $key => $item)
-                    <tr>
-                        <td class="text-center">{{ $key + 1 }}</td>
-                        <td>{{ $item->nama_ruang }}</td>
-                        <td class="text-center">{{ $item->gedung }}</td>
-                        <td class="text-center">{{ $item->kapasitas }}</td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="4" class="text-center">Tidak ada ruangan yang ditolak.</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
+
+
 
     <!-- Footer -->
     <footer class="text-center mt-5">
@@ -174,4 +267,5 @@
 
     <script src="https://unpkg.com/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

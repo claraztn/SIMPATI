@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,34 +11,42 @@
         .custom-navbar {
             background-color: #003f5c;
         }
+
         .nav-link:hover {
             text-decoration: underline;
         }
+
         .card-custom {
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
+
         .status-badge {
             font-weight: bold;
-            color: #28a745; /* Hijau untuk status aktif */
+            color: #28a745;
+            /* Hijau untuk status aktif */
         }
+
         .profile-card img {
             width: 80px;
             height: 80px;
             border-radius: 50%;
             object-fit: cover;
         }
+
         .icon-title {
             margin-right: 8px;
             color: #555;
         }
+
         .divider {
             border-left: 1px solid #ccc;
             height: 30px;
         }
     </style>
 </head>
+
 <body class="bg-light">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md custom-navbar shadow-lg">
@@ -45,10 +54,12 @@
             <a class="navbar-brand text-white" href="#">
                 <strong>SIMPATI</strong>
             </a>
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                 <i class="bi bi-list text-white"></i>
             </button>
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -58,33 +69,40 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('mahasiswa.dashboard') }}">Home</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('mahasiswa.registrasi') }}">Registrasi</a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('mahasiswa.irs') }}">IRS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ route('mahasiswa.detail-irs-khs') }}">Detail IRS & KHS</a>
+                            <a class="nav-link text-white" href="{{ route('mahasiswa.detail-irs-khs') }}">Detail IRS &
+                                KHS</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hello, Mahasiswa
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="accountDropdown"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Hello, {{ auth()->user()->username ?? 'Mahasiswa' }}
                             </a>
                             <ul class="dropdown-menu border-0 shadow">
                                 <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                             </ul>
                         </li>
                     </ul>
-                </div>                               
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- Content -->
     <div class="container">
+        @if (session('success'))
+            <div class="alert alert-success mt-2" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="card border-0 shadow my-3">
             <div class="card-header bg-light">
                 <h3 class="h5 pt-2">Dashboard Mahasiswa</h3>
@@ -92,12 +110,12 @@
         </div>
     </div>
     <!-- Ganti 'my-5' menjadi kelas margin yang lebih kecil atau kosongkan -->
-    <div class="container my-5">
+    <div class="container my-2">
         <!-- Alert -->
         <div class="alert alert-success d-flex align-items-center" role="alert">
             <i class="bi bi-check-circle-fill me-2"></i>
-            <strong>Welcome, Widiawati Sihaloho</strong>
-        </div>    
+            <strong>Welcome, {{ $mahasiswa->nama_mahasiswa ?? 'Mahasiswa' }}</strong>
+        </div>
 
         <!-- Profile Card -->
         <div class="card profile-card p-4 mb-4">
@@ -106,9 +124,9 @@
                     <img src="https://via.placeholder.com/100" alt="Profile Picture">
                 </div>
                 <div class="col-md-10">
-                    <h5>Widiawati Sihaloho</h5>
-                    <p class="text-muted mb-0">Informatika S1</p>
-                    <p class="text-muted mb-0">24060122130057</p>
+                    <h5>{{ $mahasiswa->nama_mahasiswa ?? 'Mahasiswa' }}</h5>
+                    <p class="text-muted mb-0">{{ $mahasiswa->programStudi->nama_prodi ?? 'Prodi Tdk Diketahui' }}</p>
+                    <p class="text-muted mb-0">{{ $mahasiswa?->nim }}</p>
                 </div>
             </div>
         </div>
@@ -123,11 +141,12 @@
                         <strong>Status Akademik</strong>
                     </div>
                     <div class="card-body">
-                        <p class="text-muted">Informasi selengkapnya mengenai status akademik silakan menghubungi akademik fakultas masing-masing.</p>
+                        <p class="text-muted">Informasi selengkapnya mengenai status akademik silakan menghubungi
+                            akademik fakultas masing-masing.</p>
                         <p>
-                            <i class="bi bi-person-fill"></i> 
-                            <strong>Dosen wali:</strong> Adhe Setya Pramayoga, M.T. <br>
-                            <strong>NIP:</strong> 199112092024061001 <br>
+                            <i class="bi bi-person-fill"></i>
+                            <strong>Dosen wali:</strong> {{ $mahasiswa?->dosen->nama_dosen }} <br>
+                            <strong>NIP:</strong> {{ $mahasiswa?->dosen->nip }} <br>
                         </p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -137,7 +156,7 @@
                             <div class="divider"></div>
                             <div>
                                 <span class="info-label">Semester Studi</span><br>
-                                <span class="info-value">5</span>
+                                <span class="info-value">{{ $mahasiswa?->statusAkademik->current_semester }}</span>
                             </div>
                             <div class="divider"></div>
                             <div>
@@ -148,7 +167,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Prestasi Akademik -->
             <div class="col-md-6">
                 <div class="card p-3">
@@ -160,12 +179,12 @@
                         <div class="d-flex justify-content-around align-items-center">
                             <div>
                                 <span class="info-label">IPk</span><br>
-                                <span class="info-value">4.00</span>
+                                <span class="info-value">{{ $mahasiswa?->statusAkademik->ipk_komulatif }}</span>
                             </div>
                             <div class="divider"></div>
                             <div>
                                 <span class="info-label">SKSk</span><br>
-                                <span class="info-value">89</span>
+                                <span class="info-value">{{ $mahasiswa?->statusAkademik->SKSk }}</span>
                             </div>
                         </div>
                     </div>
@@ -176,4 +195,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
