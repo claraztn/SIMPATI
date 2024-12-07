@@ -40,11 +40,7 @@
                     <ul class="navbar-nav flex-grow-1">
                         <!-- Menu Home -->
                         <li class="nav-item">
-<<<<<<< HEAD
-                            <a class="nav-link text-white" href="#" style="text-decoration: none;">Home</a>
-=======
                             <a class="nav-link text-white" href="{{ route('dekan.dashboard') }}" style="text-decoration: none;">Home</a>
->>>>>>> 7ade62540e5bd0d7bdc68d62f34c6e998a67af8a
                         </li>
                         <!-- Menu Verifikasi Ruangan -->
                         <li class="nav-item">
@@ -62,11 +58,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-<<<<<<< HEAD
-                                Hello, Dekan
-=======
                                 Hello, {{ auth()->user()->username ?? 'Dekan' }}
->>>>>>> 7ade62540e5bd0d7bdc68d62f34c6e998a67af8a
                             </a>
                             <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">
                                 <li>
@@ -87,8 +79,6 @@
             </div>
         @endif
         <h1 class="h3 mb-4 text-center">Verifikasi dan Jadwal Disetujui</h1>
-<<<<<<< HEAD
-=======
         <!-- Dropdown Pilih Prodi -->
         <div class="mb-4">
             <label for="prodiSelect" class="form-label">Pilih Program Studi</label>
@@ -105,7 +95,6 @@
             </select>
         </div>
 
-<<<<<<< HEAD
         <!-- Tabel Verifikasi Jadwal -->
         <div class="card shadow mb-5">
             <div class="card-header text-dark" style="background-color: #ffc107;">
@@ -116,10 +105,14 @@
                     <thead class="text-center table-warning">
                         <tr>
                             <th>No</th>
-                            <th>Mata Kuliah</th>
-                            <th>Ruangan</th>
+                            <th>Kelas</th>
                             <th>Hari</th>
-                            <th>Jam</th>
+                            <th>Ruangan</th>
+                            <th>Jam Mulai</th>
+                            <th>Jam Selesai</th>
+                            <th>SKS</th>
+                            <th>Status</th>
+                            <th>Nama Pengampu</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -164,165 +157,32 @@
                     <thead class="text-center table-success">
                         <tr>
                             <th>No</th>
-                            <th>Mata Kuliah</th>
-                            <th>Ruangan</th>
+                            <th>Kelas</th>
                             <th>Hari</th>
-                            <th>Jam</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($jadwalApproved as $key => $item)
-                            <tr>
-                                <td class="text-center">{{ $key + 1 }}</td>
-                                <td>{{ $item->mataKuliah->nama_mk }}</td>
-                                <td>{{ $item->ruangan->nama_ruang }}</td>
-                                <td>{{ $item->hari }}</td>
-                                <td>{{ $item->jam_mulai }}</td>
-
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-=======
->>>>>>> 7ade62540e5bd0d7bdc68d62f34c6e998a67af8a
-        <!-- Dropdown Pilih Prodi -->
-        <div class="mb-4">
-            <label for="prodiSelect" class="form-label">Pilih Program Studi</label>
-            <select class="form-select" id="prodiSelect" aria-label="Pilih Program Studi">
-                <option selected>Pilih Prodi...</option>
-                <option value="1">Informatika</option>
-                <option value="2">Matematika</option>
-                <option value="2">Statistika</option>
-                <option value="3">Fisika</option>
-                <option value="4">Kimia</option>
-                <option value="5">Biologi</option>
-                <option value="5">Bioteknologi</option>
-
-            </select>
-        </div>
-
-        <!-- Tabel Verifikasi Jadwal -->
-        <div class="card shadow mb-5">
-            <div class="card-header text-dark" style="background-color: #ffc107;">
-                <h5 class="mb-0 text-center">Daftar Jadwal Menunggu Verifikasi</h5>
-            </div>
-            <div class="card-body">
-                <table class="table table-bordered table-hover">
-                    <thead class="text-center table-warning">
-                        <tr>
-                            <th>No</th>
-                            <th>Mata Kuliah</th>
                             <th>Ruangan</th>
-                            <th>Hari</th>
-                            <th>Jam</th>
-                            <th>Aksi</th>
+                            <th>Jam Mulai</th>
+                            <th>Jam Selesai</th>
+                            <th>SKS</th>
+                            <th>Status</th>
+                            <th>Nama Pengampu</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($jadwalPending as $key => $item)
-                            <tr>
-                                <td class="text-center">{{ $key + 1 }}</td>
-                                <td>{{ $item->mataKuliah->nama_mk }}</td>
-                                <td>{{ $item->ruangan->nama_ruang }}</td>
-                                <td>{{ $item->hari }}</td>
-                                <td>{{ $item->jam_mulai }}</td>
-                                <td class="text-center">
-                                    <form
-                                        action="{{ route('verifikasi.jadwal.submit', ['id_jadwal' => $item->id_jadwal]) }}"
-                                        method="POST">
-                                        @csrf
-                                        @method('PATCH')
-                                        <button type="submit" name="action" value="approve"
-                                            class="btn btn-success btn-sm">Setujui</button>
-                                        <button type="submit" name="action" value="reject"
-                                            class="btn btn-danger btn-sm">Tolak</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="text-center">Tidak ada jadwal yang menunggu verifikasi.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-<<<<<<< HEAD
-        <!-- Tabel Jadwal Disetujui -->
-        <div class="card shadow">
-            <div class="card-header bg-success text-white">
-                <h5 class="mb-0 text-center">Daftar Jadwal yang Sudah Disetujui</h5>
-            </div>
-            <div class="card-body">
-                <table class="table table-bordered table-hover">
-                    <thead class="text-center table-success">
-                        <tr>
-                            <th>No</th>
-                            <th>Mata Kuliah</th>
-                            <th>Ruangan</th>
-                            <th>Hari</th>
-                            <th>Jam</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($jadwalApproved as $key => $item)
-                            <tr>
-                                <td class="text-center">{{ $key + 1 }}</td>
-                                <td>{{ $item->mataKuliah->nama_mk }}</td>
-                                <td>{{ $item->ruangan->nama_ruang }}</td>
-                                <td>{{ $item->hari }}</td>
-                                <td>{{ $item->jam_mulai }}</td>
-
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-=======
-<!-- Tabel Jadwal Disetujui -->
-<div class="card shadow">
-    <div class="card-header bg-success text-white">
-        <h5 class="mb-0 text-center">Daftar Jadwal yang Sudah Disetujui</h5>
-    </div>
-    <div class="card-body">
-        <table class="table table-bordered table-hover">
-            <thead class="text-center table-success">
-                <tr>
-                    <th>No</th>
-                    <th>Kelas dan Matakuliah</th>
-                    <th>Hari</th>
-                    <th>Ruangan</th>
-                    <th>Jam Mulai</th>
-                    <th>SKS</th>
-                    <th>Nama Pengampu</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($jadwalApproved as $key => $item)
-                    <tr>
-                    <td class="text-center">{{ $key + 1 }}</td>
-                        <td>{{ $item->mata_kuliah }}</td>
-                        <td>{{ $item->hari }}</td>
-                        <td>{{ $item->ruangan->nama_ruang }}</td>
-                        <td>{{ $item->jam }}</td>
-                        <td>{{ $item->sks }}</td>
-                        <td>{{ $item->nama_pengampu }}</td>
                         
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
->>>>>>> 97cbb3aca2c0ba92c27428880912265a3201bfdb
+                    </thead>
+                    <tbody>
+                        @foreach ($jadwalApproved as $key => $item)
+                            <tr>
+                                <td class="text-center">{{ $key + 1 }}</td>
+                                <td>{{ $item->mataKuliah->nama_mk }}</td>
+                                <td>{{ $item->ruangan->nama_ruang }}</td>
+                                <td>{{ $item->hari }}</td>
+                                <td>{{ $item->jam_mulai }}</td>
 
->>>>>>> 7ade62540e5bd0d7bdc68d62f34c6e998a67af8a
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Icon Library -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/bootstrap-icons.min.js"></script>
