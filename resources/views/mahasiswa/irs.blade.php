@@ -137,9 +137,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('mahasiswa.dashboard') }}">Home</a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ route('mahasiswa.registrasi') }}">Registrasi</a>
-                        </li> --}}
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('mahasiswa.irs') }}">IRS</a>
                         </li>
@@ -224,6 +221,11 @@
                                 Detail
                                 <i class="fas fa-chevron-down"></i> <!-- Ikon panah Font Awesome -->
                             </button>
+                            @if ($irs?->isverified)
+                                <button class="btn-fill" onclick="window.location.href='{{ route('irs.unduh') }}'"><i
+                                        class="fa fa-file"></i> Unduh IRS</button>
+                            @else
+                            @endif
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <li><a class="dropdown-item" href="#" onclick="showContent('irs')">IRS</a></li>
                                 <li><a class="dropdown-item" href="#" onclick="showContent('khs')">KHS</a></li>
@@ -231,7 +233,6 @@
                                         onclick="showContent('transkrip')">Transkrip</a>
                                 </li>
                             </ul>
-
                         </div>
                         <div class="info">
                             <h6 id="totalSks" class="me-5 text-primary">Maks. SKS anda: {{ $batasSKS }} </h6>
@@ -258,13 +259,30 @@
 
                         <div class="card shadow">
                             <div class="card-header">
-                                <h6 class="mb-0">Daftar Mata Kuliah</h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h6 class="mb-0">Daftar Mata Kuliah</h6>
+                                    <div class="semester-filter">
+                                        <select name="semester" class="form-control" id="semesterFilter">
+                                            <option value="s" {{ request('semester') == 's' ? 'selected' : '' }}>
+                                                Semua Semester</option>
+                                            @for ($semester = 1; $semester <= 8; $semester++)
+                                                <option value="{{ $semester }}"
+                                                    {{ request('semester') == $semester ? 'selected' : '' }}>
+                                                    Semester {{ $semester }}
+                                                </option>
+                                            @endfor
+                                        </select>
+
+                                    </div>
+
+                                </div>
                             </div>
                             <div class="card-body">
                                 <table class="table table-bordered" id="matkulTable">
                                     <thead>
                                         <tr>
                                             <th>No</th>
+                                            <th>Kelas</th>
                                             <th>Kode MK</th>
                                             <th>Nama MK</th>
                                             <th>Hari & Jam</th>
@@ -282,6 +300,7 @@
                                         @forelse ($jadwalMk as $item)
                                             <tr>
                                                 <td>{{ $i++ }}</td>
+                                                <td>{{ $item->kode_kelas }}</td>
                                                 <td>{{ $item->kode_mk }}</td>
                                                 <td>{{ $item->mataKuliah->nama_mk }}</td>
                                                 <td>{{ $item->hari }}, {{ $item->jam_mulai }} -
@@ -301,7 +320,8 @@
                                                         data-hari="{{ $item->hari }}"
                                                         data-mulai="{{ $item->jam_mulai }}"
                                                         data-selesai="{{ $item->jam_selesai }}"
-                                                        data-ruang="{{ $item->id_ruang }}">
+                                                        data-ruang="{{ $item->id_ruang }}"
+                                                        data-jadwal="{{ $item->id_jadwal }}">
                                                 </td>
                                             </tr>
                                         @empty
@@ -315,7 +335,9 @@
                                 </table>
                             </div>
                         </div>
-                        @if ($irs)
+                        @if ($irs && !$irs->isverified)
+                            <button class="btn-save" id="btnSave" type="submit">Simpan Perubahan</button>
+                        @elseif ($irs && $irs->isverified)
                             <button class="btn-disable" disabled id="btnSave" type="submit">Sudah Mengajukan
                                 IRS</button>
                         @else
@@ -323,7 +345,6 @@
                         @endif
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
@@ -364,6 +385,10 @@
             document.getElementById('transkripAccordion').style.display = 'none';
         }
 
+        document.getElementById('semesterFilter').addEventListener('change', function() {
+            let semester = this.value;
+            window.location.href = '/mahasiswa/irs' + (semester ? '?semester=' + semester : '');
+        });
 
 
         // UNTUK PENGECEKAN batas SKS melebih atau tidak ketika di submit.
@@ -390,6 +415,7 @@
                     const mulai = this.getAttribute('data-mulai');
                     const selesai = this.getAttribute('data-selesai');
                     const ruang = this.getAttribute('data-ruang');
+                    const jadwal = this.getAttribute('data-jadwal');
 
                     // checkbox dicentang => tambahkan SKS dan kode_mk ke array
                     if (this.checked) {
@@ -426,6 +452,12 @@
                         inputRuang.name = 'ruang[]';
                         inputRuang.value = ruang;
                         document.forms[0].appendChild(inputRuang);
+
+                        const inputJadwal = document.createElement('input');
+                        inputJadwal.type = 'hidden';
+                        inputJadwal.name = 'id_jadwal[]';
+                        inputJadwal.value = jadwal;
+                        document.forms[0].appendChild(inputJadwal);
                     } else {
                         // kurangi SKS, hapus kode_mk dari array
                         totalSKS -= sks;
@@ -435,7 +467,7 @@
                         }
 
 
-                        // hapus input hidden untuk kode_mk yang di uncheck
+                        // hps input hidden untuk kode_mk yang di uncheck
                         const inputs = document.querySelectorAll(`input[name="kode_mk[]"]`);
                         inputs.forEach(input => {
                             if (input.value === kodeMk) {
@@ -470,6 +502,13 @@
                                 input.remove();
                             }
                         });
+
+                        const inputsJadwal = document.querySelectorAll(`input[name="id_jadwal[]"]`);
+                        inputsJadwal.forEach(input => {
+                            if (input.value === jadwal) {
+                                input.remove();
+                            }
+                        });
                     }
 
                     // Update total SKS
@@ -477,6 +516,7 @@
                     document.getElementById('total_sks').value = totalSKS;
                 });
             });
+
 
             // ps mau submit cek apakah total SKS melebihi batas saat tombol simpan diklik
             btnSave.addEventListener('click', function(event) {

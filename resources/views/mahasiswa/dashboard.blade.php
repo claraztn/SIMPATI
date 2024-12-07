@@ -76,8 +76,7 @@
                             <a class="nav-link text-white" href="{{ route('mahasiswa.irs') }}">IRS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ route('mahasiswa.detail-irs-khs') }}">Detail IRS &
-                                KHS</a>
+                            <a class="nav-link text-white" href="{{ route('mahasiswa.detail-irs-khs') }}">Detail IRS &KHS</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
@@ -121,7 +120,7 @@
         <div class="card profile-card p-4 mb-4">
             <div class="row align-items-center">
                 <div class="col-md-2 text-center">
-                    <img src="https://via.placeholder.com/100" alt="Profile Picture">
+                    <img src="https://via.placeholder.com/500" alt="Profile Picture">
                 </div>
                 <div class="col-md-10">
                     <h5>{{ $mahasiswa->nama_mahasiswa ?? 'Mahasiswa' }}</h5>

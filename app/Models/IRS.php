@@ -29,9 +29,8 @@ class IRS extends Model
     {
         return $this->belongsTo(Kelas::class, 'kode_kelas', 'kode_kelas');
     }
-
     public function itemIrsMahasiswa()
     {
-        return $this->belongsTo(IrsItemMahasiswa::class, 'id_irs', 'id');
+        return $this->hasMany(IrsItemMahasiswa::class, 'id_irs', 'id');
     }
 }

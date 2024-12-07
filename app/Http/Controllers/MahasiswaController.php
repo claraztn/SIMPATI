@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\IRS;
 use App\Models\Jadwal;
+use Barryvdh\DomPDF\Facade\PDF;
 use App\Models\Mahasiswa;
 use App\Models\MataKuliah;
 use Illuminate\Http\Request;
@@ -24,13 +25,10 @@ class MahasiswaController extends Controller
         return view('mahasiswa.dashboard', compact('mahasiswa'));
     }
 
-    public function showIRS()
+    public function showIRS(Request $request)
     {
-        // get info mhs brdasarkan user yg saat ini sdg login
         $currentLogin = auth()->user()->id;
         $mahasiswa = Mahasiswa::where('id_user', $currentLogin)->first();
-        // dd($getIdMhs);
-
         $statusAkademik = StatusAkademik::where('nim', $mahasiswa->nim)->first();
 
         $nim = $statusAkademik?->nim;
@@ -39,12 +37,21 @@ class MahasiswaController extends Controller
 
         $batasSKS = $this->batasMaksimalSKS($nim, $semester, $ipk);
 
-        // get semua jadwal yg udh approved
-        $jadwalMk = Jadwal::where('status', 'approved')->get();
+        // filter semester
+        $semesterFilter = $request->get('semester', 's');  // default ke 's' jika tidak ada parameter semester
 
-        ###########
-        // cek apakah semester saat ini saya sbg mahasiswa SUDAH MENGAJUKAN IRS atau blm
-        // jika sudah berarti gk ush bisa submit irs lagi, button halaman mahasiswa/irs di disable
+        // get semua jadwal yang sudah approved
+        if ($semesterFilter != 's') {
+            $jadwalMk = Jadwal::where('status', 'approved')
+                ->whereHas('mataKuliah', function ($query) use ($semesterFilter) {
+                    $query->where('semester', $semesterFilter);
+                })
+                ->get();
+        } else {
+            // if 's' dipilih, get semua jadwal tanpa filter semester
+            $jadwalMk = Jadwal::where('status', 'approved')->get();
+        }
+
         $irs = IRS::where('nim', $mahasiswa->nim)->where('semester', $semester)->first();
 
         return view('mahasiswa.irs', compact('jadwalMk', 'batasSKS', 'irs', 'semester'));
@@ -91,14 +98,13 @@ class MahasiswaController extends Controller
             'kode_mk.required' => 'Mata kuliah harus dipilih!',
         ]);
 
-        // dd($request->all());
 
         $kodeMk = $request->kode_mk;
         $hari = $request->hari;
         $jamMulai = $request->jam_mulai;
         $jamSelesai = $request->jam_selesai;
         $ruang = $request->ruang;
-        // dd($jamMulai);
+        $jadwal = $request->id_jadwal;
 
         $currentLogin = auth()->user()->id; // get nim user yang sedang login
         $mahasiswa = Mahasiswa::where('id_user', $currentLogin)->first();
@@ -122,7 +128,6 @@ class MahasiswaController extends Controller
             }
         }
 
-
         // add irs, create dlu ke data tabel IRS
         $irs = IRS::create([
             'nim' => $nim,
@@ -135,6 +140,7 @@ class MahasiswaController extends Controller
         foreach ($kodeMk as $index => $kodeMkItem) {
             IrsItemMahasiswa::create([
                 'id_irs' => $irs->id,
+                'id_jadwal' => $jadwal[$index],
                 'nim' => $nim,
                 'kode_mk' => $kodeMkItem,
                 'hari' => $hari[$index],
@@ -147,6 +153,7 @@ class MahasiswaController extends Controller
         return redirect()->back()->with('success', 'IRS berhasil diajukan!');
     }
 
+
     private function cekRentangWaktu($start1, $end1, $start2, $end2)
     {
         return ($start1 < $end2 && $end1 > $start2);
@@ -157,6 +164,34 @@ class MahasiswaController extends Controller
         $mataKuliah = MataKuliah::all();
 
         return view('mahasiswa.detail_irs_khs', compact('mataKuliah'));
+    }
+
+    function unduhIRS()
+    {
+        $currentLogin = auth()->user()->id;
+
+        $mahasiswa = Mahasiswa::where('id_user', $currentLogin)->first();
+        if (!$mahasiswa) {
+            return redirect()->route('home')->with('error', 'Data mahasiswa tidak ditemukan.');
+        }
+
+        $irs = IRS::where('nim', $mahasiswa->nim)->first();
+        if (!$irs) {
+            return redirect()->route('home')->with('error', 'IRS tidak ditemukan.');
+        }
+
+        $itemIRS = IrsItemMahasiswa::where('id_irs', $irs->id)->get();
+        $dateNow = now()->format('d M Y');
+
+        $data = [
+            'irs' => $irs,
+            'mahasiswa' => $mahasiswa,
+            'itemIRS' => $itemIRS,
+            'dateNow' => $dateNow
+        ];
+
+        $pdf = PDF::loadView('mahasiswa.irs_pdf', $data);
+        return $pdf->download('IRS_' . $mahasiswa->nim . '.pdf');
     }
 
     // public function showRegistrasi()
@@ -194,5 +229,4 @@ class MahasiswaController extends Controller
 
     //     return redirect()->route('mahasiswa.dashboard')->with('successRegist', 'Registrasi semester baru berhasil!');
     // }
-
 }
