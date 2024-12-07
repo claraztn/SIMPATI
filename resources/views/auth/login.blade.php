@@ -28,7 +28,7 @@
             margin: auto;  
             max-width: 1000px;
             padding: 50px;
-            margin-top: 60px;
+            margin-top: 110px;
         }
 
         /* Dark overlay */
