@@ -286,7 +286,7 @@
                             <tr>
                                 <th>Gedung</th>
                                 <th>Nama Ruang</th>
-                                <th>Request Prodi</th>
+                                <th>Program Studi</th>
                                 <th>Kapasitas Ruang</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
@@ -363,7 +363,7 @@
                                             min="1">
                                     </div>
                                 </div>
-
+                                
                                 <div class="mb-3 row text-end">
                                     <div class="col-sm-12">
                                         <button type="submit" class="btn btn-primary">Simpan</button>

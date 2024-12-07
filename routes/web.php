@@ -69,7 +69,7 @@ Route::prefix('kaprodi')->middleware('auth')->group(function () {
 Route::prefix('bagianAkademik')->middleware('auth')->group(function () {
     Route::get('/dashboard', [BagianAkademikController::class, 'index'])->name('bagianAkademik.dashboard');
     Route::get('/manajemen_ruang', [RuanganController::class, 'showManajemenRuang'])->name('bagianAkademik.manajemen_ruang');
-    Route::get('/ketersediaan_ruang', [RuanganController::class, 'index'])->name('ketersediaan_ruang');
+    Route::get('/ketersediaan_ruang', [RuanganController::class, 'index'])->name('bagianAkademik.ketersediaan_ruang');
     Route::post('/update_kapasitas{id}', [RuanganController::class, 'update'])->name('bagianAkademik.ruangan.update');
 });
 
