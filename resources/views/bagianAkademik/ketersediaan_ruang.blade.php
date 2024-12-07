@@ -255,20 +255,19 @@
         </div>
     </nav>
 
-    @if (session('success'))
-        <script>
-            alert('{{ session('success') }}');
-        </script>
-    @endif
-
-    @if (session('error'))
-        <script>
-            alert('{{ session('error') }}');
-        </script>
-    @endif
-
     <div class="container">
-        <div class="card border-0 shadow my-5">
+        @if (session('success'))
+            <div class="alert alert-success mt-4" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger mt-4" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
+        <div class="card border-0 shadow my-4">
             <div class="card-header bg-light">
                 <h3 class="h5 pt-2">KETERSEDIAAN RUANG KELAS</h3>
             </div>
@@ -277,8 +276,8 @@
                     <button class="btn-fill {{ request()->routeIs('bagianAkademik.manajemen_ruang') ? 'active' : '' }}"
                         onclick="window.location.href='{{ route('bagianAkademik.manajemen_ruang') }}'">Pengisian
                     </button>
-                    <button class="btn-history {{ request()->routeIs('ketersediaan_ruang') ? 'active' : '' }}"
-                        onclick="window.location.href='{{ route('ketersediaan_ruang') }}'">Riwayat Pengisian
+                    <button class="btn-history {{ request()->routeIs('bagianAkademik.ketersediaan_ruang') ? 'active' : '' }}"
+                        onclick="window.location.href='{{ route('bagianAkademik.ketersediaan_ruang') }}'">Riwayat Pengisian
                     </button>
                 </div>
                 <div class="form-container">
@@ -317,9 +316,7 @@
                                                 data-nama-ruang="{{ $ruang->nama_ruang }}"
                                                 onclick="return confirmHapus(this)">Hapus</button>
                                         </form>
-
                                     </td>
-
                                 </tr>
                             @endforeach
                         </tbody>
@@ -390,7 +387,7 @@
 
     <script>
         function alertAjukan() {
-            alert('Semua Ruang berhasil diajukan ke Dekan!');
+            alert('Sudah diajukan ke dekan');
         }
     </script>
 
@@ -434,10 +431,8 @@
                     });
                 }
             });
-
             return false;
         }
     </script>
 </body>
-
 </html>

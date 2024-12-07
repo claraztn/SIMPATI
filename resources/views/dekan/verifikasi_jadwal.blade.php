@@ -131,7 +131,7 @@
                                         @csrf
                                         @method('PATCH')
                                         <button type="submit" name="action" value="approve"
-                                            class="btn btn-success btn-sm">Setujui</button>
+                                            class="btn btn-success btn-sm">Setuju</button>
                                         <button type="submit" name="action" value="reject"
                                             class="btn btn-danger btn-sm">Tolak</button>
                                     </form>

@@ -51,35 +51,43 @@
 
         label {
             text-align: center;
+            /* Center the text inside the label */
         }
 
         .btn-save {
             background-color: #28a745;
+            /* Green color */
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             width: 100%;
+            /* Make it full-width */
             margin-top: 20px;
         }
 
         .btn-save:hover {
             background-color: #218838;
+            /* Darker green on hover */
         }
 
+        /* Custom styles for navbar links */
         .navbar-nav .nav-item .nav-link {
             color: white;
             text-decoration: none;
         }
 
+        /* On hover, add underline */
         .navbar-nav .nav-item .nav-link:hover {
             text-decoration: underline;
         }
 
+        /* Active link: underline stays when the link is active */
         .navbar-nav .nav-item.active .nav-link {
             text-decoration: underline;
             color: white;
+            /* Ensure text color stays white */
         }
     </style>
 </head>
@@ -151,7 +159,7 @@
                     <button class="btn-fill"
                         onclick="window.location.href='{{ route('bagianAkademik.manajemen_ruang') }}'">Pengisian</button>
                     <button class="btn-history"
-                        onclick="window.location.href='{{ route('ketersediaan_ruang') }}'">Riwayat Pengisian</button>
+                        onclick="window.location.href='{{ route('bagianAkademik.ketersediaan_ruang') }}'">Riwayat Pengisian</button>
                 </div>
 
                 <!-- Form to configure room capacity -->
@@ -181,6 +189,9 @@
                         <!-- "Nama Ruang" Field -->
                         <label for="namaRuang">Nama Ruang:</label>
                         <input type="text" id="namaRuang" name="nama_ruang" required />
+                        @error('nama_ruang')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
 
                         <!-- "Kapasitas" Field -->
                         <label for="kapasitas">Kapasitas:</label>
@@ -204,3 +215,4 @@
 </body>
 
 </html>
+

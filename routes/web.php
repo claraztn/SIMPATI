@@ -353,13 +353,9 @@ Route::prefix('kaprodi')->middleware('auth')->group(function () {
 Route::prefix('bagianAkademik')->middleware('auth')->group(function () {
     Route::get('/dashboard', [BagianAkademikController::class, 'index'])->name('bagianAkademik.dashboard');
     Route::get('/manajemen_ruang', [RuanganController::class, 'showManajemenRuang'])->name('bagianAkademik.manajemen_ruang');
-    Route::get('/ketersediaan_ruang', [RuanganController::class, 'index'])->name('ketersediaan_ruang');
+    Route::get('/ketersediaan_ruang', [RuanganController::class, 'index'])->name('bagianAkademik.ketersediaan_ruang');
     Route::post('/update_kapasitas{id}', [RuanganController::class, 'update'])->name('bagianAkademik.ruangan.update');
 });
-
-
-// Rute untuk Ketersediaan Ruang
-
 
 // Rute untuk Manajemen Ruangan
 Route::prefix('ruangan')->middleware('auth')->group(function () {
@@ -369,11 +365,8 @@ Route::prefix('ruangan')->middleware('auth')->group(function () {
     Route::get('/prodi', [RuanganController::class, 'getRuangByProdi'])->name('ruangan.getRuanganByProdi');
     // Mendapatkan ruangan berdasarkan gedung
     Route::get('/gedung', [RuanganController::class, 'getRuangByGedung'])->name('ruangan.getRuanganByGedung');
-    // Route::get('/getRuanganByGedung/{gedung}', [RuanganController::class, 'getRuangByGedung']);
-
     // Atur Kapasitas Ruang
     Route::post('/atur-kapasitas', [RuanganController::class, 'aturKapasitas'])->name('ruangan.aturKapasitas');
-
     // Hapus Kapasitas Ruang
     Route::delete('/{id_ruang}', [RuanganController::class, 'hapus'])->name('ruangan.hapus');
 });
