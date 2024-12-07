@@ -44,8 +44,8 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'username' => 'Beny',
-            'email' => 'beny@academic.undip.ac.id',
+            'username' => 'Beny Nugroho, S.Kom.',
+            'email' => 'benynugroho@academic.undip.ac.id',
             'password' => Hash::make('beny'),
             'role' => 'BagianAkademik',
         ]);

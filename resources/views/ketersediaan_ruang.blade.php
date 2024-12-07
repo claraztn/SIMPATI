@@ -390,7 +390,7 @@
 
     <script>
         function alertAjukan() {
-            alert('Sudah diajukan ke dekan');
+            alert('Semua Ruang berhasil diajukan ke Dekan!');
         }
     </script>
 

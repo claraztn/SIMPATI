@@ -16,8 +16,8 @@ class BagianAkademikSeeder extends Seeder
     {
         DB::table('bagian_akademik')->insert([
             'nip' => '987654321',
-            'nama' => 'Beny',
-            'email' => 'beny@academic.undip.ac.id',
+            'nama' => 'Beny Nugroho, S.Kom.',
+            'email' => 'benynugroho@academic.undip.ac.id',
             'handphone' => '082278438923',
             'id_user' => 5,
             'created_at' => now(),
