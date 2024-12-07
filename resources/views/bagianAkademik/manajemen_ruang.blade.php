@@ -51,43 +51,35 @@
 
         label {
             text-align: center;
-            /* Center the text inside the label */
         }
 
         .btn-save {
             background-color: #28a745;
-            /* Green color */
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             width: 100%;
-            /* Make it full-width */
             margin-top: 20px;
         }
 
         .btn-save:hover {
             background-color: #218838;
-            /* Darker green on hover */
         }
 
-        /* Custom styles for navbar links */
         .navbar-nav .nav-item .nav-link {
             color: white;
             text-decoration: none;
         }
 
-        /* On hover, add underline */
         .navbar-nav .nav-item .nav-link:hover {
             text-decoration: underline;
         }
 
-        /* Active link: underline stays when the link is active */
         .navbar-nav .nav-item.active .nav-link {
             text-decoration: underline;
             color: white;
-            /* Ensure text color stays white */
         }
     </style>
 </head>
@@ -136,7 +128,6 @@
                                 <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Hello, {{ auth()->user()->username ?? 'BagianAkademik' }}
-
                                 </a>
                                 <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">
                                     <li>
