@@ -94,7 +94,7 @@
         <div class="alert alert-success d-flex align-items-center" role="alert">
             <i class="bi bi-check-circle-fill me-2"></i>
             <strong>Welcome, Beny Nugroho, S.Kom.</strong>
-        </div>    
+        </div>
 
         <!-- Profile Card and Info Cards Side by Side -->
         <div class="row">
@@ -121,13 +121,13 @@
                     <div class="col-md-6">
                         <div class="card card-info text-center p-3 mb-4">
                             <h5>Total Ruang Dibuat</h5>
-                            <p>10</p>
+                            <p>{{ $ruangan }}</p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="card card-info text-center p-3 mb-4">
                             <h5>Ruang Belum Disetujui Dekan</h5>
-                            <p>7/10</p>
+                            <p>{{ $notApprov }} / {{ $ruangan }}</p>
                         </div>
                     </div>
                 </div>
@@ -137,13 +137,13 @@
                     <div class="col-md-6">
                         <div class="card card-info text-center p-3 mb-4">
                             <h5>Ruang Disetujui Dekan</h5>
-                            <p>7/10</p>
+                            <p>{{ $approved }} / {{ $ruangan }}</p>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="card card-info text-center p-3 mb-4">
                             <h5>Ruang Ditolak Dekan</h5>
-                            <p>3/10</p>
+                            <p>{{ $rejected }} / {{ $ruangan }}</p>
                         </div>
                     </div>
                 </div>

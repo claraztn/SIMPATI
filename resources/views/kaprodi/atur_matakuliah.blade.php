@@ -118,14 +118,12 @@
                                 style="text-decoration: none;">Atur Mata Kuliah</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Dropdown User -->
+                    <ul class="navbar-nav ms-auto"> 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hello, Ketua Program Studi
+                            <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Hello, {{ auth()->user()->username ?? 'Kaprodi' }}
                             </a>
-                            <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">
+                            <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">                          
                                 <li>
                                     <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                                 </li>

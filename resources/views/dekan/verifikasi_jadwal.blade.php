@@ -40,7 +40,11 @@
                     <ul class="navbar-nav flex-grow-1">
                         <!-- Menu Home -->
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="{{ route('dekan.dashboard') }}" style="text-decoration: none;">Home</a>
+                            <a class="nav-link text-white" href="{{ route('dekan.dashboard') }}"
+                                style="text-decoration: none;" onmouseover="this.style.textDecoration='underline'"
+                                onmouseout="this.style.textDecoration='none'">
+                                Home
+                            </a>
                         </li>
                         <!-- Menu Verifikasi Ruangan -->
                         <li class="nav-item">
@@ -53,14 +57,12 @@
                                 style="text-decoration: none;">Verifikasi Jadwal</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Dropdown User -->
+                    <ul class="navbar-nav ms-auto"> 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Hello, {{ auth()->user()->username ?? 'Dekan' }}
                             </a>
-                            <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">
+                            <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">                          
                                 <li>
                                     <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                                 </li>
@@ -106,8 +108,9 @@
                         <tr>
                             <th>No</th>
                             <th>Kelas</th>
-                            <th>Hari</th>
+                            <th>Mata Kuliah</th>
                             <th>Ruangan</th>
+                            <th>Hari</th>
                             <th>Jam Mulai</th>
                             <th>Jam Selesai</th>
                             <th>SKS</th>
@@ -120,10 +123,19 @@
                         @forelse ($jadwalPending as $key => $item)
                             <tr>
                                 <td class="text-center">{{ $key + 1 }}</td>
+                                <td>{{ $item->kode_kelas }} </td>
                                 <td>{{ $item->mataKuliah->nama_mk }}</td>
                                 <td>{{ $item->ruangan->nama_ruang }}</td>
                                 <td>{{ $item->hari }}</td>
                                 <td>{{ $item->jam_mulai }}</td>
+                                <td>{{ $item->jam_selesai }}</td>
+                                <td>{{ $item->mataKuliah->sks }}</td>
+                                <td>{{ $item->status }}</td>
+                                <td>
+                                    @foreach ($item->mataKuliah->dosenMataKuliah as $dosenMataKuliah)
+                                        {{ $dosenMataKuliah->dosen->nama_dosen }}<br>
+                                    @endforeach
+                                </td>
                                 <td class="text-center">
                                     <form
                                         action="{{ route('verifikasi.jadwal.submit', ['id_jadwal' => $item->id_jadwal]) }}"
@@ -131,7 +143,7 @@
                                         @csrf
                                         @method('PATCH')
                                         <button type="submit" name="action" value="approve"
-                                            class="btn btn-success btn-sm">Setuju</button>
+                                            class="btn btn-success btn-sm">Setujui</button>
                                         <button type="submit" name="action" value="reject"
                                             class="btn btn-danger btn-sm">Tolak</button>
                                     </form>
@@ -139,7 +151,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center">Tidak ada jadwal yang menunggu verifikasi.</td>
+                                <td colspan="10" class="text-center">Tidak ada jadwal yang menunggu verifikasi.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -158,24 +170,33 @@
                         <tr>
                             <th>No</th>
                             <th>Kelas</th>
-                            <th>Hari</th>
+                            <th>Mata Kuliah</th>
                             <th>Ruangan</th>
+                            <th>Hari</th>
                             <th>Jam Mulai</th>
                             <th>Jam Selesai</th>
                             <th>SKS</th>
                             <th>Status</th>
                             <th>Nama Pengampu</th>
                         </tr>
-                        
                     </thead>
                     <tbody>
                         @foreach ($jadwalApproved as $key => $item)
                             <tr>
                                 <td class="text-center">{{ $key + 1 }}</td>
+                                <td>{{ $item->kode_kelas }} </td>
                                 <td>{{ $item->mataKuliah->nama_mk }}</td>
                                 <td>{{ $item->ruangan->nama_ruang }}</td>
                                 <td>{{ $item->hari }}</td>
                                 <td>{{ $item->jam_mulai }}</td>
+                                <td>{{ $item->jam_selesai }}</td>
+                                <td>{{ $item->mataKuliah->sks }}</td>
+                                <td>{{ $item->status }}</td>
+                                <td>
+                                    @foreach ($item->mataKuliah->dosenMataKuliah as $dosenMataKuliah)
+                                        {{ $dosenMataKuliah->dosen->nama_dosen }}<br>
+                                    @endforeach
+                                </td>
 
                             </tr>
                         @endforeach
@@ -183,8 +204,10 @@
                 </table>
             </div>
         </div>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Icon Library -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/bootstrap-icons.min.js"></script>
 </body>
+
 </html>

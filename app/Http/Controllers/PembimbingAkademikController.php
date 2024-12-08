@@ -17,7 +17,19 @@ class PembimbingAkademikController extends Controller
     public function index()
     {
 
-        return view('pembimbingAkademik.dashboard');
+        $userId = auth()->user()->id;
+
+        $getDosen = Dosen::where('id_user', $userId)->first();
+
+        $mhsBimbingan = Mahasiswa::where('dosen_wali', $getDosen->nip)->get();
+        $nimList = $mhsBimbingan->pluck('nim');
+        $irsApproved = IRS::whereIn('nim', $nimList)->where('isverified', '1')->count();
+
+        $irsReq = IRS::whereIn('nim', $nimList)->count();
+
+        // dd($irsApproved, $irsReq);
+
+        return view('pembimbingAkademik.dashboard', compact('irsApproved', 'irsReq'));
     }
 
     function irsMahasiswa()

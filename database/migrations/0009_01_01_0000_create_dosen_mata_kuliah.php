@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('dosen_mata_kuliah', function (Blueprint $table) {
             $table->id()->primary();
             $table->string('nip');
+            $table->unsignedBigInteger('id_jadwal');
             $table->string('kode_mk');
             $table->string('tahun');
             $table->timestamps();
 
-            $table->foreign('nip')->references('nip')->on('dosen'); 
-            $table->foreign('kode_mk')->references('kode_mk')->on('mata_kuliah'); 
+            $table->foreign('nip')->references('nip')->on('dosen');
+            $table->foreign('id_jadwal')->references('id_jadwal')->on('jadwal');
+            $table->foreign('kode_mk')->references('kode_mk')->on('mata_kuliah');
         });
     }
 

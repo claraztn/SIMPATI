@@ -9,7 +9,13 @@ class BagianAkademikController extends Controller
 {
     public function index()
     {
-        return view('bagianAkademik.dashboard'); 
+        $ruangan = Ruangan::all()->count();
+
+        $notApprov = Ruangan::where('status', 'pending')->count();
+        $approved = Ruangan::where('status', 'approved')->count();
+        $rejected = Ruangan::where('status', 'rejected')->count();
+
+        return view('bagianAkademik.dashboard', compact('ruangan', 'notApprov', 'approved', 'rejected'));
     }
 
     public function manajemenRuang()

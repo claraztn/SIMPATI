@@ -14,16 +14,18 @@ return new class extends Migration
         Schema::create('irs_item_mahasiswas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_irs');
+            $table->unsignedBigInteger('id_jadwal'); //added
             $table->string('nim');
             $table->string('kode_mk');
 
-            // perlu cetak informasi detail!
             $table->string('hari');
             $table->string('jam_mulai');
             $table->string('jam_selesai');
             $table->string('ruang');
 
             $table->foreign('id_irs')->references('id')->on('irs')->onDelete('cascade');
+
+            $table->foreign('id_jadwal')->references('id_jadwal')->on('jadwal')->onDelete('cascade'); //added
 
             $table->timestamps();
         });

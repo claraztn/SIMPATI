@@ -83,12 +83,13 @@
         </div>
     </div>
 
+
     <div class="container my-2">
         <!-- Alert -->
         <div class="alert alert-success d-flex align-items-center" role="alert">
             <i class="bi bi-check-circle-fill me-2"></i>
-            <strong>Welcome, Dr. Aris Sugiharto, S.Si., M.Kom'</strong>
-        </div>    
+            <strong>Welcome, {{ auth()->user()->username }}</strong>
+        </div>
 
         <!-- Profile Card -->
         <div class="card profile-card p-4 mb-4">
@@ -97,19 +98,19 @@
                     <img src="https://via.placeholder.com/100" alt="Profile Picture">
                 </div>
                 <div class="col-md-10">
-                    <h5>Dr. Aris Sugiharto, S.Si., M.Kom'</h5>
+                    <h5>{{ auth()->user()->username }}</h5>
                     <p class="text-muted mb-0">Ketua Program Studi</p>
-                    <p class="text-muted mb-0">H.7.198611152023101001</p>
+                    <p class="text-muted mb-0">{{ auth()->user()->dosen->nip }}</p>
                 </div>
             </div>
-        </div>        
+        </div>
 
         <!-- 3 Info Cards -->
         <div class="row">
             <div class="col-md-4">
                 <div class="card card-info text-center p-3">
                     <h5>Jadwal yang sudah disetujui oleh Dekan</h5>
-                    <p>7/10</p>
+                    <p>{{ $jadwalApproved }} / {{ $jadwalAll }}</p>
                 </div>
             </div>
         </div>

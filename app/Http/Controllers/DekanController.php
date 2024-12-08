@@ -10,9 +10,16 @@ use Illuminate\Support\Facades\DB;
 
 class DekanController extends Controller
 {
+
     public function index()
     {
-        return view('dekan.dashboard');
+        $ruangAll = Ruangan::all()->count();
+        $jadwalAll = Jadwal::all()->count();
+
+        $ruangVerif = Ruangan::where('status', 'approved')->get()->count();
+        $jadwalVerif = Jadwal::where('status', 'approved')->get()->count();
+
+        return view('dekan.dashboard', compact('ruangAll', 'jadwalAll', 'ruangVerif', 'jadwalVerif'));
     }
 
     public function verifikasiRuangan()

@@ -42,8 +42,10 @@
                     <ul class="navbar-nav flex-grow-1">
                         <!-- Home -->    
                         <li class="nav-item">
-                                <a class="nav-link text-white" href="#" style="text-decoration: none;">Home</a>
-                            </li>    
+                            <a class="nav-link text-white" href="{{ route('pembimbingAkademik.dashboard') }}" style="text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                                Home
+                            </a>
+                        </li>   
                         <!-- Menu IRS Mahasiswa -->
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('pembimbingAkademik.irs-mahasiswa') }}"
@@ -60,7 +62,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hello, Pembimbing Akademik
+                                Hello, {{ auth()->user()->username ?? 'pembimbingAkademik' }}
                             </a>
                             <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">
                                 <li>

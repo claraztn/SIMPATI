@@ -16,10 +16,11 @@ class KaprodiController extends Controller
 {
     public function index()
     {
-        // $kelas = Kelas::with('mataKuliah')->get();
-        $jadwals = Jadwal::with('kelas')->get();
-        $ruangan = Ruangan::where('status', 'approved')->get();
-        return view('kaprodi.dashboard', compact('jadwals', 'ruangan'));
+        $jadwalApproved = Jadwal::where('status', 'approved')->get()->count();
+        $jadwalAll = Jadwal::all()->count();
+
+
+        return view('kaprodi.dashboard', compact('jadwalApproved', 'jadwalAll'));
     }
 
     public function aturJadwal()
@@ -156,6 +157,85 @@ class KaprodiController extends Controller
 
         return redirect()->route('kaprodi.atur-jadwal')->with('success', 'Jadwal berhasil disimpan!');
     }
+
+    public function updateJadwal(Request $request, $id_jadwal)
+    {
+        $request->validate([
+            'kode_kelas' => 'required|exists:kelas,kode_kelas',
+            'kode_mk' => 'required|exists:mata_kuliah,kode_mk',
+            'hari' => 'required|string',
+            'id_ruang' => 'required|exists:ruangan,id_ruang',
+            'jam_mulai' => 'required',
+
+            'dosen_pengampu' => 'required|array',
+            'dosen_pengampu.*' => 'required|exists:dosen,nip',
+        ]);
+
+        $jadwal = Jadwal::find($id_jadwal);
+
+        if (!$jadwal) {
+            return redirect()->route('kaprodi.atur-jadwal')->with('error', 'Jadwal tidak ditemukan!');
+        }
+
+        $jamMulai = $request->jam_mulai;
+
+        try {
+            if (\Carbon\Carbon::hasFormat($jamMulai, 'H:i')) {
+                $parsedJamMulai = \Carbon\Carbon::createFromFormat('H:i', $jamMulai);
+            } elseif (\Carbon\Carbon::hasFormat($jamMulai, 'H:i:s')) {
+                // Jika gagal, coba format H:i:s
+                $parsedJamMulai = \Carbon\Carbon::createFromFormat('H:i:s', $jamMulai);
+            } else {
+                throw new \Exception('Format waktu tidak valid');
+            }
+
+            $durasiMenit = $request->sks * 50; // 1 SKS = 50 menit
+            $jamSelesai = $parsedJamMulai->copy()->addMinutes($durasiMenit)->format('H:i:s');
+        } catch (\Exception $e) {
+            return redirect()->route('kaprodi.atur-jadwal')->with('error', 'Format waktu jam mulai tidak valid.');
+        }
+
+        $cekJadwal = Jadwal::where('hari', $request->hari)
+            ->where('id_ruang', $request->id_ruang)
+            ->where('id_jadwal', '!=', $jadwal->id_jadwal) // Mengecualikan jadwal ini
+            ->where(function ($query) use ($parsedJamMulai, $jamSelesai) {
+                $query->where('jam_mulai', '<', $jamSelesai)
+                    ->where('jam_selesai', '>', $parsedJamMulai);
+            })
+            ->exists();
+
+        if ($cekJadwal) {
+            return redirect()->route('kaprodi.atur-jadwal')->with('error', 'Gagal menyimpan. Jadwal berbenturan dengan jadwal lain!');
+        }
+
+        $jadwal->update([
+            'kode_kelas' => $request->kode_kelas,
+            'kode_mk' => $request->kode_mk,
+            'hari' => $request->hari,
+            'id_ruang' => $request->id_ruang,
+            'jam_mulai' => $parsedJamMulai->format('H:i:s'),
+            'jam_selesai' => $jamSelesai,
+            'sks' => $request->sks,
+            'status' => 'pending',
+        ]);
+
+        DB::table('dosen_mata_kuliah')->where('id_jadwal', $jadwal->id_jadwal)->delete();
+
+        foreach ($request->dosen_pengampu as $nip) {
+            DB::table('dosen_mata_kuliah')->insert([
+                'kode_mk' => $request->kode_mk,
+                'nip' => $nip,
+                'id_jadwal' => $jadwal->id_jadwal,
+                'tahun' => '2023',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+
+        return redirect()->route('kaprodi.atur-jadwal')->with('success', 'Jadwal berhasil diperbarui!');
+    }
+
+
 
     public function storeMatakuliah(Request $request)
     {

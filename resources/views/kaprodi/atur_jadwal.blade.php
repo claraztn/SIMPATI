@@ -71,6 +71,11 @@
             background-color: #e53e3e;
             /* Even darker red */
         }
+
+        .highlight-border {
+            border: 2px solid #007bff !important;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.8);
+        }
     </style>
 </head>
 
@@ -116,14 +121,12 @@
                                 style="text-decoration: none;">Atur Mata Kuliah</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Dropdown User -->
+                    <ul class="navbar-nav ms-auto"> 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hello, Ketua Program Studi
+                            <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Hello, {{ auth()->user()->username ?? 'Kaprodi' }}
                             </a>
-                            <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">
+                            <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">                          
                                 <li>
                                     <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                                 </li>
@@ -160,6 +163,8 @@
                     @csrf
                     <div class="mb-3">
                         <div class="row">
+                            <input type="number" hidden name="id_jadwal" id="id_jadwal" class="form-control">
+
                             <div class="col-md-6">
                                 <label for="kode_kelas" class="form-label">Kelas</label>
                                 <select name="kode_kelas" id="kode_kelas" class="form-select" required>
@@ -249,7 +254,7 @@
                         <button type="button" id="remove-dosen-btn" class="btn btn-remove">Hapus Dosen</button>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">Simpan Jadwal</button>
+                        <button type="submit" id="btn-submit" class="btn btn-primary">Simpan Jadwal</button>
                     </div>
                 </form>
             </div>
@@ -265,7 +270,8 @@
                     <thead class="text-center table-success">
                         <tr>
                             <th>No</th>
-                            <th>Kelas</th>
+                            <th>Kelas </th>
+                            <th>Mata Kuliah</th> 
                             <th>Hari</th>
                             <th>Ruangan</th>
                             <th>Jam Mulai</th>
@@ -273,6 +279,7 @@
                             <th>SKS</th>
                             <th>Status</th>
                             <th>Nama Pengampu</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -282,7 +289,8 @@
                         @foreach ($jadwals as $jadwal_kelas)
                             <tr>
                                 <td>{{ $i++ }}</td>
-                                <td>{{ $jadwal_kelas->kode_kelas }} - {{ $jadwal_kelas->mataKuliah->nama_mk }}</td>
+                                <td>{{ $jadwal_kelas->kode_kelas }}</td>
+                                <td>{{ $jadwal_kelas->mataKuliah->nama_mk }}</td>
                                 <td>{{ $jadwal_kelas->hari }}</td>
                                 <td>{{ $jadwal_kelas->ruangan->nama_ruang ?? 'Belum ditentukan' }}</td>
                                 <td>{{ $jadwal_kelas->jam_mulai }}</td>
@@ -296,6 +304,18 @@
                                         @endif
                                     @endforeach
                                 </td>
+                                <td>
+                                    <a href="javascript:void(0);" class="btn btn-warning btn-sm edit-btn"
+                                        data-id="{{ $jadwal_kelas->id_jadwal }}"
+                                        data-kode_kelas="{{ $jadwal_kelas->kode_kelas }}"
+                                        data-mk="{{ $jadwal_kelas->kode_mk }}" data-hari="{{ $jadwal_kelas->hari }}"
+                                        data-ruang="{{ $jadwal_kelas->id_ruang }}"
+                                        data-jam_mulai="{{ $jadwal_kelas->jam_mulai }}"
+                                        data-sks="{{ $jadwal_kelas->mataKuliah->sks }}"
+                                        data-dosen="{{ json_encode($jadwal_kelas->dosens->pluck('nip')->toArray()) }}">
+                                        Edit
+                                    </a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -305,8 +325,66 @@
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const editButtons = document.querySelectorAll('.edit-btn');
+            editButtons.forEach(button => {
+                button.addEventListener('click', function() {
+
+                    const idJadwal = this.dataset.id;
+                    const kodeKelas = this.dataset.kode_kelas;
+                    const kodeMk = this.dataset.mk;
+                    const hari = this.dataset.hari;
+                    const ruang = this.dataset.ruang;
+                    const jamMulai = this.dataset.jam_mulai;
+                    const sks = this.dataset.sks;
+                    const dosen = JSON.parse(this.dataset.dosen);
+
+                    document.querySelector('.card-body form').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+
+                    const form = document.querySelector('.card-body form');
+                    form.action = `/kaprodi/update-jadwal/${idJadwal}`;
+
+                    // Populate the form fields
+                    document.querySelector('#id_jadwal').value = idJadwal;
+                    document.querySelector('#kode_kelas').value = kodeKelas;
+                    document.querySelector('#kode_mk').value = kodeMk;
+                    document.querySelector('#hari').value = hari;
+                    document.querySelector('#id_ruang').value = ruang;
+                    document.querySelector('#jam_mulai').value = jamMulai;
+                    document.querySelector('#sks').value = sks;
+
+                    dosen.forEach((nip, index) => {
+                        if (index === 0) {
+                            document.querySelector('#dosen1').value = nip;
+                        } else if (index === 1) {
+                            document.querySelector('#dosen2').value = nip;
+                        }
+                    });
+                    document.querySelector('.card-body').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    highlightFormBorders();
+
+                });
+            });
+        });
+
+        function highlightFormBorders() {
+            const formElements = document.querySelectorAll('.form-select, .form-control');
+            formElements.forEach((element) => {
+                element.classList.add('highlight-border');
+                setTimeout(() => {
+                    element.classList.remove('highlight-border');
+                }, 2000);
+            });
+        }
+    </script>
+
+    <script>
         const dosenData = @json($dosenArray);
-        console.log(dosenData);
+        // console.log(dosenData);
 
         document.getElementById('add-dosen-btn').addEventListener('click', function() {
             const dosenGroups = document.querySelectorAll('.dosen-group');

@@ -54,7 +54,11 @@
                     <ul class="navbar-nav flex-grow-1">
                         <!-- Menu Home -->
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#" style="text-decoration: none;">Home</a>
+                            <a class="nav-link text-white" href="{{ route('dekan.dashboard') }}"
+                                style="text-decoration: none;" onmouseover="this.style.textDecoration='underline'"
+                                onmouseout="this.style.textDecoration='none'">
+                                Home
+                            </a>
                         </li>
                         <!-- Menu Verifikasi Ruangan -->
                         <li class="nav-item">
