@@ -42,7 +42,9 @@
                     <ul class="navbar-nav flex-grow-1">
                         <!-- Menu Home -->
                         <li class="nav-item">
-                            <a class="nav-link text-white" href="#" style="text-decoration: none;">Home</a>
+                            <a class="nav-link text-white" href="{{ route('kaprodi.dashboard') }}" style="text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                                Home
+                            </a>
                         </li>
                         <!-- Menu Atur Jadwal -->
                         <li class="nav-item">
@@ -55,14 +57,12 @@
                                 style="text-decoration: none;">Atur Mata Kuliah</a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Dropdown User -->
+                    <ul class="navbar-nav ms-auto"> 
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown"
-                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Hello, Ketua Program Studi
+                            <a class="nav-link dropdown-toggle text-white" href="#!" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Hello, {{ auth()->user()->username ?? 'Kaprodi' }}
                             </a>
-                            <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">
+                            <ul class="dropdown-menu border-0 shadow" aria-labelledby="accountDropdown">                          
                                 <li>
                                     <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
                                 </li>
@@ -76,15 +76,45 @@
 
     <!-- Content -->
     <div class="container">
-        <div class="card border-0 shadow my-5">
+        <div class="card border-0 shadow my-3">
             <div class="card-header bg-light">
                 <h3 class="h5 pt-2">Dashboard Ketua Program Studi</h3>
             </div>
-            <div class="card-body">
-                <p>Welcome to the Ketua Program Studi dashboard</p>
+        </div>
+    </div>
+
+    <div class="container my-2">
+        <!-- Alert -->
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            <strong>Welcome, Dr. Aris Sugiharto, S.Si., M.Kom'</strong>
+        </div>    
+
+        <!-- Profile Card -->
+        <div class="card profile-card p-4 mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-2 text-center">
+                    <img src="https://via.placeholder.com/100" alt="Profile Picture">
+                </div>
+                <div class="col-md-10">
+                    <h5>Dr. Aris Sugiharto, S.Si., M.Kom'</h5>
+                    <p class="text-muted mb-0">Ketua Program Studi</p>
+                    <p class="text-muted mb-0">H.7.198611152023101001</p>
+                </div>
+            </div>
+        </div>        
+
+        <!-- 3 Info Cards -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-info text-center p-3">
+                    <h5>Jadwal yang sudah disetujui oleh Dekan</h5>
+                    <p>7/10</p>
+                </div>
             </div>
         </div>
     </div>
+
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"

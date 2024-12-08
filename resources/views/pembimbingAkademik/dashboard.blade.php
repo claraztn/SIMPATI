@@ -40,15 +40,21 @@
                 </div>
                 <div class="offcanvas-body">
                     <ul class="navbar-nav flex-grow-1">
+                        <!-- Home -->    
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ route('pembimbingAkademik.dashboard') }}" style="text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+                                Home
+                            </a>
+                        </li>
                         <!-- Menu IRS Mahasiswa -->
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('pembimbingAkademik.irs-mahasiswa') }}"
-                                style="text-decoration: none;">IRS Mahasiswa</a>
+                            style="text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">IRS Mahasiswa</a>
                         </li>
                         <!-- Menu Jadwal Mengajar -->
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('pembimbingAkademik.jadwal-mengajar') }}"
-                                style="text-decoration: none;">Jadwal Mengajar</a>
+                            style="text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">Jadwal Mengajar</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
@@ -72,13 +78,41 @@
 
     <!-- Content -->
     <div class="container">
-        <div class="card border-0 shadow my-5">
+        <div class="card border-0 shadow my-3">
             <div class="card-header bg-light">
                 <h3 class="h5 pt-2">Dashboard Pembimbing Akademik</h3>
             </div>
-            <div class="card-body">
-                <p>Welcome to the Pembimbing Akademik dashboard</p>
+        </div>
+    </div>
 
+    <div class="container my-2">
+        <!-- Alert -->
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            <strong>Welcome, Dr. Sutikno, S.T., M.Cs'</strong>
+        </div>    
+
+        <!-- Profile Card -->
+        <div class="card profile-card p-4 mb-4">
+            <div class="row align-items-center">
+                <div class="col-md-2 text-center">
+                    <img src="https://via.placeholder.com/100" alt="Profile Picture">
+                </div>
+                <div class="col-md-10">
+                    <h5>Dr. Sutikno, S.T., M.Cs'</h5>
+                    <p class="text-muted mb-0">Pembimbing Akademik</p>
+                    <p class="text-muted mb-0">H.7.198611152023101001</p>
+                </div>
+            </div>
+        </div>        
+
+        <!-- 3 Info Cards -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card card-info text-center p-3">
+                    <h5>IRS Mahasiswa yang sudah disetujui</h5>
+                    <p>7/10</p>
+                </div>
             </div>
         </div>
     </div>

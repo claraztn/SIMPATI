@@ -51,35 +51,43 @@
 
         label {
             text-align: center;
+            /* Center the text inside the label */
         }
 
         .btn-save {
             background-color: #28a745;
+            /* Green color */
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             width: 100%;
+            /* Make it full-width */
             margin-top: 20px;
         }
 
         .btn-save:hover {
             background-color: #218838;
+            /* Darker green on hover */
         }
 
+        /* Custom styles for navbar links */
         .navbar-nav .nav-item .nav-link {
             color: white;
             text-decoration: none;
         }
 
+        /* On hover, add underline */
         .navbar-nav .nav-item .nav-link:hover {
             text-decoration: underline;
         }
 
+        /* Active link: underline stays when the link is active */
         .navbar-nav .nav-item.active .nav-link {
             text-decoration: underline;
             color: white;
+            /* Ensure text color stays white */
         }
     </style>
 </head>
@@ -151,7 +159,7 @@
                     <button class="btn-fill"
                         onclick="window.location.href='{{ route('bagianAkademik.manajemen_ruang') }}'">Pengisian</button>
                     <button class="btn-history"
-                        onclick="window.location.href='{{ route('ketersediaan_ruang') }}'">Riwayat Pengisian</button>
+                        onclick="window.location.href='{{ route('bagianAkademik.ketersediaan_ruang') }}'">Riwayat Pengisian</button>
                 </div>
 
                 <!-- Form to configure room capacity -->
@@ -163,7 +171,10 @@
                         <select id="prodi" name="id_prodi" required>
                             <option value="">--Pilih Prodi--</option>
                             @foreach ($prodi as $item)
-                                <option value="{{ $item->id_prodi }}">{{ $item->nama_prodi }}</option>
+                                <option value="{{ $item->id_prodi }}" 
+                                    {{ old('id_prodi') == $item->id_prodi ? 'selected' : '' }}>
+                                    {{ $item->nama_prodi }}
+                                </option>
                             @endforeach
                         </select>
 
@@ -171,25 +182,27 @@
                         <label for="gedung">Pilih Gedung:</label>
                         <select id="gedung" name="gedung" required>
                             <option value="">--Pilih Gedung--</option>
-                            <option value="A">A</option>
-                            <option value="B">B</option>
-                            <option value="C">C</option>
-                            <option value="D">D</option>
-                            <option value="E">E</option>
+                            <option value="A" {{ old('gedung') == 'A' ? 'selected' : '' }}>A</option>
+                            <option value="B" {{ old('gedung') == 'B' ? 'selected' : '' }}>B</option>
+                            <option value="C" {{ old('gedung') == 'C' ? 'selected' : '' }}>C</option>
+                            <option value="D" {{ old('gedung') == 'D' ? 'selected' : '' }}>D</option>
+                            <option value="E" {{ old('gedung') == 'E' ? 'selected' : '' }}>E</option>
                         </select>
 
                         <!-- "Nama Ruang" Field -->
                         <label for="namaRuang">Nama Ruang:</label>
-                        <input type="text" id="namaRuang" name="nama_ruang" required />
+                        <input type="text" id="namaRuang" name="nama_ruang" value="{{ old('nama_ruang') }}" required />
+                        @error('nama_ruang')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
 
                         <!-- "Kapasitas" Field -->
                         <label for="kapasitas">Kapasitas:</label>
-                        <input type="number" id="kapasitas" name="kapasitas" required min="1" />
+                        <input type="number" id="kapasitas" name="kapasitas" value="{{ old('kapasitas') }}" required min="1" />
 
                         <!-- Submit Button -->
                         <button type="submit" class="btn-save">Simpan</button>
                     </form>
-
                 </div>
             </div>
         </div>

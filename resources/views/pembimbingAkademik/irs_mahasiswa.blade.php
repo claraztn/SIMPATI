@@ -40,6 +40,10 @@
                 </div>
                 <div class="offcanvas-body">
                     <ul class="navbar-nav flex-grow-1">
+                        <!-- Home -->    
+                        <li class="nav-item">
+                                <a class="nav-link text-white" href="#" style="text-decoration: none;">Home</a>
+                            </li>    
                         <!-- Menu IRS Mahasiswa -->
                         <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('pembimbingAkademik.irs-mahasiswa') }}"
