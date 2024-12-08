@@ -48,14 +48,6 @@ class RuanganController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
-        $ruangan = Ruangan::all();
-        $prodi = ProgramStudi::all();
-
-        $ruangs = Ruangan::with('programStudi')->orderBy('created_at', 'desc')->get();
-
-        return view('bagianAkademik.ketersediaan_ruang', compact('ruangan', 'prodi', 'ruangs'));
-=======
         $ruangs = Ruangan::join('program_studi', 'ruangan.id_prodi', '=', 'program_studi.id_prodi')
             ->orderByRaw("status = 'pending' DESC") // Mengurutkan berdasarkan status
             ->orderBy('program_studi.nama_prodi', 'ASC') // Mengurutkan berdasarkan nama_prodi
@@ -63,12 +55,8 @@ class RuanganController extends Controller
     
         $prodi = ProgramStudi::all(); // Mengambil data program studi
         return view('bagianAkademik.ketersediaan_ruang', compact('ruangs', 'prodi'));
->>>>>>> 4d4520dac99b0fe5ae877623db91e9f3f53f2680
     }
     
-    
-    
-
     /**
      * Mengatur kapasitas ruangan.
      */
@@ -93,10 +81,6 @@ class RuanganController extends Controller
 
         $prodi = ProgramStudi::find($validated['id_prodi']);
         $id_fakultas = $prodi->id_fakultas;
-<<<<<<< HEAD
-        // dd($id_fakultas);
-=======
->>>>>>> 4d4520dac99b0fe5ae877623db91e9f3f53f2680
 
         $existRuangan = Ruangan::where('gedung', $validated['gedung'])
             ->where('nama_ruang', $validated['nama_ruang'])
