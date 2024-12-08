@@ -20,12 +20,6 @@ class PembimbingAkademikController extends Controller
         return view('pembimbingAkademik.dashboard');
     }
 
-    // public function irsMahasiswa()
-    // {
-    //     $mahasiswa = IRS::all();
-    //     return view('pembimbingAkademik.irs', compact('mahasiswa'));  // Kirim data ke view
-    // }
-
     function irsMahasiswa()
     {
         // ambil id dosen yg sdgn login

@@ -95,7 +95,7 @@
         <h1 class="h3 mb-4 text-center">Verifikasi dan Ruangan Disetujui</h1>
 
         <!-- Tabel Verifikasi Ruangan -->
-        <div class="card shadow mb-5">
+        <div class="card shadow">
             <div class="card-header card-header-warning text-center">
                 <h5 class="mb-0">Daftar Ruangan Berdasarkan Verifikasi Prodi</h5>
             </div>
@@ -104,7 +104,7 @@
                     <thead class="text-center table-warning">
                         <tr>
                             <th>No</th>
-                            <th>Request Prodi</th>
+                            <th>Program Studi</th>
                             <th>Jumlah Ruangan Menunggu</th>
                             <th>Aksi</th>
                         </tr>
@@ -113,19 +113,15 @@
                         @forelse ($ruangans as $key => $item)
                             <tr>
                                 <td class="text-center">{{ $loop->iteration }}</td>
-
                                 <td>{{ $item->programStudi->nama_prodi }}</td>
-
                                 <td class="text-center">{{ $item->jumlah_ruangan }}</td>
-
                                 <td class="text-center">
                                     <form method="POST"
                                         action="{{ route('verifikasi.ruangan.prodi.submit', $item->id_prodi) }}">
                                         @csrf
                                         @method('PATCH')
-
                                         <button type="submit" name="action" value="approve"
-                                            class="btn btn-success btn-sm">Setujui Semua</button>
+                                            class="btn btn-success btn-sm">Setuju Semua</button>
                                     </form>
                                 </td>
                             </tr>
@@ -139,6 +135,7 @@
             </div>
         </div>
 
+        <br>
         <!-- Tabel Verifikasi Ruangan -->
         <div class="card shadow mb-5">
             <div class="card-header card-header-warning text-center">
@@ -151,7 +148,7 @@
                             <th>No</th>
                             <th>Nama Ruangan</th>
                             <th>Gedung</th>
-                            <th>Request Prodi</th>
+                            <th>Program Studi</th>
                             <th>Kapasitas</th>
                             <th>Aksi</th>
                         </tr>
@@ -171,7 +168,7 @@
                                         @csrf
                                         @method('PATCH')
                                         <button type="submit" name="action" value="approve"
-                                            class="btn btn-success btn-sm">Setujui</button>
+                                            class="btn btn-success btn-sm">Setuju</button>
                                         <button type="submit" name="action" value="reject"
                                             class="btn btn-danger btn-sm">Tolak</button>
                                     </form>
@@ -200,7 +197,7 @@
                             <th>No</th>
                             <th>Nama Ruangan</th>
                             <th>Gedung</th>
-                            <th>Request Prodi</th>
+                            <th>Program Studi</th>
                             <th>Kapasitas</th>
                         </tr>
                     </thead>
@@ -223,8 +220,9 @@
             </div>
         </div>
 
+        <br>
         <!-- Tabel Ruangan Ditolak -->
-        <div class="card shadow mt-3">
+        <div class="card shadow">
             <div class="card-header card-header-danger text-center">
                 <h5 class="mb-0">Daftar Ruangan yang Ditolak</h5>
             </div>
@@ -235,7 +233,7 @@
                             <th>No</th>
                             <th>Nama Ruangan</th>
                             <th>Gedung</th>
-                            <th>Request Prodi</th>
+                            <th>Program Studi</th>
                             <th>Kapasitas</th>
                         </tr>
                     </thead>

@@ -11,6 +11,7 @@ class IrsItemMahasiswa extends Model
     // Kolom yang dapat diisi (fillable)
     protected $fillable = [
         'id_irs',
+        'id_jadwal',
         'nim',
         'kode_mk',
         'hari',
@@ -33,5 +34,8 @@ class IrsItemMahasiswa extends Model
     {
         return $this->belongsTo(MataKuliah::class, 'kode_mk', 'kode_mk');
     }
-
+    public function jadwal()
+    {
+        return $this->belongsTo(Jadwal::class, 'id_jadwal', 'id_jadwal');
+    }
 }

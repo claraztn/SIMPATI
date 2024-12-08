@@ -23,6 +23,15 @@
             font-weight: bold;
             color: #003f5c;
         }
+        .profile-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .profile-card {
+            border-radius: 15px;
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -87,38 +96,56 @@
             <strong>Welcome, Beny Nugroho, S.Kom.</strong>
         </div>    
 
-        <!-- Profile Card -->
-        <div class="card profile-card p-4 mb-4">
-            <div class="row align-items-center">
-                <div class="col-md-2 text-center">
-                    <img src="https://via.placeholder.com/100" alt="Profile Picture">
-                </div>
-                <div class="col-md-10">
-                    <h5>Beny Nugroho, S.Kom.</h5>
-                    <p class="text-muted mb-0">Laboratory Technician</p>
-                    <p class="text-muted mb-0">H.7.198611152023101001</p>
-                </div>
-            </div>
-        </div>        
-
-        <!-- 3 Info Cards -->
+        <!-- Profile Card and Info Cards Side by Side -->
         <div class="row">
+            <!-- Profile Card -->
             <div class="col-md-4">
-                <div class="card card-info text-center p-3">
-                    <h5>Total Ruang Dibuat</h5>
-                    <p>10</p>
+                <div class="card profile-card p-4 mb-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-12 text-center">
+                            <img src="https://via.placeholder.com/120" alt="Profile Picture">
+                        </div>
+                        <div class="col-md-12 text-center mt-3">
+                            <h5>Beny Nugroho, S.Kom.</h5>
+                            <p class="text-muted mb-0">Laboratory Technician</p>
+                            <p class="text-muted mb-0">H.7.198611152023101001</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card card-info text-center p-3">
-                    <h5>Ruang Disetujui Dekan</h5>
-                    <p>7/10</p>
+
+            <!-- Info Cards Side by Side -->
+            <div class="col-md-8">
+                <!-- First Row of Cards -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card card-info text-center p-3 mb-4">
+                            <h5>Total Ruang Dibuat</h5>
+                            <p>10</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card card-info text-center p-3 mb-4">
+                            <h5>Ruang Belum Disetujui Dekan</h5>
+                            <p>7/10</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card card-info text-center p-3">
-                    <h5>Ruang Ditolak Dekan</h5>
-                    <p>3/10</p>
+
+                <!-- Second Row of Cards -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card card-info text-center p-3 mb-4">
+                            <h5>Ruang Disetujui Dekan</h5>
+                            <p>7/10</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card card-info text-center p-3 mb-4">
+                            <h5>Ruang Ditolak Dekan</h5>
+                            <p>3/10</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
