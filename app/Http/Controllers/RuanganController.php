@@ -57,9 +57,6 @@ class RuanganController extends Controller
         return view('bagianAkademik.ketersediaan_ruang', compact('ruangs', 'prodi'));
     }
     
-    
-    
-
     /**
      * Mengatur kapasitas ruangan.
      */

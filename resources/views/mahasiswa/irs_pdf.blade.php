@@ -83,11 +83,11 @@
             @foreach ($itemIRS as $index => $item)
                 <tr class="center">
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $item->mataKuliah->kode_mk }}</td>
-                    <td>{{ $item->mataKuliah->nama_mk }}</td>
-                    <td>{{ $item->jadwal->kode_kelas }}</td>
-                    <td>{{ $item->mataKuliah->sks }}</td>
-                    <td>{{ $item->jadwal->ruangan->nama_ruang }}</td>
+                    <td>{{ $item->mataKuliah?->kode_mk }}</td>
+                    <td>{{ $item->mataKuliah?->nama_mk }}</td>
+                    <td>{{ $item->jadwal?->kode_kelas }}</td>
+                    <td>{{ $item->mataKuliah?->sks }}</td>
+                    <td>{{ $item->jadwal?->ruangan->nama_ruang }}</td>
                     <td width="10%">
                         @foreach ($item->mataKuliah->dosenMataKuliah as $dosen)
                             {{ $dosen->dosen->nama_dosen }}<br>
@@ -95,9 +95,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="7" class="table-justify-left">{{ $item->jadwal->hari }}, pukul
-                        {{ $item->jadwal->jam_mulai }} -
-                        {{ $item->jadwal->jam_selesai }}</td>
+                    <td colspan="7" class="table-justify-left">{{ $item->jadwal?->hari }}, pukul
+                        {{ $item->jadwal?->jam_mulai }} -
+                        {{ $item->jadwal?->jam_selesai }}</td>
                 </tr>
             @endforeach
         </tbody>
