@@ -203,7 +203,7 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">Simpan Jadwal</button>
+                        <button type="submit" class="btn btn-primary">Simpan Mata Kuliah</button>
                     </div>
                 </form>
             </div>
@@ -258,7 +258,7 @@
                             </tr>
                         @endforeach
                     </tbody>
-                </table>
+                </table>             
             </div>
         </div>
     </div>

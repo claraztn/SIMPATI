@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Jadwal;
-use App\Models\ProgramStudi;
 use App\Models\Ruangan;
+use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 
 class DekanController extends Controller

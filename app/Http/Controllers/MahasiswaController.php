@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\IRS;
 use App\Models\Jadwal;
-use Barryvdh\DomPDF\Facade\PDF;
 use App\Models\Mahasiswa;
 use App\Models\MataKuliah;
 use Illuminate\Http\Request;
 use App\Models\StatusAkademik;
+use Barryvdh\DomPDF\Facade\PDF;
 use App\Models\IrsItemMahasiswa;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class MahasiswaController extends Controller
@@ -18,16 +19,17 @@ class MahasiswaController extends Controller
     public function index()
     {
         // get info mhs brdasarkan user yg saat ini sdg login
-        $currentLogin = auth()->user()->id;
+        $currentLogin = Auth::id();
         $mahasiswa = Mahasiswa::where('id_user', $currentLogin)->first();
+        $user = Auth::user(); 
         // dd($getIdMhs);
 
-        return view('mahasiswa.dashboard', compact('mahasiswa'));
+        return view('mahasiswa.dashboard', compact('user', 'mahasiswa'));
     }
 
     public function showIRS(Request $request)
     {
-        $currentLogin = auth()->user()->id;
+        $currentLogin = Auth::id();
         $mahasiswa = Mahasiswa::where('id_user', $currentLogin)->first();
         $statusAkademik = StatusAkademik::where('nim', $mahasiswa->nim)->first();
 
@@ -37,10 +39,8 @@ class MahasiswaController extends Controller
 
         $batasSKS = $this->batasMaksimalSKS($nim, $semester, $ipk);
 
-        // filter semester
-        $semesterFilter = $request->get('semester', 's');  // default ke 's' jika tidak ada parameter semester
+        $semesterFilter = $request->get('semester', 's');
 
-        // get semua jadwal yang sudah approved
         if ($semesterFilter != 's') {
             $jadwalMk = Jadwal::where('status', 'approved')
                 ->whereHas('mataKuliah', function ($query) use ($semesterFilter) {
@@ -48,14 +48,49 @@ class MahasiswaController extends Controller
                 })
                 ->get();
         } else {
-            // if 's' dipilih, get semua jadwal tanpa filter semester
             $jadwalMk = Jadwal::where('status', 'approved')->get();
         }
 
         $irs = IRS::where('nim', $mahasiswa->nim)->where('semester', $semester)->first();
 
+        if ($irs) {
+            return redirect()->route('mahasiswa.irs.edit', ['id' => $irs->id]);
+        }
+
         return view('mahasiswa.irs', compact('jadwalMk', 'batasSKS', 'irs', 'semester'));
     }
+    public function editIRS(Request $request, $id)
+    {
+        $irs = IRS::findOrFail($id);
+
+        $mahasiswa = Mahasiswa::where('nim', $irs->nim)->first();
+
+        $statusAkademik = StatusAkademik::where('nim', $mahasiswa->nim)->first();
+        $semester = $statusAkademik?->current_semester; // ambil posisiny skrg smstr brp
+
+        $semesterFilter = $request->get('semester', 's');
+
+        if ($semesterFilter != 's') {
+            $jadwalMk = Jadwal::where('status', 'approved')
+                ->whereHas('mataKuliah', function ($query) use ($semesterFilter) {
+                    $query->where('semester', $semesterFilter);
+                })
+                ->get();
+        } else {
+            $jadwalMk = Jadwal::where('status', 'approved')->get();
+        }
+
+        $batasSKS = $this->batasMaksimalSKS($mahasiswa->nim, $statusAkademik->current_semester, $statusAkademik->ipk_komulatif);
+
+        $selectedJadwalIds = IRSItemMahasiswa::where('id_irs', $irs->id)
+            ->pluck('id_jadwal') // ambil daftar id_jadwal yang sudah dipilih
+            ->toArray();
+
+        return view('mahasiswa.irs_edit', compact('irs', 'mahasiswa', 'jadwalMk', 'batasSKS', 'selectedJadwalIds', 'semester'));
+    }
+
+
+
 
     public function batasMaksimalSKS($nim, $semester, $ipk = null)
     {
@@ -106,7 +141,7 @@ class MahasiswaController extends Controller
         $ruang = $request->ruang;
         $jadwal = $request->id_jadwal;
 
-        $currentLogin = auth()->user()->id; // get nim user yang sedang login
+        $currentLogin = Auth::id(); // get nim user yang sedang login
         $mahasiswa = Mahasiswa::where('id_user', $currentLogin)->first();
         $statusAkademik = StatusAkademik::where('nim', $mahasiswa->nim)->first();
 
@@ -153,6 +188,64 @@ class MahasiswaController extends Controller
         return redirect()->back()->with('success', 'IRS berhasil diajukan!');
     }
 
+    public function updateIRS(Request $request, $id)
+    {
+        $request->validate([
+            'total_sks' => 'required|numeric',
+            'kode_mk' => 'required|array',
+            'kode_mk.*' => 'required|string',
+        ], [
+            'kode_mk.required' => 'Mata kuliah harus dipilih!',
+        ]);
+        // dd(request()->all());
+
+        $irs = IRS::findOrFail($id);
+        $currentLogin = Auth::id();
+        $mahasiswa = Mahasiswa::where('id_user', $currentLogin)->first();
+        $nim = $mahasiswa->nim;
+
+        $kodeMk = $request->kode_mk;
+        $hari = $request->hari;
+        $jamMulai = $request->jam_mulai;
+        $jamSelesai = $request->jam_selesai;
+        $ruang = $request->ruang;
+        $jadwal = $request->id_jadwal;
+
+        // Data jadwal yang sebelumnya tersimpan di IRS
+        $existingItems = IrsItemMahasiswa::where('id_irs', $irs->id)->get();
+
+        // Filter data yang perlu dihapus (checkbox yang di-uncheck)
+        $existingIds = $existingItems->pluck('id_jadwal')->toArray();
+        $uncheckedJadwalIds = array_diff($existingIds, $jadwal); // Jadwal yang tidak dicentang
+
+        // Hapus data unchecked dari database
+        IrsItemMahasiswa::whereIn('id_jadwal', $uncheckedJadwalIds)->delete();
+
+        // Filter data yang perlu ditambahkan (checkbox yang baru dicentang)
+        $newJadwalIds = array_diff($jadwal, $existingIds); // Jadwal yang baru dicentang
+        foreach ($newJadwalIds as $index => $jadwalId) {
+            IrsItemMahasiswa::create([
+                'id_irs' => $irs->id,
+                'id_jadwal' => $jadwalId,
+                'nim' => $nim,
+                'kode_mk' => $kodeMk[$index],
+                'hari' => $hari[$index],
+                'jam_mulai' => $jamMulai[$index],
+                'jam_selesai' => $jamSelesai[$index],
+                'ruang' => $ruang[$index],
+            ]);
+        }
+
+        // Update total SKS dan status IRS
+        $irs->update([
+            'jmlsks' => $request->total_sks,
+            'isverified' => false,
+        ]);
+
+        return redirect()->back()->with('success', 'IRS berhasil diperbarui!');
+    }
+
+
 
     private function cekRentangWaktu($start1, $end1, $start2, $end2)
     {
@@ -168,19 +261,23 @@ class MahasiswaController extends Controller
 
     function unduhIRS()
     {
-        $currentLogin = auth()->user()->id;
+        $currentLogin = Auth::id();
 
         $mahasiswa = Mahasiswa::where('id_user', $currentLogin)->first();
+        // dd($mahasiswa);
+
         if (!$mahasiswa) {
             return redirect()->route('home')->with('error', 'Data mahasiswa tidak ditemukan.');
         }
 
         $irs = IRS::where('nim', $mahasiswa->nim)->first();
+
         if (!$irs) {
             return redirect()->route('home')->with('error', 'IRS tidak ditemukan.');
         }
 
         $itemIRS = IrsItemMahasiswa::where('id_irs', $irs->id)->get();
+
         $dateNow = now()->format('d M Y');
 
         $data = [
@@ -191,6 +288,7 @@ class MahasiswaController extends Controller
         ];
 
         $pdf = PDF::loadView('mahasiswa.irs_pdf', $data);
+
         return $pdf->download('IRS_' . $mahasiswa->nim . '.pdf');
     }
 

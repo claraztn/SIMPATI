@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\MataKuliah;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class MataKuliahController extends Controller
 {

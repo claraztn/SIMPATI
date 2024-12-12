@@ -6,6 +6,7 @@ use App\Models\Jadwal;
 use App\Models\Ruangan;
 use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class RuanganController extends Controller
 {

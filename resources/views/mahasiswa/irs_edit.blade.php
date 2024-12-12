@@ -214,6 +214,13 @@
                 <div class="button-container mb-4">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="action">
+                            <button class="btn-fill" onclick="window.location.href='{{ route('mahasiswa.irs') }}'">Buat
+                                IRS</button>
+                            <button class="btn-fill" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Detail
+                                <i class="fas fa-chevron-down"></i> <!-- Ikon panah Font Awesome -->
+                            </button>
                             @if ($irs?->isverified)
                                 <button class="btn-fill" onclick="window.location.href='{{ route('irs.unduh') }}'"><i
                                         class="fa fa-file"></i> Unduh IRS</button>
@@ -230,23 +237,17 @@
                         <div class="info">
                             <h6 id="totalSks" class="me-5 text-primary">Maks. SKS anda: {{ $batasSKS }} </h6>
                             @if ($irs)
-                                <h6 class="me-5">Total SKS diajukan: <span id="totalPilih"
-                                        class="h5">{{ $irs->jmlsks }}</span>
-                                </h6>
-                            @else
-                                <h6 class="me-5">Total SKS dipilih: <span id="totalPilih" class="h5">0</span>
+                                <h6 class="me-5">Total SKS diajukan: <span class="h5"
+                                        id="totalPilih">{{ $irs->jmlsks }}</span>
                                 </h6>
                             @endif
                         </div>
                     </div>
-
-
-
                 </div>
 
                 <!-- Tabel Mata Kuliah -->
                 <div class="card shadow mb-4">
-                    <form method="POST" id="formIRS" action="{{ route('irs.submit') }}">
+                    <form method="POST" id="formIRS" action="{{ route('mahasiswa.irs.update', $irs->id) }}">
                         @csrf
                         <input hidden name="total_sks" id="total_sks" value="0">
 
@@ -257,7 +258,8 @@
                                     <div class="semester-filter">
                                         <select name="semester" class="form-control" id="semesterFilter">
                                             <option value="s" {{ request('semester') == 's' ? 'selected' : '' }}>
-                                                Semua Semester</option>
+                                                Semua Semester
+                                            </option>
                                             @for ($semester = 1; $semester <= 8; $semester++)
                                                 <option value="{{ $semester }}"
                                                     {{ request('semester') == $semester ? 'selected' : '' }}>
@@ -265,7 +267,6 @@
                                                 </option>
                                             @endfor
                                         </select>
-
                                     </div>
 
                                 </div>
@@ -307,19 +308,22 @@
                                                     @endforeach
                                                 </td>
                                                 <td>
-                                                    <input type="checkbox" class="sks-checkbox"
-                                                        data-sks="{{ $item->mataKuliah->sks }}"
+                                                    <input type="checkbox" name="kode_mk[]" class="sks-checkbox"
+                                                        value="{{ $item->kode_mk }}"
                                                         data-kode="{{ $item->kode_mk }}"
+                                                        data-sks="{{ $item->mataKuliah->sks }}"
                                                         data-hari="{{ $item->hari }}"
                                                         data-mulai="{{ $item->jam_mulai }}"
                                                         data-selesai="{{ $item->jam_selesai }}"
                                                         data-ruang="{{ $item->id_ruang }}"
-                                                        data-jadwal="{{ $item->id_jadwal }}">
+                                                        data-jadwal="{{ $item->id_jadwal }}"
+                                                        @if (in_array($item->id_jadwal, $selectedJadwalIds)) checked @endif>
+
                                                 </td>
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="9" class="text-center">
+                                                <td colspan="10" class="text-center">
                                                     Tidak ada jadwal kuliah ditemukan.
                                                 </td>
                                             </tr>
@@ -327,6 +331,7 @@
                                     </tbody>
                                 </table>
                             </div>
+
                         </div>
                         @if ($irs && !$irs->isverified)
                             <button class="btn-save" id="btnSave" type="submit">Simpan Perubahan</button>
@@ -339,6 +344,7 @@
                     </form>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -346,179 +352,113 @@
     <script src="https://unpkg.com/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://unpkg.com/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
     <script>
-        function showContent(type) {
-            // Sembunyikan semua bagian Accordion
-            document.getElementById('irsAccordion').style.display = 'none';
-            document.getElementById('khsAccordion').style.display = 'none';
-            document.getElementById('transkripAccordion').style.display = 'none';
-
-            // Sembunyikan Tabel Mata Kuliah dan Button Simpan
-            document.getElementById('matkulTable').closest('div').style.display =
-                'none'; // Hide the parent div of the table
-            document.querySelector('button.btn-save').style.display = 'none';
-
-            // Menampilkan konten yang dipilih
-            if (type === 'irs') {
-                document.getElementById('irsAccordion').style.display = 'block';
-            } else if (type === 'khs') {
-                document.getElementById('khsAccordion').style.display = 'block';
-            } else if (type === 'transkrip') {
-                document.getElementById('transkripAccordion').style.display = 'block';
-            }
-        }
-
-        function showTable() {
-            // Menampilkan Tabel Mata Kuliah dan Button Simpan
-            document.getElementById('matkulTable').closest('div').style.display = 'block';
-            document.querySelector('button.btn-save').style.display = 'block';
-
-            // Menyembunyikan bagian Accordion ketika "Buat IRS" diklik
-            document.getElementById('irsAccordion').style.display = 'none';
-            document.getElementById('khsAccordion').style.display = 'none';
-            document.getElementById('transkripAccordion').style.display = 'none';
-        }
-
         document.getElementById('semesterFilter').addEventListener('change', function() {
             let semester = this.value;
-            window.location.href = '/mahasiswa/irs' + (semester ? '?semester=' + semester : '');
+            let urlPath = window.location.pathname;
+            let irsId = urlPath.split('/').pop();
+
+            let urlFinal = '/mahasiswa/irs/edit/' + irsId;
+
+            if (semester && semester !== 's') {
+                urlFinal += '?semester=' + semester;
+            }
+
+            window.location.href = urlFinal;
+
         });
 
-
-        // UNTUK PENGECEKAN batas SKS melebih atau tidak ketika di submit.
-        // klo melebihi, gagal kan.
         document.addEventListener('DOMContentLoaded', function() {
-
             const batasSKS = parseInt('{{ $batasSKS }}');
-
             const checkboxes = document.querySelectorAll('.sks-checkbox');
             const totalPilihElement = document.getElementById('totalPilih');
             const btnSave = document.getElementById('btnSave');
 
             let totalSKS = 0;
-            let selectedKodeMk = [];
 
-            // script buat ngehandle perubahan checkbox tiap item list jdwal
+            function updateTotalSKS() {
+                totalSKS = 0;
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        totalSKS += parseInt(checkbox.getAttribute('data-sks'));
+                    }
+                });
+                totalPilihElement.textContent = totalSKS;
+                document.getElementById('total_sks').value = totalSKS;
+            }
+
+            updateTotalSKS();
+
             checkboxes.forEach(checkbox => {
                 checkbox.addEventListener('change', function() {
-                    const sks = parseInt(this.getAttribute('data-sks'));
-
-                    // ambil informasi SECARA DETAIL, jadwal yg diambil di hari, ruang dan mk yg mana
-                    const kodeMk = this.getAttribute('data-kode');
-                    const hari = this.getAttribute('data-hari');
-                    const mulai = this.getAttribute('data-mulai');
-                    const selesai = this.getAttribute('data-selesai');
-                    const ruang = this.getAttribute('data-ruang');
-                    const jadwal = this.getAttribute('data-jadwal');
-
-                    // checkbox dicentang => tambahkan SKS dan kode_mk ke array
-                    if (this.checked) {
-                        totalSKS += sks;
-                        selectedKodeMk.push(kodeMk);
-
-                        // mapping buat tiap item yg di ceklis masuk ke array
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = 'kode_mk[]';
-                        input.value = kodeMk;
-                        document.forms[0].appendChild(input);
-
-                        const inputHari = document.createElement('input');
-                        inputHari.type = 'hidden';
-                        inputHari.name = 'hari[]';
-                        inputHari.value = hari;
-                        document.forms[0].appendChild(inputHari);
-
-                        const inputMulai = document.createElement('input');
-                        inputMulai.type = 'hidden';
-                        inputMulai.name = 'jam_mulai[]';
-                        inputMulai.value = mulai;
-                        document.forms[0].appendChild(inputMulai);
-
-                        const inputSelesai = document.createElement('input');
-                        inputSelesai.type = 'hidden';
-                        inputSelesai.name = 'jam_selesai[]';
-                        inputSelesai.value = selesai;
-                        document.forms[0].appendChild(inputSelesai);
-
-                        const inputRuang = document.createElement('input');
-                        inputRuang.type = 'hidden';
-                        inputRuang.name = 'ruang[]';
-                        inputRuang.value = ruang;
-                        document.forms[0].appendChild(inputRuang);
-
-                        const inputJadwal = document.createElement('input');
-                        inputJadwal.type = 'hidden';
-                        inputJadwal.name = 'id_jadwal[]';
-                        inputJadwal.value = jadwal;
-                        document.forms[0].appendChild(inputJadwal);
-                    } else {
-                        // kurangi SKS, hapus kode_mk dari array
-                        totalSKS -= sks;
-                        const index = selectedKodeMk.indexOf(kodeMk);
-                        if (index !== -1) {
-                            selectedKodeMk.splice(index, 1);
-                        }
-
-
-                        // hps input hidden untuk kode_mk yang di uncheck
-                        const inputs = document.querySelectorAll(`input[name="kode_mk[]"]`);
-                        inputs.forEach(input => {
-                            if (input.value === kodeMk) {
-                                input.remove();
-                            }
-                        });
-                        const inputsHari = document.querySelectorAll(`input[name="hari[]"]`);
-                        inputsHari.forEach(input => {
-                            if (input.value === hari) {
-                                input.remove();
-                            }
-                        });
-
-                        const inputsMulai = document.querySelectorAll(`input[name="jam_mulai[]"]`);
-                        inputsMulai.forEach(input => {
-                            if (input.value === mulai) {
-                                input.remove();
-                            }
-                        });
-
-                        const inputsSelesai = document.querySelectorAll(
-                            `input[name="jam_selesai[]"]`);
-                        inputsSelesai.forEach(input => {
-                            if (input.value === selesai) {
-                                input.remove();
-                            }
-                        });
-
-                        const inputsRuang = document.querySelectorAll(`input[name="ruang[]"]`);
-                        inputsRuang.forEach(input => {
-                            if (input.value === ruang) {
-                                input.remove();
-                            }
-                        });
-
-                        const inputsJadwal = document.querySelectorAll(`input[name="id_jadwal[]"]`);
-                        inputsJadwal.forEach(input => {
-                            if (input.value === jadwal) {
-                                input.remove();
-                            }
-                        });
-                    }
-
-                    // Update total SKS
-                    totalPilihElement.textContent = totalSKS;
-                    document.getElementById('total_sks').value = totalSKS;
+                    updateTotalSKS();
                 });
             });
 
 
-            // ps mau submit cek apakah total SKS melebihi batas saat tombol simpan diklik
+            document.querySelector('form').addEventListener('submit', function() {
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        const kodeMk = checkbox.getAttribute('data-kode');
+                        const hari = checkbox.getAttribute('data-hari');
+                        const mulai = checkbox.getAttribute('data-mulai');
+                        const selesai = checkbox.getAttribute('data-selesai');
+                        const ruang = checkbox.getAttribute('data-ruang');
+                        const jadwal = checkbox.getAttribute('data-jadwal');
+
+                        const inputs = [{
+                                name: 'kode_mk[]',
+                                value: kodeMk
+                            },
+                            {
+                                name: 'hari[]',
+                                value: hari
+                            },
+                            {
+                                name: 'jam_mulai[]',
+                                value: mulai
+                            },
+                            {
+                                name: 'jam_selesai[]',
+                                value: selesai
+                            },
+                            {
+                                name: 'ruang[]',
+                                value: ruang
+                            },
+                            {
+                                name: 'id_jadwal[]',
+                                value: jadwal
+                            },
+                        ];
+
+                        inputs.forEach(inputData => {
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = inputData.name;
+                            input.value = inputData.value;
+                            document.forms[0].appendChild(input);
+                        });
+                    }
+                });
+                updateTotalSKS();
+
+            });
+
+
             btnSave.addEventListener('click', function(event) {
                 if (totalSKS > batasSKS) {
                     event.preventDefault();
-                    alert('Anda melebihi batas SKS!'); // alert.
+                    alert('Anda melebihi batas SKS!');
+                } else {
+                    const checkedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+                    if (checkedCheckboxes.length === 0) {
+                        event.preventDefault();
+                        alert('Harap pilih setidaknya satu mata kuliah!');
+                    }
                 }
             });
         });
     </script>
 </body>
+
 </html>

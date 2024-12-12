@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Ruangan;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class BagianAkademikController extends Controller
 {
@@ -14,8 +16,8 @@ class BagianAkademikController extends Controller
         $notApprov = Ruangan::where('status', 'pending')->count();
         $approved = Ruangan::where('status', 'approved')->count();
         $rejected = Ruangan::where('status', 'rejected')->count();
-
-        return view('bagianAkademik.dashboard', compact('ruangan', 'notApprov', 'approved', 'rejected'));
+        $user = Auth::user(); 
+        return view('bagianAkademik.dashboard', compact('user','ruangan', 'notApprov', 'approved', 'rejected'));
     }
 
     public function manajemenRuang()

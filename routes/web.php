@@ -29,10 +29,12 @@ Route::post('/select-role', [AuthController::class, 'processRole'])->name('proce
 Route::prefix('mahasiswa')->middleware('auth')->group(function () {
     Route::get('/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
     Route::get('/irs', [MahasiswaController::class, 'showIRS'])->name('mahasiswa.irs');
+    Route::get('/irs/edit/{id}', [MahasiswaController::class, 'editIRS'])->name('mahasiswa.irs.edit');
+    Route::post('/irs/update/{id}', [MahasiswaController::class, 'updateIRS'])->name('mahasiswa.irs.update');
     Route::post('/irs', [MahasiswaController::class, 'submitIRS'])->name('irs.submit');
     Route::get('/irs/unduh', [MahasiswaController::class, 'unduhIRS'])->name('irs.unduh');
+
     Route::get('/detail_irs_khs', [MahasiswaController::class, 'showDetail'])->name('mahasiswa.detail-irs-khs');
-    // Route::get('/registrasi', [MahasiswaController::class, 'showRegistrasi'])->name('mahasiswa.registrasi');
     Route::post('/registrasi-submit', [MahasiswaController::class, 'submitRegistrasi'])->name('registrasi.submit');
 });
 

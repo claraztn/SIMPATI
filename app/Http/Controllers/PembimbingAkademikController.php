@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dosen;
-use App\Models\DosenMataKuliah;
-use Illuminate\Http\Request;
 use App\Models\IRS;
-use App\Models\IrsItemMahasiswa;
+use App\Models\User;
+use App\Models\Dosen;
 use App\Models\Jadwal;
 use App\Models\Mahasiswa;
-use App\Models\User;
+use Illuminate\Http\Request;
+use App\Models\DosenMataKuliah;
+use App\Models\IrsItemMahasiswa;
+use Illuminate\Routing\Controller;
 
 class PembimbingAkademikController extends Controller
 {

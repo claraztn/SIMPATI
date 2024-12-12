@@ -29,8 +29,8 @@
         }
 
         .profile-card img {
-            width: 80px;
-            height: 80px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             object-fit: cover;
         }
@@ -120,7 +120,7 @@
         <div class="card profile-card p-4 mb-4">
             <div class="row align-items-center">
                 <div class="col-md-2 text-center">
-                    <img src="https://via.placeholder.com/500" alt="Profile Picture">
+                    <img src="{{ ($user->foto) }}" alt="Profile Picture">
                 </div>
                 <div class="col-md-10">
                     <h5>{{ $mahasiswa->nama_mahasiswa ?? 'Mahasiswa' }}</h5>

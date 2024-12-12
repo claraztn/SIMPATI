@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Kelas;
 use App\Models\Jadwal;
 use App\Models\Ruangan;
 use App\Models\MataKuliah;
+use App\Models\ProgramStudi;
 use Illuminate\Http\Request;
 use App\Models\DosenMataKuliah;
-use App\Models\ProgramStudi;
+use Illuminate\Container\Attributes\Auth;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 
 class KaprodiController extends Controller
@@ -26,7 +29,7 @@ class KaprodiController extends Controller
     public function aturJadwal()
     {
         // $kelas = Kelas::with('mataKuliah', 'jadwal', 'jadwal.ruangan', 'dosenMataKuliah.dosen')->get();
-        $mataKuliah = MataKuliah::all();
+        $mataKuliah = MataKuliah::orderBy('nama_mk', 'asc')->get();
         $jadwals = Jadwal::with('kelas', 'dosens')->get();
         $ruangan = Ruangan::where('status', 'approved')->get();
         $dosen = Dosen::all();
@@ -40,7 +43,6 @@ class KaprodiController extends Controller
     public function aturMatakuliah()
     {
         $mataKuliah = MataKuliah::orderBy('created_at', 'DESC')->get();
-
         $prodi = ProgramStudi::all();
 
         return view('kaprodi.atur_matakuliah', compact('mataKuliah', 'prodi'));
@@ -49,7 +51,6 @@ class KaprodiController extends Controller
     public function listMatakuliah()
     {
         $mataKuliah = MataKuliah::orderBy('created_at', 'DESC')->get();
-
         $prodi = ProgramStudi::all();
 
         return view('kaprodi.list_matakuliah', compact('mataKuliah', 'prodi'));
@@ -95,11 +96,12 @@ class KaprodiController extends Controller
 
     public function storeJadwal(Request $request)
     {
+        dd($request);
         $request->validate([
             'kode_kelas' => 'required|exists:kelas,kode_kelas',
             'kode_mk' => 'required|exists:mata_kuliah,kode_mk',
             'hari' => 'required|string',
-            'id_ruang' => 'required|exists:ruangan,id_ruang',
+            'id_ruang' => 'required|exists:ruangan,id_rxxuang',
             'jam_mulai' => 'required|date_format:H:i',
 
             'dosen_pengampu' => 'required|array',
@@ -235,12 +237,10 @@ class KaprodiController extends Controller
         return redirect()->route('kaprodi.atur-jadwal')->with('success', 'Jadwal berhasil diperbarui!');
     }
 
-
-
     public function storeMatakuliah(Request $request)
     {
         $validatedData = $request->validate([
-            'kode_mk' => 'required|string|max:10|unique:mata_kuliah,kode_mk',
+            'kode_mk' => 'required|string|max:10',
             'nama_mk' => 'required|string|max:255',
             'semester' => 'required|integer|min:1|max:8',
             'sks' => 'required|integer|min:1|max:4',
@@ -248,7 +248,10 @@ class KaprodiController extends Controller
             'id_prodi' => 'required|exists:program_studi,id_prodi',
         ]);
 
-        // dd($request->all());
+        $existMk = MataKuliah::where('kode_mk', $validatedData['kode_mk'])->first();
+        if ($existMk) {
+            return redirect()->route('kaprodi.atur-matakuliah')->with('error', 'Gagal menyimpan. Data Mata kuliah sudah ada!');
+        }
 
         MataKuliah::create([
             'kode_mk' => $validatedData['kode_mk'],
@@ -258,7 +261,6 @@ class KaprodiController extends Controller
             'sifat' => $validatedData['sifat'],
             'id_prodi' => $validatedData['id_prodi'],
         ]);
-
         return redirect()->route('kaprodi.atur-matakuliah')->with('success', 'Data mata kuliah berhasil ditambahkan!');
     }
 

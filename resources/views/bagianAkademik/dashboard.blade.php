@@ -103,7 +103,7 @@
                 <div class="card profile-card p-4 mb-4">
                     <div class="row align-items-center">
                         <div class="col-md-12 text-center">
-                            <img src="https://via.placeholder.com/120" alt="Profile Picture">
+                            <img src="{{ ($user->foto) }}" alt="Profile Picture">
                         </div>
                         <div class="col-md-12 text-center mt-3">
                             <h5>Beny Nugroho, S.Kom.</h5>
